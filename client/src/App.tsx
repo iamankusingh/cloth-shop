@@ -1,4 +1,7 @@
+// home page (/) route
+import TShirt from "./canvas/TShirt";
 import Button from "./components/Button";
+import Header from "./components/Header";
 import PageTitle from "./components/PageTitle";
 
 function App() {
@@ -6,8 +9,10 @@ function App() {
     <>
       <PageTitle title="Cloth shop - Home" />
 
+      <Header />
+
       <main className="p-2">
-        <h1>Cloth shop</h1>
+        <TShirt />
 
         <h1>Customize your Cloths</h1>
 

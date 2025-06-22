@@ -1,3 +1,4 @@
+// main (primary) button of all places
 import { NavLink } from "react-router-dom";
 
 interface buttonPrope {

@@ -1,3 +1,4 @@
+// a component to set page title
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
