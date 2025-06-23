@@ -11,12 +11,16 @@ function App() {
 
       <Header />
 
-      <main className="p-2">
-        <TShirt />
+      <main className="h-screen w-screen lg:flex lg:flex-row-reverse">
+        <section className="h-[50vh] lg:h-screen lg:w-[50vw]">
+          <TShirt />
+        </section>
 
-        <h1>Customize your Cloths</h1>
+        <section className="lg:w-[50vw] p-2">
+          <h1 className="py-6 text-4xl">Design Your Cloths</h1>
 
-        <Button path="/customizer" title="Customize it" />
+          <Button path="/customizer" title="Customize it" />
+        </section>
       </main>
     </>
   );

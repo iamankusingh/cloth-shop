@@ -1,4 +1,5 @@
 // page appear when have to customize the selected cloth
+import TShirt from "../canvas/TShirt";
 import Button from "../components/Button";
 import PageTitle from "../components/PageTitle";
 
@@ -7,8 +8,18 @@ const Customizer: React.FC = () => {
     <>
       <PageTitle title="Cloth shop - Customize" />
 
-      <main>
-        <Button path="/" title="Back" />
+      <main className="h-screen w-screen lg:flex lg:flex-row-reverse">
+        <section className="h-[50vh] lg:h-screen lg:w-[50vw]">
+          <div className="fixed top-0 z-10">
+            <Button path="/" title="Back" />
+          </div>
+
+          <TShirt />
+        </section>
+
+        <section className="lg:w-[50vw] p-2">
+          <input type="color" name="" id="" />
+        </section>
       </main>
     </>
   );
