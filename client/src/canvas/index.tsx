@@ -2,23 +2,36 @@ import { Canvas } from "@react-three/fiber";
 import TShirt from "./TShirt";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
+const CameraWithLight = () => {
+  return (
+    <PerspectiveCamera
+      makeDefault
+      position={[0, 0.3, 1]}
+    >
+      <directionalLight color="white" intensity={2} />
+    </PerspectiveCamera>
+  );
+};
+
 const CanvasModel: React.FC = () => {
   return (
-    <Canvas
-      shadows
-      camera={{ position: [0, 0, 0], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
-      className="w-full max-w-full h-full transition-all ease-in"
-    >
-      <ambientLight intensity={1} />
-      <directionalLight color="white" position={[0, 0, 5]} />
+    <section className="h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0">
+      <Canvas
+        shadows
+        camera={{ position: [0, 0, 0], fov: 25 }}
+        gl={{ preserveDrawingBuffer: true }}
+        className="w-full max-w-full h-full transition-all ease-in "
+      >
+        {/* lights and camera */}
+        <CameraWithLight />
 
-      <PerspectiveCamera position={[0, 0.3, 1]} makeDefault />
+        {/* action */}
+        <OrbitControls enableZoom={false} />
 
-      <OrbitControls />
-
-      <TShirt />
-    </Canvas>
+        {/* 3D model */}
+        <TShirt />
+      </Canvas>
+    </section>
   );
 };
 
