@@ -1,3 +1,5 @@
+// main canvas component to manage scene and model
+
 import { Canvas } from "@react-three/fiber";
 import TShirt from "./TShirt";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
@@ -23,6 +25,7 @@ const CanvasModel: React.FC = () => {
         className="w-full max-w-full h-full transition-all ease-in "
       >
         {/* lights and camera */}
+        <ambientLight intensity={0.5} />
         <CameraWithLight />
 
         {/* action */}
