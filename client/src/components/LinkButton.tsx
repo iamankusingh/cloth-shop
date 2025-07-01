@@ -5,7 +5,7 @@ interface buttonPrope {
   path: string;
   title: string;
 }
-const Button: React.FC<buttonPrope> = ({ path, title }) => {
+const LinkButton: React.FC<buttonPrope> = ({ path, title }) => {
   return (
     <NavLink
       to={path}
@@ -16,4 +16,4 @@ const Button: React.FC<buttonPrope> = ({ path, title }) => {
   );
 };
 
-export default Button;
+export default LinkButton;

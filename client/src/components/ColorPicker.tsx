@@ -14,17 +14,15 @@ const ColorPicker: React.FC = () => {
   const [color, setColor] = useState<string>("22194D");
 
   return (
-    <div>
-      <SketchPicker
-        className="text-black"
-        color={color}
-        disableAlpha
-        onChange={(color: ColorPickerProps) => {
-          console.log(color);
-          setColor(color.hex);
-        }}
-      />
-    </div>
+    <SketchPicker
+      className="text-black"
+      color={color}
+      disableAlpha
+      onChange={(color: ColorPickerProps) => {
+        console.log(color);
+        setColor(color.hex);
+      }}
+    />
   );
 };
 
