@@ -13,16 +13,40 @@ const Customizer: React.FC = () => {
 
       <Header />
 
-      {/* <div className="fixed top-0 z-10">
-        <LinkButton path="/" title="Back" />
-      </div> */}
-
-      <main className="w-screen lg:w-[50vw] lg:mt-10">
-        <div className="border flex items-center justify-around text-xl">
-          <button>Colors</button>
-          <button>Logo</button>
-          <button>Text</button>
-          <button>Texture</button>
+      <main className="w-screen lg:w-[50vw] lg:pt-16">
+        <div className="p-2 bg-gray-500 rounded-lg flex items-center justify-around text-xl">
+          <button
+            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600  rounded-lg ${
+              activeTab === "color" ? "bg-blue-600" : ""
+            }`}
+            onClick={() => setActiveTab("color")}
+          >
+            Colors
+          </button>
+          <button
+            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600 rounded-lg ${
+              activeTab === "logo" ? "bg-blue-600" : ""
+            }`}
+            onClick={() => setActiveTab("logo")}
+          >
+            Logo
+          </button>
+          <button
+            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600 rounded-lg ${
+              activeTab === "text" ? "bg-blue-600" : ""
+            }`}
+            onClick={() => setActiveTab("text")}
+          >
+            Text
+          </button>
+          <button
+            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600 rounded-lg ${
+              activeTab === "design" ? "bg-blue-600" : ""
+            }`}
+            onClick={() => setActiveTab("design")}
+          >
+            Design
+          </button>
         </div>
 
         <section className="lg:w-[50vw] p-2">
@@ -30,7 +54,7 @@ const Customizer: React.FC = () => {
             {activeTab === "color" ? <ColorPicker /> : ""}
             {activeTab === "logo" ? "logo" : ""}
             {activeTab === "text" ? "text" : ""}
-            {activeTab === "texture" ? "texture" : ""}
+            {activeTab === "design" ? "design" : ""}
           </div>
         </section>
       </main>
