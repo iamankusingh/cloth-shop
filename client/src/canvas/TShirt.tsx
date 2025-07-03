@@ -4,15 +4,17 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import * as THREE from "three";
+import useClothConfigStore from "../store/clothConfigStore";
 
 const TShirt: React.FC = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
+  const { hexColor } = useClothConfigStore();
 
   // set color
   useFrame((_, delta) =>
     easing.dampC(
       (materials.lambert1 as THREE.MeshStandardMaterial).color,
-      "aqua",
+      hexColor,
       0.25,
       delta
     )

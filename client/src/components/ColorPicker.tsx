@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { SketchPicker } from "react-color";
+import useClothConfigStore from "../store/clothConfigStore";
 
 interface ColorPickerProps {
   hex: string;
@@ -11,16 +11,15 @@ interface ColorPickerProps {
 }
 
 const ColorPicker: React.FC = () => {
-  const [color, setColor] = useState<string>("22194D");
+  const { hexColor, updateColor } = useClothConfigStore();
 
   return (
     <SketchPicker
       className="text-black"
-      color={color}
+      color={hexColor}
       disableAlpha
       onChange={(color: ColorPickerProps) => {
-        console.log(color);
-        setColor(color.hex);
+        updateColor(color.hex);
       }}
     />
   );
