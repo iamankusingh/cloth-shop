@@ -4,6 +4,7 @@ import { useState } from "react";
 import ColorPicker from "../components/ColorPicker";
 import Header from "../components/Header";
 import PageTitle from "../components/PageTitle";
+import ImageUpload from "../components/ImageUpload";
 
 const Customizer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("color");
@@ -14,9 +15,9 @@ const Customizer: React.FC = () => {
       <Header />
 
       <main className="w-screen lg:w-[50vw] lg:pt-16">
-        <div className="p-2 bg-gray-500 rounded-lg flex items-center justify-around text-xl">
+        <div className="max-w-full p-2 text-white bg-gray-500 rounded-lg flex items-center justify-around md:text-xl">
           <button
-            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600  rounded-lg ${
+            className={`inline-block px-4 py-2 font-semibold border-2 border-blue-600  rounded-lg ${
               activeTab === "color" ? "bg-blue-600" : ""
             }`}
             onClick={() => setActiveTab("color")}
@@ -24,7 +25,7 @@ const Customizer: React.FC = () => {
             Colors
           </button>
           <button
-            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600 rounded-lg ${
+            className={`inline-block px-4 py-2 font-semibold border-2 border-blue-600 rounded-lg ${
               activeTab === "logo" ? "bg-blue-600" : ""
             }`}
             onClick={() => setActiveTab("logo")}
@@ -32,7 +33,7 @@ const Customizer: React.FC = () => {
             Logo
           </button>
           <button
-            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600 rounded-lg ${
+            className={`inline-block px-4 py-2 font-semibold border-2 border-blue-600 rounded-lg ${
               activeTab === "text" ? "bg-blue-600" : ""
             }`}
             onClick={() => setActiveTab("text")}
@@ -40,7 +41,7 @@ const Customizer: React.FC = () => {
             Text
           </button>
           <button
-            className={`inline-block px-6 py-2 text-white font-semibold border-2 border-blue-600 rounded-lg ${
+            className={`inline-block px-4 py-2 font-semibold border-2 border-blue-600 rounded-lg ${
               activeTab === "design" ? "bg-blue-600" : ""
             }`}
             onClick={() => setActiveTab("design")}
@@ -50,9 +51,9 @@ const Customizer: React.FC = () => {
         </div>
 
         <section className="lg:w-[50vw] p-2">
-          <div className=" flex justify-center">
+          <div className="flex justify-center">
             {activeTab === "color" ? <ColorPicker /> : ""}
-            {activeTab === "logo" ? "logo" : ""}
+            {activeTab === "logo" ? <ImageUpload /> : ""}
             {activeTab === "text" ? "text" : ""}
             {activeTab === "design" ? "design" : ""}
           </div>
