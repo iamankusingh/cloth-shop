@@ -5,6 +5,7 @@ import ColorPicker from "../components/ColorPicker";
 import Header from "../components/Header";
 import PageTitle from "../components/PageTitle";
 import ImageUpload from "../components/ImageUpload";
+import TextInput from "../components/TextInput";
 
 const Customizer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("color");
@@ -54,7 +55,7 @@ const Customizer: React.FC = () => {
           <div className="flex justify-center">
             {activeTab === "color" ? <ColorPicker /> : ""}
             {activeTab === "logo" ? <ImageUpload /> : ""}
-            {activeTab === "text" ? "text" : ""}
+            {activeTab === "text" ? <TextInput /> : ""}
             {activeTab === "design" ? "design" : ""}
           </div>
         </section>
