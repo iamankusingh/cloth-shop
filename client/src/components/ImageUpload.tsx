@@ -1,34 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useClothConfigStore from "../store/clothConfigStore";
 
 const ImageUpload = () => {
   const [file, setFile] = useState<File | null>(null);
+  const { updateLogoPath } = useClothConfigStore();
 
-  useEffect(() => {
-    if (file) {
-      console.log("File in useState:", file);
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files?.[0]);
+      const url = URL.createObjectURL(e.target.files?.[0]);
+      updateLogoPath(url);
     }
-  }, [file]);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
       <input
         id="file-upload"
         type="file"
-        accept="image/png"
+        accept="image/*"
         className="hidden"
-        onChange={(e) => {
-          if (e.target.files && e.target.files[0]) {
-            console.log(e.target.files[0]);
-            setFile(e.target.files[0]);
-          }
-        }}
+        onChange={handleImageUpload}
       />
 
       <label
         htmlFor="file-upload"
-        className="p-6 inline-block bg-blue-500 text-white rounded cursor-pointer"
+        className="p-6 inline-block text-white rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
-        Upload Image (.png)
+        Upload Image
       </label>
 
       <p className="">{!file ? "" : file.name}</p>

@@ -5,7 +5,7 @@ const TextInput = () => {
 
   useEffect(() => {
     if (text) {
-      console.log(text);
+      console.log("Text on cloth ", text);
     }
   }, [text]);
 
@@ -14,6 +14,7 @@ const TextInput = () => {
       <input
         type="text"
         value={text}
+        autoFocus
         className="p-2 text-xl border rounded-lg"
         onChange={(e) => {
           setText(e.target.value);
