@@ -31,6 +31,19 @@ const ImageUpload = () => {
       </label>
 
       <p className="">{!file ? "" : file.name}</p>
+      {file ? (
+        <button
+          className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
+          onClick={() => {
+            updateLogoPath("");
+            setFile(null);
+          }}
+        >
+          Remove image
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

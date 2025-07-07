@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import useClothConfigStore from "../store/clothConfigStore";
 
 const TextInput = () => {
   const [text, setText] = useState<string>("");
+  const { updateText } = useClothConfigStore();
 
   useEffect(() => {
     if (text) {
-      console.log("Text on cloth ", text);
+      updateText(text);
     }
-  }, [text]);
+  }, [text, updateText]);
 
   return (
     <div className="w-full h-full flex items-center justify-center gap-4">
