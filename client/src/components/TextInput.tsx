@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 
-const TextInput = () => {
+const TextInput: React.FC = () => {
   const [text, setText] = useState<string>("");
   const { updateText } = useClothConfigStore();
 
   useEffect(() => {
     if (text) {
       updateText(text);
+    } else {
+      updateText("");
     }
   }, [text, updateText]);
 

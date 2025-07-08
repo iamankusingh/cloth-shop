@@ -9,7 +9,8 @@ import { useMemo } from "react";
 
 const TShirt: React.FC = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
-  const { hexColor, logoPath, text } = useClothConfigStore();
+  const { hexColor, logoPath, imageSize, positionY, text } =
+    useClothConfigStore();
 
   // set color
   useFrame((_, delta) =>
@@ -38,7 +39,7 @@ const TShirt: React.FC = () => {
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#fff";
     ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-    
+
     const texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
 
@@ -56,9 +57,9 @@ const TShirt: React.FC = () => {
       >
         {logoPath && (
           <Decal
-            position={[0, 0.04, 0.15]}
+            position={[0, positionY / 100, 0.15]}
             rotation={[0, 0, 0]}
-            scale={0.15}
+            scale={imageSize / 100}
             map={new THREE.TextureLoader().load(logoPath)}
           />
         )}

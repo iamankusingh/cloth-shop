@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 
-const ImageUpload = () => {
+const ImageUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
-  const { updateLogoPath } = useClothConfigStore();
+  const { updateLogoPath, updateImageSize, updatePositionY } =
+    useClothConfigStore();
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -14,7 +15,7 @@ const ImageUpload = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="w-full h-full flex flex-col items-center justify-center gap-4 ">
       <input
         id="file-upload"
         type="file"
@@ -41,6 +42,40 @@ const ImageUpload = () => {
         >
           Remove image
         </button>
+      ) : (
+        ""
+      )}
+
+      {file ? (
+        <div className="w-[80%]">
+          <label htmlFor="img-size">Image Size : </label>
+
+          <input
+            type="range"
+            name="img-size"
+            id="img-size"
+            min={5}
+            max={50}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              updateImageSize(parseFloat(e.target.value))
+            }
+          />
+
+          <label htmlFor="positionY">Position Y : </label>
+
+          <input
+            type="range"
+            name="positionY"
+            id="positionY"
+            min={-25}
+            max={25}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              updatePositionY(parseFloat(e.target.value))
+            }
+          />
+        </div>
       ) : (
         ""
       )}

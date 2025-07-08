@@ -7,6 +7,10 @@ interface ClothConfigState {
   updateLogoPath: (path: string) => void;
   text: string;
   updateText: (path: string) => void;
+  imageSize: number;
+  updateImageSize: (size: number) => void;
+  positionY: number;
+  updatePositionY: (positionY: number) => void;
 }
 
 const useClothConfigStore = create<ClothConfigState>((set) => ({
@@ -18,6 +22,12 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
 
   text: "",
   updateText: (newText) => set(() => ({ text: newText })),
+
+  imageSize: 15,
+  updateImageSize: (size) => set(() => ({ imageSize: size })),
+
+  positionY: 0,
+  updatePositionY: (positionY) => set(() => ({ positionY })),
 }));
 
 export default useClothConfigStore;
