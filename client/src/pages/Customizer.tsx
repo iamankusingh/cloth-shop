@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import PageTitle from "../components/PageTitle";
 import ImageUpload from "../components/ImageUpload";
 import TextInput from "../components/TextInput";
+import DesignUpload from "../components/DesignUpload";
 
 const Customizer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("color");
@@ -56,7 +57,7 @@ const Customizer: React.FC = () => {
             {activeTab === "color" ? <ColorPicker /> : ""}
             {activeTab === "logo" ? <ImageUpload /> : ""}
             {activeTab === "text" ? <TextInput /> : ""}
-            {activeTab === "design" ? "design" : ""}
+            {activeTab === "design" ? <DesignUpload /> : ""}
           </div>
         </section>
       </main>

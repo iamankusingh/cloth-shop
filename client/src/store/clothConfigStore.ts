@@ -13,6 +13,12 @@ interface ClothConfigState {
   updateImageSize: (size: number) => void;
   positionY: number;
   updatePositionY: (positionY: number) => void;
+  designImg: string;
+  updateDesignImg: (img: string) => void;
+  designImgPath: string;
+  updateDesignImgPath: (path: string) => void;
+  designScale: number;
+  updateDesignScale: (scale: number) => void;
 }
 
 const useClothConfigStore = create<ClothConfigState>((set) => ({
@@ -33,6 +39,15 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
 
   positionY: 0,
   updatePositionY: (positionY) => set(() => ({ positionY })),
+
+  designImg: "",
+  updateDesignImg: (img) => set(() => ({ designImg: img })),
+
+  designImgPath: "",
+  updateDesignImgPath: (path) => set(() => ({ designImgPath: path })),
+
+  designScale: 0,
+  updateDesignScale: (scale) => set(() => ({ designScale: scale })),
 }));
 
 export default useClothConfigStore;

@@ -9,8 +9,15 @@ import { useMemo } from "react";
 
 const TShirt: React.FC = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
-  const { hexColor, logoPath, imageSize, positionY, clothText } =
-    useClothConfigStore();
+  const {
+    hexColor,
+    logoPath,
+    imageSize,
+    positionY,
+    clothText,
+    designImgPath,
+    designScale,
+  } = useClothConfigStore();
 
   // set color
   useFrame((_, delta) =>
@@ -71,7 +78,15 @@ const TShirt: React.FC = () => {
             scale={[0.25, 0.08, 0.25]} // Adjust scale for text aspect ratio
             map={textTexture}
             depthTest={true}
-            // depthWrite={true}
+          />
+        )}
+
+        {designImgPath && (
+          <Decal
+            position={[0, 0, 0]}
+            rotation={[0, 0, 0]}
+            scale={designScale / 100}
+            map={new THREE.TextureLoader().load(designImgPath)}
           />
         )}
       </mesh>
