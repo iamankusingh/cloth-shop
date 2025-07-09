@@ -3,10 +3,12 @@ import { create } from "zustand";
 interface ClothConfigState {
   hexColor: string;
   updateColor: (color: string) => void;
+  logoImg: string;
+  updateLogoImg: (img: string) => void;
   logoPath: string;
   updateLogoPath: (path: string) => void;
-  text: string;
-  updateText: (path: string) => void;
+  clothText: string;
+  updateClothText: (path: string) => void;
   imageSize: number;
   updateImageSize: (size: number) => void;
   positionY: number;
@@ -17,11 +19,14 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   hexColor: "#24D6A6",
   updateColor: (color) => set(() => ({ hexColor: color })),
 
+  logoImg: "",
+  updateLogoImg: (img) => set(() => ({ logoImg: img })),
+
   logoPath: "",
   updateLogoPath: (path) => set(() => ({ logoPath: path })),
 
-  text: "",
-  updateText: (newText) => set(() => ({ text: newText })),
+  clothText: "",
+  updateClothText: (newText) => set(() => ({ clothText: newText })),
 
   imageSize: 15,
   updateImageSize: (size) => set(() => ({ imageSize: size })),

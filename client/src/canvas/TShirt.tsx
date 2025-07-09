@@ -9,7 +9,7 @@ import { useMemo } from "react";
 
 const TShirt: React.FC = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
-  const { hexColor, logoPath, imageSize, positionY, text } =
+  const { hexColor, logoPath, imageSize, positionY, clothText } =
     useClothConfigStore();
 
   // set color
@@ -24,7 +24,7 @@ const TShirt: React.FC = () => {
 
   // Create a texture from text using canvas
   const textTexture = useMemo(() => {
-    if (!text) return null;
+    if (!clothText) return null;
 
     const canvas = document.createElement("canvas");
     canvas.width = 512;
@@ -38,13 +38,13 @@ const TShirt: React.FC = () => {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#fff";
-    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(clothText, canvas.width / 2, canvas.height / 2);
 
     const texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
 
     return texture;
-  }, [text]);
+  }, [clothText]);
 
   return (
     <>
@@ -64,7 +64,7 @@ const TShirt: React.FC = () => {
           />
         )}
 
-        {text && textTexture && (
+        {clothText && textTexture && (
           <Decal
             position={[0, 0.12, 0.15]} // Adjust position for best fit
             rotation={[0, 0, 0]}

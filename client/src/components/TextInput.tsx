@@ -3,15 +3,16 @@ import useClothConfigStore from "../store/clothConfigStore";
 
 const TextInput: React.FC = () => {
   const [text, setText] = useState<string>("");
-  const { updateText } = useClothConfigStore();
+  const { clothText, updateClothText } = useClothConfigStore();
 
   useEffect(() => {
     if (text) {
-      updateText(text);
+      updateClothText(text);
     } else {
-      updateText("");
+      updateClothText("");
+      setText(clothText);
     }
-  }, [text, updateText]);
+  }, [text, clothText, updateClothText]);
 
   return (
     <div className="w-full h-full flex items-center justify-center gap-4">
@@ -27,7 +28,10 @@ const TextInput: React.FC = () => {
 
       <button
         className="p-2 inline-block bg-blue-500 rounded-lg"
-        onClick={() => setText("")}
+        onClick={() => {
+          setText("");
+          updateClothText("");
+        }}
       >
         Clear
       </button>
