@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 
 const DesignUpload: React.FC = () => {
   const [uploadedFile, setUploadedFile] = useState<string>("");
   const { designImg, updateDesignImg, updateDesignImgPath, updateDesignScale } =
     useClothConfigStore();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -24,6 +26,12 @@ const DesignUpload: React.FC = () => {
     updateDesignScale(50);
   }, [uploadedFile, designImg, updateDesignScale]);
 
+  const handleReset = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-4 ">
       <input
@@ -31,6 +39,7 @@ const DesignUpload: React.FC = () => {
         type="file"
         accept="image/*"
         className="hidden"
+        ref={fileInputRef}
         onChange={handleImageUpload}
       />
 
@@ -42,7 +51,7 @@ const DesignUpload: React.FC = () => {
       </label>
 
       {uploadedFile ? (
-        <div className="w-[80%]">
+        <div className="w-[80%] flex flex-col justify-center items-center gap-4">
           <p className="">{!uploadedFile ? "" : uploadedFile}</p>
           <button
             className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
@@ -50,6 +59,7 @@ const DesignUpload: React.FC = () => {
               setUploadedFile("");
               updateDesignImg("");
               updateDesignImgPath("");
+              handleReset();
             }}
           >
             Remove image
