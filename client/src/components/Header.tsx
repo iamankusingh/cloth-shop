@@ -16,8 +16,11 @@ const Header: React.FC = () => {
 
       <div>
         <SignedOut>
-          <SignInButton />
+          <div className="button">
+            <SignInButton />
+          </div>
         </SignedOut>
+        
         <SignedIn>
           <UserButton />
         </SignedIn>
