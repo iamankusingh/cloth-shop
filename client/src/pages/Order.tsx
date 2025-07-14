@@ -25,31 +25,54 @@ const Order: React.FC = () => {
 
         <SignedIn>
           {/* <UserButton /> */}
-          <section className="lg:pt-16 p-2 lg:w-[50vw] border-2 border-blue-600 rounded-lg text-center">
+          <section className="lg:pt-16 p-2 lg:w-[50vw] rounded-lg text-center">
             <h3 className="text-2xl">Order your Personalized cloth</h3>
 
-            <form action="#" className="flex flex-col gap-1">
-              <p>Enter your address</p>
+            <form
+              action="#"
+              className="p-2 flex flex-col items-start gap-2 bg-gray-800 rounded-2xl text-xl"
+            >
+              <p className="py-2 text-2xl">Enter your address</p>
 
               <label htmlFor="name">Full name: </label>
-              <input type="text" id="name" name="name" />
+              <input type="text" id="name" name="name" className="input" />
 
               <label htmlFor="houseNo">House No: </label>
-              <input type="text" id="houseNo" name="houseNo" />
+              <input
+                type="text"
+                id="houseNo"
+                name="houseNo"
+                className="input"
+              />
 
               <label htmlFor="locality">Locality: </label>
-              <input type="text" id="locality" name="locality" />
+              <input
+                type="text"
+                id="locality"
+                name="locality"
+                className="input"
+              />
 
               <label htmlFor="city">City: </label>
-              <input type="text" id="city" name="city" />
+              <input type="text" id="city" name="city" className="input" />
 
               <label htmlFor="pincode">Pincode: </label>
-              <input type="number" id="pincode" name="pincode" />
+              <input
+                type="number"
+                id="pincode"
+                name="pincode"
+                className="input"
+              />
 
               <label htmlFor="district">District: </label>
-              <input type="text" id="district" name="district" />
+              <input
+                type="text"
+                id="district"
+                name="district"
+                className="input"
+              />
 
-              <input type="submit" value="Save" />
+              <input type="submit" value="Save" className="button" />
             </form>
           </section>
         </SignedIn>
