@@ -1,25 +1,55 @@
 import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 import PageTitle from "../components/PageTitle";
 import { useEffect, useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 
 interface formDataInterface {
   uid: string;
   fullName: string;
+  houseNo: string;
+  locality: string;
+  city: string;
+  pincode: number;
+  district: string;
+  phoneNo: number;
+}
+
+interface createUserResponse {
+  success: boolean;
+  message: string;
+  data: {
+    user: object;
+  };
 }
 
 const Order: React.FC = () => {
   // variables to store form data
   const [uid, setUid] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
+  const [houseNo, setHouseNo] = useState<string>("");
+  const [locality, setLocality] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [pincode, setPincode] = useState<number>(0);
+  const [district, setDistrict] = useState<string>("");
+  const [phoneNo, setPhoneNo] = useState<number>(0);
+
+  // userId from clerk
+  const { userId } = useAuth();
 
   useEffect(() => {
-    setUid("anku1109");
-  }, []);
+    setUid(userId || "");
+  }, [userId]);
 
   // form data object
   const formData: formDataInterface = {
     uid: uid,
     fullName: fullName,
+    houseNo: houseNo,
+    locality: locality,
+    city: city,
+    pincode: pincode,
+    district: district,
+    phoneNo: phoneNo,
   };
 
   // handle form
@@ -27,10 +57,10 @@ const Order: React.FC = () => {
     e.preventDefault();
 
     console.log(formData);
-    updateUser();
+    handleUser();
   };
 
-  const updateUser = async (): Promise<void> => {
+  const handleUser = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
         "http://localhost:3000/api/v1/user",
@@ -43,13 +73,13 @@ const Order: React.FC = () => {
         }
       );
       if (response.ok) {
-        const result = await response.json();
-        console.log("User updated successfullt", result);
-        alert("User updated successfully");
+        const result: createUserResponse = await response.json();
+        console.log("Done...", result);
+        alert(result.message);
       }
     } catch (error) {
       console.error("Something went wrong", error);
-      alert("Failed to update user");
+      alert("Something went wrong");
     }
   };
 
@@ -92,6 +122,7 @@ const Order: React.FC = () => {
                 className="hidden"
                 value={uid}
               />
+
               <div className="inputBox">
                 <label htmlFor="name">Full name</label>
                 <input
@@ -111,7 +142,10 @@ const Order: React.FC = () => {
                   type="text"
                   id="houseNo"
                   name="houseNo"
+                  required
                   className="input"
+                  value={houseNo}
+                  onChange={(e) => setHouseNo(e.target.value)}
                 />
               </div>
 
@@ -121,13 +155,24 @@ const Order: React.FC = () => {
                   type="text"
                   id="locality"
                   name="locality"
+                  required
                   className="input"
+                  value={locality}
+                  onChange={(e) => setLocality(e.target.value)}
                 />
               </div>
 
               <div className="inputBox">
                 <label htmlFor="city">City</label>
-                <input type="text" id="city" name="city" className="input" />
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  required
+                  className="input"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
               </div>
 
               <div className="inputBox">
@@ -136,9 +181,12 @@ const Order: React.FC = () => {
                   type="number"
                   id="pincode"
                   name="pincode"
+                  required
                   minLength={6}
                   maxLength={6}
                   className="input"
+                  value={pincode}
+                  onChange={(e) => setPincode(parseInt(e.target.value))}
                 />
               </div>
 
@@ -148,7 +196,10 @@ const Order: React.FC = () => {
                   type="text"
                   id="district"
                   name="district"
+                  required
                   className="input"
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
                 />
               </div>
 
@@ -158,17 +209,26 @@ const Order: React.FC = () => {
                   type="number"
                   id="phoneNo"
                   name="phoneNo"
+                  required
                   minLength={10}
                   maxLength={12}
                   className="input"
+                  value={phoneNo}
+                  onChange={(e) => setPhoneNo(parseInt(e.target.value))}
                 />
               </div>
 
               <div className="my-auto text-center">
                 <input
+                  type="reset"
+                  value="Clear all"
+                  className="h-fit w-fit mx-2 button"
+                />
+
+                <input
                   type="submit"
                   value="Save"
-                  className="h-fit w-fit button"
+                  className="h-fit w-fit mx-2 button"
                 />
               </div>
             </form>

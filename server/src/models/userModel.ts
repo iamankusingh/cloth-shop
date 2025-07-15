@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 interface userSchemaInterface {
-  userID: string;
+  uid: string;
   fullName: string;
   email: string;
   houseNo: string;
@@ -14,12 +14,12 @@ interface userSchemaInterface {
 
 const userSchema = new mongoose.Schema(
   {
-    userID: {
+    uid: {
       type: String,
       required: [true, "User ID is required"],
       unique: true,
     },
-    fullname: {
+    fullName: {
       type: String,
       required: [true, "User name is required"],
       trim: true,
@@ -68,6 +68,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const UserModel = mongoose.model<userSchemaInterface>("User", userSchema);
+const UserModel = mongoose.model<userSchemaInterface>("ClothUsers", userSchema);
 
 export default UserModel;
