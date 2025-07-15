@@ -59,6 +59,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: [true, "District is required"],
     },
+    phoneNo: {
+      type: Number,
+      trim: true,
+      required: [true, "Pincode is required"],
+    },
   },
   { timestamps: true }
 );

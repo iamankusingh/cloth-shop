@@ -34,3 +34,7 @@ body {
 .input {
   @apply p-2 bg-gray-700 rounded-lg active:border-0;
 }
+
+.inputBox {
+  @apply flex flex-col items-start;
+}
