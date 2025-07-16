@@ -4,8 +4,7 @@ import UserModel from "../models/userModel";
 
 export const handleUser = async (req: Request, res: Response) => {
   try {
-    // const { uid } = req.body;
-    console.log(req.body);
+    console.log("Form data from frontend : ", req.body);
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -25,6 +24,7 @@ export const handleUser = async (req: Request, res: Response) => {
 
       // create user if doesn't exists else just modify
       const existingUser = await UserModel.findOne({ uid });
+
       if (!existingUser) {
         console.log("User doesn't exists, creating...");
 
@@ -49,24 +49,48 @@ export const handleUser = async (req: Request, res: Response) => {
         session.endSession();
 
         // api status code and response
-        res.status(201).json({
-          success: true,
-          message: "User created",
-          data: {
-            user: newUser[0],
-          },
-        });
+        if (newUser) {
+          res.status(201).json({
+            success: true,
+            message: "User created",
+          });
+        } else {
+          res.status(400).json({
+            success: false,
+            message: "Failed to create user",
+          });
+        }
       } else {
         // if exists then just update
         console.log("User already exists, updating...");
 
         // update user
+        const updateUser = await UserModel.findOneAndUpdate(
+          { uid: uid },
+          {
+            uid,
+            fullName,
+            houseNo,
+            locality,
+            city,
+            pincode,
+            district,
+            phoneNo,
+          }
+        );
 
         // api status code and response
-        res.status(201).json({
-          success: true,
-          message: "User updated",
-        });
+        if (updateUser) {
+          res.status(201).json({
+            success: true,
+            message: "User updated",
+          });
+        } else {
+          res.status(400).json({
+            success: false,
+            message: "Failed to update user",
+          });
+        }
       }
     } catch (error) {
       await session.abortTransaction();

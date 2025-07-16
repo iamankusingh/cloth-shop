@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
+import { SignInButton } from "@clerk/clerk-react";
 import PageTitle from "../components/PageTitle";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
@@ -14,12 +14,9 @@ interface formDataInterface {
   phoneNo: number;
 }
 
-interface createUserResponse {
+interface handleUserResponse {
   success: boolean;
   message: string;
-  data: {
-    user: object;
-  };
 }
 
 const Order: React.FC = () => {
@@ -34,7 +31,7 @@ const Order: React.FC = () => {
   const [phoneNo, setPhoneNo] = useState<number>(0);
 
   // userId from clerk
-  const { userId } = useAuth();
+  const { isLoaded, isSignedIn, userId } = useAuth();
 
   useEffect(() => {
     setUid(userId || "");
@@ -73,7 +70,7 @@ const Order: React.FC = () => {
         }
       );
       if (response.ok) {
-        const result: createUserResponse = await response.json();
+        const result: handleUserResponse = await response.json();
         console.log("Done...", result);
         alert(result.message);
       }
@@ -88,23 +85,9 @@ const Order: React.FC = () => {
       <PageTitle title="Cloth shop - Order cloth" />
 
       <main>
-        <SignedOut>
-          <section className="lg:h-screen lg:w-[50vw] lg:pt-16 p-2 flex flex-col items-center justify-center gap-6">
-            <h3 className="text-2xl">Please Sign in first to order.</h3>
+        {!isLoaded ? <p>Loading...</p> : null}
 
-            <img
-              src="/hello-user.gif"
-              alt="hello user"
-              className="rounded-full"
-            />
-
-            <div className="button">
-              <SignInButton />
-            </div>
-          </section>
-        </SignedOut>
-
-        <SignedIn>
+        {isSignedIn ? (
           <section className="lg:pt-16 p-3 lg:w-[50vw] rounded-lg">
             <h3 className="text-2xl">Order your Personalized cloth</h3>
 
@@ -233,7 +216,21 @@ const Order: React.FC = () => {
               </div>
             </form>
           </section>
-        </SignedIn>
+        ) : (
+          <section className="lg:h-screen lg:w-[50vw] lg:pt-16 p-2 flex flex-col items-center justify-center gap-6">
+            <h3 className="text-2xl">Please Sign in first to order.</h3>
+
+            <img
+              src="/hello-user.gif"
+              alt="hello user"
+              className="rounded-full"
+            />
+
+            <div className="button">
+              <SignInButton />
+            </div>
+          </section>
+        )}
       </main>
     </>
   );
