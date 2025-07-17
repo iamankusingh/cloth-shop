@@ -2,6 +2,31 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import UserModel from "../models/userModel";
 
+export const fetchUserData = async (req: Request, res: Response) => {
+  try {
+    const { uid } = req.body;
+
+    const userData = await UserModel.findOne({ uid });
+
+    if (userData) {
+      res.status(200).json({
+        success: true,
+        message: "Fetch user data",
+        data: userData,
+      });
+      console.log("Fetched user data", userData);
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+      console.log("User not found");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const handleUser = async (req: Request, res: Response) => {
   try {
     console.log("Form data from frontend : ", req.body);

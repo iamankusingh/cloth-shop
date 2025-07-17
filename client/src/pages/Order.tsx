@@ -19,6 +19,21 @@ interface handleUserResponse {
   message: string;
 }
 
+interface UserDataResponse {
+  success: boolean;
+  message: string;
+  data: {
+    uid: string;
+    fullName: string;
+    houseNo: string;
+    locality: string;
+    city: string;
+    pincode: number;
+    district: string;
+    phoneNo: number;
+  };
+}
+
 const Order: React.FC = () => {
   // variables to store form data
   const [uid, setUid] = useState<string>("");
@@ -33,10 +48,6 @@ const Order: React.FC = () => {
   // userId from clerk
   const { isLoaded, isSignedIn, userId } = useAuth();
 
-  useEffect(() => {
-    setUid(userId || "");
-  }, [userId]);
-
   // form data object
   const formData: formDataInterface = {
     uid: uid,
@@ -49,6 +60,48 @@ const Order: React.FC = () => {
     phoneNo: phoneNo,
   };
 
+  useEffect(() => {
+    setUid(userId || "");
+  }, [setUid, userId]);
+
+  // ftech user data (everytime)
+  const fetchUserData = async (): Promise<void> => {
+    try {
+      const response: Response = await fetch(
+        "http://localhost:3000/api/v1/user/data",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({ uid }),
+        }
+      );
+
+      if (response.ok) {
+        const result: UserDataResponse = await response.json();
+        console.log(result.message);
+        alert(result.message);
+
+        setFullName(result.data.fullName);
+        setHouseNo(result.data.houseNo);
+        setLocality(result.data.locality);
+        setCity(result.data.city);
+        setPincode(result.data.pincode);
+        setDistrict(result.data.district);
+        setPhoneNo(result.data.phoneNo);
+      }
+    } catch (error) {
+      console.error("Unable to fetch user data by default", error);
+      alert("Unable to fetch user data");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid]);
+
   // handle form
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,6 +110,7 @@ const Order: React.FC = () => {
     handleUser();
   };
 
+  // create or update user
   const handleUser = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
@@ -69,9 +123,10 @@ const Order: React.FC = () => {
           body: JSON.stringify(formData),
         }
       );
+
       if (response.ok) {
         const result: handleUserResponse = await response.json();
-        console.log("Done...", result);
+        console.log(result.message);
         alert(result.message);
       }
     } catch (error) {
