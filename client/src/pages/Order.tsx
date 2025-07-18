@@ -2,6 +2,7 @@ import { SignInButton } from "@clerk/clerk-react";
 import PageTitle from "../components/PageTitle";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
+import useClothConfigStore from "../store/clothConfigStore";
 
 interface formDataInterface {
   uid: string;
@@ -60,6 +61,52 @@ const Order: React.FC = () => {
     phoneNo: phoneNo,
   };
 
+  // cloth configuration
+  const {
+    hexColor,
+    logoPath,
+    imageSize,
+    positionY,
+    clothText,
+    designImgPath,
+    designScale,
+  } = useClothConfigStore();
+
+  // set cloth configuration in databaase
+  const updateClothConfig = async (): Promise<void> => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/v1/user/cloth-config",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            uid,
+            hexColor,
+            logoPath,
+            imageSize,
+            positionY,
+            clothText,
+            designImgPath,
+            designScale,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        // console.log(result.message);
+        // alert(result.message);
+        console.log(result.message);
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     setUid(userId || "");
   }, [setUid, userId]);
@@ -98,7 +145,10 @@ const Order: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchUserData();
+    if (isSignedIn) {
+      fetchUserData();
+      updateClothConfig();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
