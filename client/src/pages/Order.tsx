@@ -4,23 +4,12 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import useClothConfigStore from "../store/clothConfigStore";
 
-interface formDataInterface {
-  uid: string;
-  fullName: string;
-  houseNo: string;
-  locality: string;
-  city: string;
-  pincode: number;
-  district: string;
-  phoneNo: number;
-}
-
-interface handleUserResponse {
+interface updateApiResponse {
   success: boolean;
   message: string;
 }
 
-interface UserDataResponse {
+interface fetchUserDataResponse {
   success: boolean;
   message: string;
   data: {
@@ -35,9 +24,10 @@ interface UserDataResponse {
   };
 }
 
+// interface fetchClothConfigResponse {}
+
 const Order: React.FC = () => {
   // variables to store form data
-  const [uid, setUid] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [houseNo, setHouseNo] = useState<string>("");
   const [locality, setLocality] = useState<string>("");
@@ -46,22 +36,17 @@ const Order: React.FC = () => {
   const [district, setDistrict] = useState<string>("");
   const [phoneNo, setPhoneNo] = useState<number>(0);
 
-  // userId from clerk
+  // from clerk
   const { isLoaded, isSignedIn, userId } = useAuth();
 
-  // form data object
-  const formData: formDataInterface = {
-    uid: uid,
-    fullName: fullName,
-    houseNo: houseNo,
-    locality: locality,
-    city: city,
-    pincode: pincode,
-    district: district,
-    phoneNo: phoneNo,
-  };
+  // to store userId
+  const [uid, setUid] = useState<string>("");
 
-  // cloth configuration
+  useEffect(() => {
+    setUid(userId || "");
+  }, [setUid, userId]);
+
+  // cloth configuration from zustand
   const {
     hexColor,
     logoPath,
@@ -72,85 +57,21 @@ const Order: React.FC = () => {
     designScale,
   } = useClothConfigStore();
 
-  // set cloth configuration in databaase
-  const updateClothConfig = async (): Promise<void> => {
-    try {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/user/cloth-config",
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "Application/json",
-          },
-          body: JSON.stringify({
-            uid,
-            hexColor,
-            logoPath,
-            imageSize,
-            positionY,
-            clothText,
-            designImgPath,
-            designScale,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        // console.log(result.message);
-        // alert(result.message);
-        console.log(result.message);
-        alert(result.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchClothConfig = async (): Promise<void> => {
-    try {
-      const response: Response = await fetch(
-        "http://localhost:3000/api/v1/user/fetch-cloth-config",
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "Application/json",
-          },
-          body: JSON.stringify({ uid }),
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log(result);
-        alert(result.message);
-      }
-    } catch (error) {
-      console.error("Unable to fetch cloth config data by default", error);
-      alert("Unable to fetch cloth config data");
-    }
-  };
-
-  useEffect(() => {
-    setUid(userId || "");
-  }, [setUid, userId]);
-
-  // ftech user data (everytime)
+  // ftech user data from database (everytime)
   const fetchUserData = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        "http://localhost:3000/api/v1/user/data",
+        `http://localhost:3000/api/v1/user?uid=${uid}`,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-type": "Application/json",
           },
-          body: JSON.stringify({ uid }),
         }
       );
 
       if (response.ok) {
-        const result: UserDataResponse = await response.json();
+        const result: fetchUserDataResponse = await response.json();
         console.log("fetch user data by default", result.message);
         alert(result.message);
 
@@ -168,39 +89,30 @@ const Order: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (isSignedIn) {
-      fetchUserData();
-      updateClothConfig();
-      fetchClothConfig();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uid]);
-
-  // handle form
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log(formData);
-    handleUser();
-  };
-
-  // create or update user
+  // create or update
   const handleUser = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        "http://localhost:3000/api/v1/user",
+        `http://localhost:3000/api/v1/user?uid=${uid}`,
         {
           method: "POST",
           headers: {
             "Content-type": "Application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({
+            fullName,
+            houseNo,
+            locality,
+            city,
+            pincode,
+            district,
+            phoneNo,
+          }),
         }
       );
 
       if (response.ok) {
-        const result: handleUserResponse = await response.json();
+        const result: updateApiResponse = await response.json();
         console.log(result.message);
         alert(result.message);
       }
@@ -209,6 +121,54 @@ const Order: React.FC = () => {
       alert("Something went wrong");
     }
   };
+
+  // set cloth configuration in databaase
+  const updateClothConfig = async (): Promise<void> => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            hexColor,
+            logoPath,
+            imageSize,
+            positionY,
+            clothText,
+            designImgPath,
+            designScale,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const result: updateApiResponse = await response.json();
+        console.log(result.message);
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // handle form and call handleUser
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(fullName, houseNo, locality, city, pincode, district, phoneNo);
+    handleUser();
+  };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      fetchUserData();
+      updateClothConfig();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid, isSignedIn]);
 
   return (
     <>
@@ -227,15 +187,6 @@ const Order: React.FC = () => {
               className="p-4 grid gric-cols-1 md:grid-cols-2 content-start gap-4 bg-gray-800 rounded-xl text-xl"
               onSubmit={handleFormSubmit}
             >
-              <input
-                type="text"
-                name="uid"
-                id="uid"
-                readOnly
-                className="hidden"
-                value={uid}
-              />
-
               <div className="inputBox">
                 <label htmlFor="name">Full name</label>
                 <input
