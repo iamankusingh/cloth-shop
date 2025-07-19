@@ -107,6 +107,30 @@ const Order: React.FC = () => {
     }
   };
 
+  const fetchClothConfig = async (): Promise<void> => {
+    try {
+      const response: Response = await fetch(
+        "http://localhost:3000/api/v1/user/fetch-cloth-config",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({ uid }),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Unable to fetch cloth config data by default", error);
+      alert("Unable to fetch cloth config data");
+    }
+  };
+
   useEffect(() => {
     setUid(userId || "");
   }, [setUid, userId]);
@@ -127,7 +151,7 @@ const Order: React.FC = () => {
 
       if (response.ok) {
         const result: UserDataResponse = await response.json();
-        console.log(result.message);
+        console.log("fetch user data by default", result.message);
         alert(result.message);
 
         setFullName(result.data.fullName);
@@ -148,6 +172,7 @@ const Order: React.FC = () => {
     if (isSignedIn) {
       fetchUserData();
       updateClothConfig();
+      fetchClothConfig();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);

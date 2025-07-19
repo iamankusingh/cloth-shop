@@ -124,6 +124,31 @@ export const handleUser = async (req: Request, res: Response) => {
   }
 };
 
+export const fetchClothConfig = async (req: Request, res: Response) => {
+  try {
+    const { uid } = req.body;
+
+    const clothConfigData = await ClothConfigModel.findOne({ uid });
+
+    if (clothConfigData) {
+      res.status(200).json({
+        success: true,
+        message: "Fetch cloth config data",
+        data: clothConfigData,
+      });
+      console.log("Fetched cloth config data", clothConfigData);
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "cloth config not found",
+      });
+      console.log("cloth config not found");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const clothConfig = async (req: Request, res: Response) => {
   try {
     console.log("cloth config data from client ", req.body);
