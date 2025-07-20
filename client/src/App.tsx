@@ -1,34 +1,27 @@
 // home page (/) route
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LinkButton from "./components/LinkButton";
 import PageTitle from "./components/PageTitle";
-import { useAuth } from "@clerk/clerk-react";
 import useClothConfigStore from "./store/clothConfigStore";
 
 function App() {
+  // uid and updater function form zustand to update store from database
   const {
+    uid,
     updateColor,
+    updateLogoImg,
     updateLogoPath,
-    updateImageSize,
-    updatePositionY,
+    updateLogoImageSize,
+    updateLogoPositionY,
     updateClothText,
+    updateDesignImg,
     updateDesignImgPath,
-    updateDesignScale,
+    updateDesignImageScale,
   } = useClothConfigStore();
 
-  // from clerk
-  const { isSignedIn, userId } = useAuth();
-
-  // to store userId
-  const [uid, setUid] = useState<string>("");
-
-  useEffect(() => {
-    setUid(userId || "");
-  }, [userId]);
-
-  // fetch cloth configuration (everytime)
+  // fetch cloth configuration if loged in (everytime)
   const fetchClothConfig = async (): Promise<void> => {
-    console.log("Fetching cloth config data for uid", uid);
+    console.log("Fetching cloth config data for uid in homepage", uid);
 
     try {
       const response: Response = await fetch(
@@ -46,13 +39,16 @@ function App() {
         console.log("fetch cloth config data ", result);
         alert(result.message);
 
+        // update zustand store with fetched data
         updateColor(result.data.hexColor);
+        updateLogoImg(result.data.logoImg);
         updateLogoPath(result.data.logoPath);
-        updateImageSize(result.data.imageSize);
-        updatePositionY(result.data.positionY);
+        updateLogoImageSize(result.data.imageSize);
+        updateLogoPositionY(result.data.positionY);
         updateClothText(result.data.clothText);
+        updateDesignImg(result.data.designImg);
         updateDesignImgPath(result.data.designImgPath);
-        updateDesignScale(result.data.designScale);
+        updateDesignImageScale(result.data.designScale);
       }
     } catch (error) {
       console.error("Unable to fetch cloth config data by default", error);
@@ -61,11 +57,11 @@ function App() {
   };
 
   useEffect(() => {
-    if (isSignedIn) {
+    if (uid) {
       fetchClothConfig();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignedIn, uid]);
+  }, [uid]);
 
   return (
     <>

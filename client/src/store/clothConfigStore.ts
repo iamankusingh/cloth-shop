@@ -1,27 +1,32 @@
 import { create } from "zustand";
 
 interface ClothConfigState {
+  uid: string;
+  updateUid: (uid: string) => void;
   hexColor: string;
   updateColor: (color: string) => void;
   logoImg: string;
   updateLogoImg: (img: string) => void;
   logoPath: string;
   updateLogoPath: (path: string) => void;
+  logoSize: number;
+  updateLogoImageSize: (size: number) => void;
+  logoPositionY: number;
+  updateLogoPositionY: (positionY: number) => void;
   clothText: string;
   updateClothText: (path: string) => void;
-  imageSize: number;
-  updateImageSize: (size: number) => void;
-  positionY: number;
-  updatePositionY: (positionY: number) => void;
   designImg: string;
   updateDesignImg: (img: string) => void;
   designImgPath: string;
   updateDesignImgPath: (path: string) => void;
-  designScale: number;
-  updateDesignScale: (scale: number) => void;
+  designImageScale: number;
+  updateDesignImageScale: (scale: number) => void;
 }
 
 const useClothConfigStore = create<ClothConfigState>((set) => ({
+  uid: "",
+  updateUid: (uid) => set(() => ({ uid })),
+
   hexColor: "#24D6A6",
   updateColor: (color) => set(() => ({ hexColor: color })),
 
@@ -31,14 +36,14 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   logoPath: "",
   updateLogoPath: (path) => set(() => ({ logoPath: path })),
 
+  logoSize: 15,
+  updateLogoImageSize: (size) => set(() => ({ logoSize: size })),
+
+  logoPositionY: 0,
+  updateLogoPositionY: (positionY) => set(() => ({ logoPositionY: positionY })),
+
   clothText: "",
   updateClothText: (newText) => set(() => ({ clothText: newText })),
-
-  imageSize: 15,
-  updateImageSize: (size) => set(() => ({ imageSize: size })),
-
-  positionY: 0,
-  updatePositionY: (positionY) => set(() => ({ positionY })),
 
   designImg: "",
   updateDesignImg: (img) => set(() => ({ designImg: img })),
@@ -46,8 +51,8 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   designImgPath: "",
   updateDesignImgPath: (path) => set(() => ({ designImgPath: path })),
 
-  designScale: 0,
-  updateDesignScale: (scale) => set(() => ({ designScale: scale })),
+  designImageScale: 0,
+  updateDesignImageScale: (scale) => set(() => ({ designImageScale: scale })),
 }));
 
 export default useClothConfigStore;

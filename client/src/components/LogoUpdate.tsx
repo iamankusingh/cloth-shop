@@ -6,14 +6,14 @@ interface logoPalletImgInterface {
   [key: string]: string;
 }
 
-const ImageUpload: React.FC = () => {
+const LogoUpdate: React.FC = () => {
   const [file, setFile] = useState<string>("");
   const {
     logoImg,
     updateLogoImg,
     updateLogoPath,
-    updateImageSize,
-    updatePositionY,
+    updateLogoImageSize,
+    updateLogoPositionY,
   } = useClothConfigStore();
 
   const logoPalletImg: logoPalletImgInterface = {
@@ -44,6 +44,11 @@ const ImageUpload: React.FC = () => {
   const handleReset = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+      setFile("");
+      updateLogoPath("");
+      updateLogoImg("");
+      updateLogoImageSize(15);
+      updateLogoPositionY(0);
     }
   };
 
@@ -90,7 +95,7 @@ const ImageUpload: React.FC = () => {
             max={50}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              updateImageSize(parseFloat(e.target.value))
+              updateLogoImageSize(parseFloat(e.target.value))
             }
           />
 
@@ -104,7 +109,7 @@ const ImageUpload: React.FC = () => {
             max={25}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              updatePositionY(parseFloat(e.target.value))
+              updateLogoPositionY(parseFloat(e.target.value))
             }
           />
         </div>
@@ -128,4 +133,4 @@ const ImageUpload: React.FC = () => {
   );
 };
 
-export default ImageUpload;
+export default LogoUpdate;

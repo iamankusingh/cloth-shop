@@ -3,8 +3,12 @@ import useClothConfigStore from "../store/clothConfigStore";
 
 const DesignUpload: React.FC = () => {
   const [uploadedFile, setUploadedFile] = useState<string>("");
-  const { designImg, updateDesignImg, updateDesignImgPath, updateDesignScale } =
-    useClothConfigStore();
+  const {
+    designImg,
+    updateDesignImg,
+    updateDesignImgPath,
+    updateDesignImageScale,
+  } = useClothConfigStore();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,8 +27,8 @@ const DesignUpload: React.FC = () => {
     if (!uploadedFile) {
       setUploadedFile(designImg);
     }
-    updateDesignScale(50);
-  }, [uploadedFile, designImg, updateDesignScale]);
+    updateDesignImageScale(50);
+  }, [uploadedFile, designImg, updateDesignImageScale]);
 
   const handleReset = () => {
     if (fileInputRef.current) {
@@ -76,7 +80,7 @@ const DesignUpload: React.FC = () => {
             max={100}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              updateDesignScale(parseFloat(e.target.value));
+              updateDesignImageScale(parseFloat(e.target.value));
             }}
           />
         </div>

@@ -12,11 +12,11 @@ const TShirt: React.FC = () => {
   const {
     hexColor,
     logoPath,
-    imageSize,
-    positionY,
+    logoSize,
+    logoPositionY,
     clothText,
     designImgPath,
-    designScale,
+    designImageScale,
   } = useClothConfigStore();
 
   // set color
@@ -64,9 +64,9 @@ const TShirt: React.FC = () => {
       >
         {logoPath && (
           <Decal
-            position={[0, positionY / 100, 0.15]}
+            position={[0, logoPositionY / 100, 0.15]}
             rotation={[0, 0, 0]}
-            scale={imageSize / 100}
+            scale={logoSize / 100}
             map={new THREE.TextureLoader().load(logoPath)}
           />
         )}
@@ -85,7 +85,7 @@ const TShirt: React.FC = () => {
           <Decal
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
-            scale={designScale / 100}
+            scale={designImageScale / 100}
             map={new THREE.TextureLoader().load(designImgPath)}
           />
         )}

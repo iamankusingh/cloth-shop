@@ -49,10 +49,12 @@ export const handleClothConfig = async (req: Request, res: Response) => {
     // get cloth config data
     const {
       hexColor,
+      logoImg,
       logoPath,
       imageSize,
       positionY,
       clothText,
+      designImg,
       designImgPath,
       designScale,
     } = req.body;
@@ -69,10 +71,12 @@ export const handleClothConfig = async (req: Request, res: Response) => {
           {
             uid,
             hexColor,
+            logoImg,
             logoPath,
             imageSize,
             positionY,
             clothText,
+            designImg,
             designImgPath,
             designScale,
           },
@@ -104,16 +108,18 @@ export const handleClothConfig = async (req: Request, res: Response) => {
       // if exists then just update
       console.log("Cloth config already exists, updating with uid", uid);
 
-      // update user
+      // update cloth config
       const updateClothConfig = await ClothConfigModel.findOneAndUpdate(
         { uid: uid },
         {
           uid,
           hexColor,
+          logoImg,
           logoPath,
           positionY,
           imageSize,
           clothText,
+          designImg,
           designImgPath,
           designScale,
         }
