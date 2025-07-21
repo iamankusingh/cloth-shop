@@ -15,9 +15,11 @@ const TShirt: React.FC = () => {
     logoSize,
     logoPositionY,
     clothText,
-    designImgPath,
-    designImageScale,
+    designPath,
+    designScale,
   } = useClothConfigStore();
+
+  console.log("latest cloth value", logoPath, designPath);
 
   // set color
   useFrame((_, delta) =>
@@ -62,8 +64,10 @@ const TShirt: React.FC = () => {
         material-roughness={1}
         dispose={null}
       >
+        {/* logo */}
         {logoPath && (
           <Decal
+            // position={[0, 0, 0.15]}
             position={[0, logoPositionY / 100, 0.15]}
             rotation={[0, 0, 0]}
             scale={logoSize / 100}
@@ -71,6 +75,7 @@ const TShirt: React.FC = () => {
           />
         )}
 
+        {/* tetx */}
         {clothText && textTexture && (
           <Decal
             position={[0, 0.12, 0.15]} // Adjust position for best fit
@@ -81,12 +86,13 @@ const TShirt: React.FC = () => {
           />
         )}
 
-        {designImgPath && (
+        {/* dedsign */}
+        {designPath && (
           <Decal
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
-            scale={designImageScale / 100}
-            map={new THREE.TextureLoader().load(designImgPath)}
+            scale={designScale / 100}
+            map={new THREE.TextureLoader().load(designPath)}
           />
         )}
       </mesh>

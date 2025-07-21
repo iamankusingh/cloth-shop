@@ -4,10 +4,11 @@ import useClothConfigStore from "../store/clothConfigStore";
 const DesignUpload: React.FC = () => {
   const [uploadedFile, setUploadedFile] = useState<string>("");
   const {
-    designImg,
-    updateDesignImg,
-    updateDesignImgPath,
-    updateDesignImageScale,
+    design,
+    designScale,
+    updateDesign,
+    updateDesignPath,
+    updateDesignScale,
   } = useClothConfigStore();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -18,17 +19,17 @@ const DesignUpload: React.FC = () => {
       setUploadedFile(imageName);
 
       const url = URL.createObjectURL(e.target.files?.[0]);
-      updateDesignImg(imageName);
-      updateDesignImgPath(url);
+      updateDesign(imageName);
+      updateDesignPath(url);
     }
   };
 
   useEffect(() => {
     if (!uploadedFile) {
-      setUploadedFile(designImg);
+      setUploadedFile(design);
     }
-    updateDesignImageScale(50);
-  }, [uploadedFile, designImg, updateDesignImageScale]);
+    updateDesignScale(50);
+  }, [uploadedFile, design, updateDesignScale]);
 
   const handleReset = () => {
     if (fileInputRef.current) {
@@ -61,8 +62,8 @@ const DesignUpload: React.FC = () => {
             className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
             onClick={() => {
               setUploadedFile("");
-              updateDesignImg("");
-              updateDesignImgPath("");
+              updateDesign("");
+              updateDesignPath("");
               handleReset();
             }}
           >
@@ -75,12 +76,12 @@ const DesignUpload: React.FC = () => {
             type="range"
             name="scale"
             id="scale"
-            value={50}
+            value={designScale}
             min={30}
             max={100}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              updateDesignImageScale(parseFloat(e.target.value));
+              updateDesignScale(parseFloat(e.target.value));
             }}
           />
         </div>

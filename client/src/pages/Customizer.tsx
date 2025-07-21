@@ -8,6 +8,7 @@ import DesignUpload from "../components/DesignUpload";
 import LinkButton from "../components/LinkButton";
 import useClothConfigStore from "../store/clothConfigStore";
 import LogoUpdate from "../components/LogoUpdate";
+import useUserStore from "../store/userStore";
 
 interface updateApiResponse {
   success: boolean;
@@ -16,28 +17,30 @@ interface updateApiResponse {
 
 const Customizer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("color");
+  // user configuration from zustand
+  const { uid } = useUserStore();
 
   // cloth configuration from zustand to update and reset database
   const {
-    uid,
     hexColor,
-    updateColor,
-    logoImg,
-    updateLogoImg,
+    logo,
     logoPath,
-    updateLogoPath,
     logoSize,
-    updateLogoImageSize,
     logoPositionY,
-    updateLogoPositionY,
     clothText,
+    design,
+    designPath,
+    designScale,
+    // updater
+    updateHexColor,
+    updateLogo,
+    updateLogoPath,
+    updateLogoSize,
+    updateLogoPositionY,
     updateClothText,
-    designImg,
-    updateDesignImg,
-    designImgPath,
-    updateDesignImgPath,
-    designImageScale,
-    updateDesignImageScale,
+    updateDesign,
+    updateDesignPath,
+    updateDesignScale,
   } = useClothConfigStore();
 
   // update cloth configuration in databaase
@@ -52,14 +55,14 @@ const Customizer: React.FC = () => {
           },
           body: JSON.stringify({
             hexColor,
-            logoImg,
+            logo,
             logoPath,
             logoSize,
             logoPositionY,
             clothText,
-            designImg,
-            designImgPath,
-            designImageScale,
+            design,
+            designPath,
+            designScale,
           }),
         }
       );
@@ -77,15 +80,15 @@ const Customizer: React.FC = () => {
   // reset cloth configuration to deafult
   const resetClothConfig = async () => {
     // update zustand store with default values
-    updateColor("#24D6A6");
-    updateLogoImg("");
+    updateHexColor("#24D6A6");
+    updateLogo("");
     updateLogoPath("");
-    updateLogoImageSize(15);
+    updateLogoSize(15);
     updateLogoPositionY(0);
     updateClothText("");
-    updateDesignImg("");
-    updateDesignImgPath("");
-    updateDesignImageScale(0);
+    updateDesign("");
+    updateDesignPath("");
+    updateDesignScale(0);
 
     try {
       const response = await fetch(

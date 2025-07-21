@@ -11,7 +11,7 @@ interface ColorPickerProps {
 }
 
 const ColorPicker: React.FC = () => {
-  const { hexColor, updateColor } = useClothConfigStore();
+  const { hexColor, updateHexColor } = useClothConfigStore();
 
   return (
     <SketchPicker
@@ -19,7 +19,7 @@ const ColorPicker: React.FC = () => {
       color={hexColor}
       disableAlpha
       onChange={(color: ColorPickerProps) => {
-        updateColor(color.hex);
+        updateHexColor(color.hex);
       }}
     />
   );

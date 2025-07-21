@@ -1,43 +1,38 @@
 import { create } from "zustand";
 
-interface ClothConfigState {
-  uid: string;
-  updateUid: (uid: string) => void;
+export interface ClothConfigState {
   hexColor: string;
-  updateColor: (color: string) => void;
-  logoImg: string;
-  updateLogoImg: (img: string) => void;
+  updateHexColor: (color: string) => void;
+  logo: string;
+  updateLogo: (img: string) => void;
   logoPath: string;
   updateLogoPath: (path: string) => void;
   logoSize: number;
-  updateLogoImageSize: (size: number) => void;
+  updateLogoSize: (size: number) => void;
   logoPositionY: number;
   updateLogoPositionY: (positionY: number) => void;
   clothText: string;
-  updateClothText: (path: string) => void;
-  designImg: string;
-  updateDesignImg: (img: string) => void;
-  designImgPath: string;
-  updateDesignImgPath: (path: string) => void;
-  designImageScale: number;
-  updateDesignImageScale: (scale: number) => void;
+  updateClothText: (newText: string) => void;
+  design: string;
+  updateDesign: (img: string) => void;
+  designPath: string;
+  updateDesignPath: (path: string) => void;
+  designScale: number;
+  updateDesignScale: (scale: number) => void;
 }
 
 const useClothConfigStore = create<ClothConfigState>((set) => ({
-  uid: "",
-  updateUid: (uid) => set(() => ({ uid })),
-
   hexColor: "#24D6A6",
-  updateColor: (color) => set(() => ({ hexColor: color })),
+  updateHexColor: (color) => set(() => ({ hexColor: color })),
 
-  logoImg: "",
-  updateLogoImg: (img) => set(() => ({ logoImg: img })),
+  logo: "",
+  updateLogo: (img) => set(() => ({ logo: img })),
 
   logoPath: "",
   updateLogoPath: (path) => set(() => ({ logoPath: path })),
 
   logoSize: 15,
-  updateLogoImageSize: (size) => set(() => ({ logoSize: size })),
+  updateLogoSize: (size) => set(() => ({ logoSize: size })),
 
   logoPositionY: 0,
   updateLogoPositionY: (positionY) => set(() => ({ logoPositionY: positionY })),
@@ -45,14 +40,14 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   clothText: "",
   updateClothText: (newText) => set(() => ({ clothText: newText })),
 
-  designImg: "",
-  updateDesignImg: (img) => set(() => ({ designImg: img })),
+  design: "",
+  updateDesign: (img) => set(() => ({ design: img })),
 
-  designImgPath: "",
-  updateDesignImgPath: (path) => set(() => ({ designImgPath: path })),
+  designPath: "",
+  updateDesignPath: (path) => set(() => ({ designPath: path })),
 
-  designImageScale: 0,
-  updateDesignImageScale: (scale) => set(() => ({ designImageScale: scale })),
+  designScale: 50,
+  updateDesignScale: (scale) => set(() => ({ designScale: scale })),
 }));
 
 export default useClothConfigStore;

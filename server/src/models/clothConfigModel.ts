@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 interface clothConfigInterface {
   uid: string;
   hexColor: string;
-  logoImg?: string;
+  logo?: string;
   logoPath?: string;
-  imageSize?: number;
-  positionY?: number;
+  logoSize?: number;
+  logoPositionY?: number;
   clothText?: string;
-  designImg?: string;
-  designImgPath?: string;
+  design?: string;
+  designPath?: string;
   designScale?: number;
 }
 
@@ -23,25 +23,25 @@ const clothConfigSchema = new mongoose.Schema({
     type: String,
     required: [true, "Color is required"],
   },
-  logoImg: {
+  logo: {
     type: String,
   },
   logoPath: {
     type: String,
   },
-  imageSize: {
+  logoSize: {
     type: Number,
   },
-  positionY: {
+  logoPositionY: {
     type: Number,
   },
   clothText: {
     type: String,
   },
-  designImg: {
+  design: {
     type: String,
   },
-  designImgPath: {
+  designPath: {
     type: String,
   },
   designScale: {

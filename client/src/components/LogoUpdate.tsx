@@ -8,11 +8,15 @@ interface logoPalletImgInterface {
 
 const LogoUpdate: React.FC = () => {
   const [file, setFile] = useState<string>("");
+
   const {
-    logoImg,
-    updateLogoImg,
+    logo,
+    // logoPath,
+    updateLogo,
     updateLogoPath,
-    updateLogoImageSize,
+    logoSize,
+    updateLogoSize,
+    logoPositionY,
     updateLogoPositionY,
   } = useClothConfigStore();
 
@@ -31,23 +35,23 @@ const LogoUpdate: React.FC = () => {
 
       const url = URL.createObjectURL(e.target.files?.[0]);
       updateLogoPath(url);
-      updateLogoImg(imageName);
+      updateLogo(imageName);
     }
   };
 
   useEffect(() => {
     if (!file) {
-      setFile(logoImg);
+      setFile(logo);
     }
-  }, [file, logoImg]);
+  }, [file, logo]);
 
   const handleReset = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
       setFile("");
       updateLogoPath("");
-      updateLogoImg("");
-      updateLogoImageSize(15);
+      updateLogo("");
+      updateLogoSize(15);
       updateLogoPositionY(0);
     }
   };
@@ -78,7 +82,7 @@ const LogoUpdate: React.FC = () => {
             onClick={() => {
               updateLogoPath("");
               setFile("");
-              updateLogoImg("");
+              updateLogo("");
               handleReset();
             }}
           >
@@ -93,9 +97,10 @@ const LogoUpdate: React.FC = () => {
             id="img-size"
             min={5}
             max={50}
+            value={logoSize}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              updateLogoImageSize(parseFloat(e.target.value))
+              updateLogoSize(parseFloat(e.target.value))
             }
           />
 
@@ -107,6 +112,7 @@ const LogoUpdate: React.FC = () => {
             id="positionY"
             min={-25}
             max={25}
+            value={logoPositionY}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               updateLogoPositionY(parseFloat(e.target.value))
@@ -122,8 +128,8 @@ const LogoUpdate: React.FC = () => {
               key={key}
               className="h-20 w-20 p-2 bg-red-300 rounded-lg"
               onClick={() => {
+                updateLogo(key);
                 updateLogoPath(value);
-                updateLogoImg(key);
               }}
             />
           ))}

@@ -1,31 +1,35 @@
 // home page (/) route
-import { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-react";
 import LinkButton from "./components/LinkButton";
 import PageTitle from "./components/PageTitle";
+import { useEffect } from "react";
+import useUserStore from "./store/userStore";
 import useClothConfigStore from "./store/clothConfigStore";
 
 function App() {
-  // uid and updater function form zustand to update store from database
+  // from clerk
+  const { isSignedIn, userId } = useAuth();
+
+  // user zustand store
+  const { updateIsSignedIn, updateUid } = useUserStore();
+
+  // cloth config zustand store
   const {
-    uid,
-    updateColor,
-    updateLogoImg,
+    updateHexColor,
+    updateLogo,
     updateLogoPath,
-    updateLogoImageSize,
+    updateLogoSize,
     updateLogoPositionY,
     updateClothText,
-    updateDesignImg,
-    updateDesignImgPath,
-    updateDesignImageScale,
+    updateDesign,
+    updateDesignPath,
+    updateDesignScale,
   } = useClothConfigStore();
 
-  // fetch cloth configuration if loged in (everytime)
-  const fetchClothConfig = async (): Promise<void> => {
-    console.log("Fetching cloth config data for uid in homepage", uid);
-
+  const fetchClothConfig = async () => {
     try {
       const response: Response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
+        `http://localhost:3000/api/v1/cloth-config?uid=${userId}`,
         {
           method: "GET",
           headers: {
@@ -40,15 +44,15 @@ function App() {
         alert(result.message);
 
         // update zustand store with fetched data
-        updateColor(result.data.hexColor);
-        updateLogoImg(result.data.logoImg);
+        updateHexColor(result.data.hexColor);
+        updateLogo(result.data.logoImg);
         updateLogoPath(result.data.logoPath);
-        updateLogoImageSize(result.data.imageSize);
-        updateLogoPositionY(result.data.positionY);
+        updateLogoSize(result.data.logoImageSize);
+        updateLogoPositionY(result.data.logoPositionY);
         updateClothText(result.data.clothText);
-        updateDesignImg(result.data.designImg);
-        updateDesignImgPath(result.data.designImgPath);
-        updateDesignImageScale(result.data.designScale);
+        updateDesign(result.data.designImg);
+        updateDesignPath(result.data.designImgPath);
+        updateDesignScale(result.data.designScale);
       }
     } catch (error) {
       console.error("Unable to fetch cloth config data by default", error);
@@ -57,11 +61,13 @@ function App() {
   };
 
   useEffect(() => {
-    if (uid) {
+    if (isSignedIn) {
+      updateIsSignedIn(true);
+      updateUid(userId || "");
       fetchClothConfig();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uid]);
+  }, [isSignedIn]);
 
   return (
     <>
