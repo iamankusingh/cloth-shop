@@ -46,7 +46,7 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   designPath: "",
   updateDesignPath: (path) => set(() => ({ designPath: path })),
 
-  designScale: 50,
+  designScale: 100,
   updateDesignScale: (scale) => set(() => ({ designScale: scale })),
 }));
 

@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 
 const DesignUpload: React.FC = () => {
-  const [uploadedFile, setUploadedFile] = useState<string>("");
   const {
     design,
     designScale,
@@ -16,20 +15,12 @@ const DesignUpload: React.FC = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const imageName = e.target.files?.[0].name;
-      setUploadedFile(imageName);
 
       const url = URL.createObjectURL(e.target.files?.[0]);
       updateDesign(imageName);
       updateDesignPath(url);
     }
   };
-
-  useEffect(() => {
-    if (!uploadedFile) {
-      setUploadedFile(design);
-    }
-    updateDesignScale(50);
-  }, [uploadedFile, design, updateDesignScale]);
 
   const handleReset = () => {
     if (fileInputRef.current) {
@@ -55,13 +46,12 @@ const DesignUpload: React.FC = () => {
         Upload Image
       </label>
 
-      {uploadedFile ? (
+      {design ? (
         <div className="w-[80%] flex flex-col justify-center items-center gap-4">
-          <p className="">{!uploadedFile ? "" : uploadedFile}</p>
+          <p className="">{!design ? "" : design}</p>
           <button
             className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
             onClick={() => {
-              setUploadedFile("");
               updateDesign("");
               updateDesignPath("");
               handleReset();

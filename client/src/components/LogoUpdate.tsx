@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import { exportedImages } from "../assets/logo";
 
@@ -7,11 +7,8 @@ interface logoPalletImgInterface {
 }
 
 const LogoUpdate: React.FC = () => {
-  const [file, setFile] = useState<string>("");
-
   const {
     logo,
-    // logoPath,
     updateLogo,
     updateLogoPath,
     logoSize,
@@ -31,7 +28,6 @@ const LogoUpdate: React.FC = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const imageName = e.target.files?.[0].name;
-      setFile(imageName);
 
       const url = URL.createObjectURL(e.target.files?.[0]);
       updateLogoPath(url);
@@ -39,16 +35,9 @@ const LogoUpdate: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (!file) {
-      setFile(logo);
-    }
-  }, [file, logo]);
-
   const handleReset = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
-      setFile("");
       updateLogoPath("");
       updateLogo("");
       updateLogoSize(15);
@@ -74,14 +63,13 @@ const LogoUpdate: React.FC = () => {
         Upload Image
       </label>
 
-      {file ? (
+      {logo ? (
         <div className="w-[80%] flex flex-col justify-center items-center gap-4">
-          <p className="">{!file ? "" : file}</p>
+          <p className="">{!logo ? "" : logo}</p>
           <button
             className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
             onClick={() => {
               updateLogoPath("");
-              setFile("");
               updateLogo("");
               handleReset();
             }}

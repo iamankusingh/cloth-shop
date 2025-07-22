@@ -7,7 +7,7 @@ export const fetchClothConfig = async (req: Request, res: Response) => {
     // uid from clerk
     const uid = req.query.uid as string;
 
-    console.log("Fetching cloth config for UID:", uid);
+    console.log("Send cloth config for UID:", uid);
 
     const clothConfigData = await ClothConfigModel.findOne({ uid });
 
@@ -18,7 +18,7 @@ export const fetchClothConfig = async (req: Request, res: Response) => {
         // return detched cloth config data
         data: clothConfigData,
       });
-      console.log("Fetched cloth config data", clothConfigData);
+      console.log("Send cloth config data", clothConfigData);
     } else {
       res.status(404).json({
         success: false,
@@ -44,41 +44,26 @@ export const handleClothConfig = async (req: Request, res: Response) => {
     // uid from clerk
     const uid = req.query.uid as string;
 
-    console.log("cloth config data from client ", req.body);
-
     // get cloth config data from client
-    const {
-      hexColor,
-      logo,
-      logoPath,
-      logoSize,
-      logoPositionY,
-      clothText,
-      design,
-      designPath,
-      designScale,
-    } = req.body;
+    console.log("cloth config data from client ", req.body);
 
     // create cloth config if doesn't exists else just modify
     const existingClothConfig = await ClothConfigModel.findOne({ uid });
 
     if (!existingClothConfig) {
-      console.log("cloth config doesn't exists, creating...");
+      console.log(
+        "Cloth config didn't exixt, creating with uid",
+        uid,
+        "and with data",
+        req.body
+      );
 
       // creating config
       const newClothConfig = await ClothConfigModel.create(
         [
           {
             uid,
-            hexColor,
-            logo,
-            logoPath,
-            logoSize,
-            logoPositionY,
-            clothText,
-            design,
-            designPath,
-            designScale,
+            ...req.body,
           },
         ],
         { session }
@@ -116,17 +101,7 @@ export const handleClothConfig = async (req: Request, res: Response) => {
       // update cloth config
       const updateClothConfig = await ClothConfigModel.findOneAndUpdate(
         { uid },
-        {
-          hexColor,
-          logo,
-          logoPath,
-          logoSize,
-          logoPositionY,
-          clothText,
-          design,
-          designPath,
-          designScale,
-        }
+        req.body
       );
 
       await session.commitTransaction();

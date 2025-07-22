@@ -45,13 +45,13 @@ function App() {
 
         // update zustand store with fetched data
         updateHexColor(result.data.hexColor);
-        updateLogo(result.data.logoImg);
+        updateLogo(result.data.logo);
         updateLogoPath(result.data.logoPath);
-        updateLogoSize(result.data.logoImageSize);
+        updateLogoSize(result.data.logoSize);
         updateLogoPositionY(result.data.logoPositionY);
         updateClothText(result.data.clothText);
-        updateDesign(result.data.designImg);
-        updateDesignPath(result.data.designImgPath);
+        updateDesign(result.data.design);
+        updateDesignPath(result.data.designPath);
         updateDesignScale(result.data.designScale);
       }
     } catch (error) {

@@ -1,5 +1,4 @@
 // page appear when have to customize the selected cloth
-
 import { useState } from "react";
 import ColorPicker from "../components/ColorPicker";
 import PageTitle from "../components/PageTitle";
@@ -9,6 +8,7 @@ import LinkButton from "../components/LinkButton";
 import useClothConfigStore from "../store/clothConfigStore";
 import LogoUpdate from "../components/LogoUpdate";
 import useUserStore from "../store/userStore";
+import { useAuth } from "@clerk/clerk-react";
 
 interface updateApiResponse {
   success: boolean;
@@ -17,8 +17,6 @@ interface updateApiResponse {
 
 const Customizer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("color");
-  // user configuration from zustand
-  const { uid } = useUserStore();
 
   // cloth configuration from zustand to update and reset database
   const {
@@ -43,7 +41,39 @@ const Customizer: React.FC = () => {
     updateDesignScale,
   } = useClothConfigStore();
 
-  // update cloth configuration in databaase
+  // from clerk
+  const { isSignedIn } = useAuth();
+
+  const handelSaveButton = async () => {
+    if (isSignedIn) {
+      updateClothConfig();
+    } else {
+      console.log("Please Sign in first");
+      alert("Please Sign in first");
+    }
+  };
+
+  const handleResetButton = async () => {
+    // update zustand store with default values
+    updateHexColor("#24D6A6");
+    updateLogo("");
+    updateLogoPath("");
+    updateLogoSize(15);
+    updateLogoPositionY(0);
+    updateClothText("");
+    updateDesign("");
+    updateDesignPath("");
+    updateDesignScale(0);
+
+    if (isSignedIn) {
+      updateClothConfig();
+    }
+  };
+
+  // user configuration from zustand
+  const { uid } = useUserStore();
+
+  // update or reset cloth configuration api call
   const updateClothConfig = async (): Promise<void> => {
     try {
       const response = await fetch(
@@ -71,51 +101,6 @@ const Customizer: React.FC = () => {
         const result: updateApiResponse = await response.json();
         console.log(result.message);
         alert(result.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // reset cloth configuration to deafult
-  const resetClothConfig = async () => {
-    // update zustand store with default values
-    updateHexColor("#24D6A6");
-    updateLogo("");
-    updateLogoPath("");
-    updateLogoSize(15);
-    updateLogoPositionY(0);
-    updateClothText("");
-    updateDesign("");
-    updateDesignPath("");
-    updateDesignScale(0);
-
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "Application/json",
-          },
-          body: JSON.stringify({
-            hexColor: "#24D6A6",
-            logoImg: "",
-            logoPath: "",
-            logoSize: 15,
-            logoPositionY: 0,
-            clothText: "",
-            designImg: "",
-            designImgPath: "",
-            designImageScale: 0,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const result: updateApiResponse = await response.json();
-        console.log(result.message);
-        alert("Cloth config reset");
       }
     } catch (error) {
       console.error(error);
@@ -173,11 +158,12 @@ const Customizer: React.FC = () => {
         <div className="w-full p-2 text-center">
           <button
             className="mx-4 button !bg-orange-500"
-            onClick={() => resetClothConfig()}
+            onClick={() => handleResetButton()}
           >
             Reset
           </button>
-          <button className="mx-4 button" onClick={() => updateClothConfig()}>
+
+          <button className="mx-4 button" onClick={() => handelSaveButton()}>
             Save
           </button>
         </div>

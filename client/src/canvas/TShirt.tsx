@@ -19,7 +19,7 @@ const TShirt: React.FC = () => {
     designScale,
   } = useClothConfigStore();
 
-  console.log("latest cloth value", logoPath, designPath);
+  // console.log("latest cloth value", logoPath, designPath);
 
   // set color
   useFrame((_, delta) =>
