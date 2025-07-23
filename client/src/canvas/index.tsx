@@ -17,7 +17,7 @@ const CameraWithLight = () => {
 
 const CanvasModel: React.FC = () => {
   return (
-    <section className="h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0">
+    <section className="h-[40vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0">
       <Canvas
         shadows
         camera={{ position: [0, 0, 0], fov: 25 }}

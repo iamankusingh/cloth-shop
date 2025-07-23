@@ -1,7 +1,22 @@
 import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
+import { sampleDesigns } from "../assets/design";
+
+interface designPalletImgInterface {
+  [key: string]: string;
+}
 
 const DesignUpload: React.FC = () => {
+  const designPlattate: designPalletImgInterface = {
+    check1: sampleDesigns.check1,
+    check2: sampleDesigns.check2,
+    check3: sampleDesigns.check3,
+    check4: sampleDesigns.check4,
+    flower1: sampleDesigns.flower1,
+    flower2: sampleDesigns.flower2,
+    flower3: sampleDesigns.flower3,
+  };
+
   const {
     design,
     designScale,
@@ -76,7 +91,20 @@ const DesignUpload: React.FC = () => {
           />
         </div>
       ) : (
-        ""
+        <div className="h-full w-full grid grid-cols-4 items-center content-center justify-items-center gap-2">
+          {Object.entries(designPlattate).map(([key, value]) => (
+            <img
+              src={value}
+              alt={key}
+              key={key}
+              className="h-auto w-20 p-2 bg-red-300 rounded-lg"
+              onClick={() => {
+                updateDesign(key);
+                updateDesignPath(value);
+              }}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

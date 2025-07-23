@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
-import { exportedImages } from "../assets/logo";
+import { sampleLogo } from "../assets/logo";
 
 interface logoPalletImgInterface {
   [key: string]: string;
@@ -18,9 +18,18 @@ const LogoUpdate: React.FC = () => {
   } = useClothConfigStore();
 
   const logoPalletImg: logoPalletImgInterface = {
-    "react.png": exportedImages.react,
-    "threejs.png": exportedImages.threejs,
-    "cat.png": exportedImages.cat,
+    "react.png": sampleLogo.react,
+    "threejs.png": sampleLogo.threejs,
+    "cat.png": sampleLogo.cat,
+    "dog.png": sampleLogo.dog,
+    "e;ephant.png": sampleLogo.elephant,
+    "flower.png": sampleLogo.flower,
+    "giraffe.png": sampleLogo.giraffe,
+    "js.png": sampleLogo.js,
+    "linux.png": sampleLogo.linux,
+    "moon.png": sampleLogo.moon,
+    "nodejs.png": sampleLogo.nodejs,
+    "peacockFeather.png": sampleLogo.peacockFeather,
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +67,7 @@ const LogoUpdate: React.FC = () => {
 
       <label
         htmlFor="file-upload"
-        className="p-6 inline-block text-white rounded border-2 border-blue-500 border-dashed cursor-pointer"
+        className="p-2  md:p-4 lg:p-6 inline-block text-white rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
         Upload Image
       </label>
@@ -114,7 +123,7 @@ const LogoUpdate: React.FC = () => {
               src={value}
               alt={key}
               key={key}
-              className="h-20 w-20 p-2 bg-red-300 rounded-lg"
+              className="h-auto w-20 p-2 bg-red-300 rounded-lg"
               onClick={() => {
                 updateLogo(key);
                 updateLogoPath(value);
