@@ -49,11 +49,13 @@ const Order: React.FC = () => {
   // cloth configuration from zustand
   const {
     hexColor,
+    logo,
     logoPath,
-    imageSize,
-    positionY,
+    logoSize,
+    logoPositionY,
     clothText,
-    designImgPath,
+    design,
+    designPath,
     designScale,
   } = useClothConfigStore();
 
@@ -122,7 +124,7 @@ const Order: React.FC = () => {
     }
   };
 
-  // set cloth configuration in databaase
+  // update or reset cloth configuration api call
   const updateClothConfig = async (): Promise<void> => {
     try {
       const response = await fetch(
@@ -134,11 +136,13 @@ const Order: React.FC = () => {
           },
           body: JSON.stringify({
             hexColor,
+            logo,
             logoPath,
-            imageSize,
-            positionY,
+            logoSize,
+            logoPositionY,
             clothText,
-            designImgPath,
+            design,
+            designPath,
             designScale,
           }),
         }
