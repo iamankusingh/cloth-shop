@@ -24,6 +24,8 @@ function App() {
     updateDesign,
     updateDesignPath,
     updateDesignScale,
+    updateClothSize,
+    updateClothFabric,
   } = useClothConfigStore();
 
   const fetchClothConfig = async () => {
@@ -53,6 +55,8 @@ function App() {
         updateDesign(result.data.design);
         updateDesignPath(result.data.designPath);
         updateDesignScale(result.data.designScale);
+        updateClothSize(result.data.clothSize);
+        updateClothFabric(result.data.clothFabric);
       }
     } catch (error) {
       console.error("Unable to fetch cloth config data by default", error);
