@@ -1,6 +1,6 @@
 // page appear when have to customize the selected cloth
 import { useState } from "react";
-import ColorPicker from "../components/ColorPicker";
+import ColorInput from "../components/ColorInput";
 import PageTitle from "../components/PageTitle";
 import TextInput from "../components/TextInput";
 import DesignUpload from "../components/DesignUpload";
@@ -26,6 +26,9 @@ const Customizer: React.FC = () => {
     logoSize,
     logoPositionY,
     clothText,
+    clothTextColor,
+    clothTextSize,
+    clothTextPositionY,
     design,
     designPath,
     designScale,
@@ -36,6 +39,9 @@ const Customizer: React.FC = () => {
     updateLogoSize,
     updateLogoPositionY,
     updateClothText,
+    updateClothTextColor,
+    updateClothTextSize,
+    updateClothTextPositionY,
     updateDesign,
     updateDesignPath,
     updateDesignScale,
@@ -61,6 +67,9 @@ const Customizer: React.FC = () => {
     updateLogoSize(15);
     updateLogoPositionY(0);
     updateClothText("");
+    updateClothTextColor("#ffffff");
+    updateClothTextSize(100);
+    updateClothTextPositionY(100);
     updateDesign("");
     updateDesignPath("");
     updateDesignScale(0);
@@ -90,6 +99,9 @@ const Customizer: React.FC = () => {
             logoSize,
             logoPositionY,
             clothText,
+            clothTextColor,
+            clothTextSize,
+            clothTextPositionY,
             design,
             designPath,
             designScale,
@@ -149,7 +161,7 @@ const Customizer: React.FC = () => {
         </div>
 
         <section className="lg:w-[50vw] p-2 flex justify-center">
-          {activeTab === "color" ? <ColorPicker /> : ""}
+          {activeTab === "color" ? <ColorInput /> : ""}
           {activeTab === "logo" ? <LogoUpdate /> : ""}
           {activeTab === "text" ? <TextInput /> : ""}
           {activeTab === "design" ? <DesignUpload /> : ""}

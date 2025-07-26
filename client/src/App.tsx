@@ -21,6 +21,9 @@ function App() {
     updateLogoSize,
     updateLogoPositionY,
     updateClothText,
+    updateClothTextColor,
+    updateClothTextSize,
+    updateClothTextPositionY,
     updateDesign,
     updateDesignPath,
     updateDesignScale,
@@ -52,6 +55,9 @@ function App() {
         updateLogoSize(result.data.logoSize);
         updateLogoPositionY(result.data.logoPositionY);
         updateClothText(result.data.clothText);
+        updateClothTextColor(result.data.clothTextColor);
+        updateClothTextSize(result.data.clothTextSize);
+        updateClothTextPositionY(result.data.clothTextPositionY);
         updateDesign(result.data.design);
         updateDesignPath(result.data.designPath);
         updateDesignScale(result.data.designScale);

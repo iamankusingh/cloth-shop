@@ -1,17 +1,19 @@
 import { SketchPicker } from "react-color";
 import type { ColorResult } from "react-color";
-import useClothConfigStore from "../store/clothConfigStore";
 
-const ColorPicker: React.FC = () => {
-  const { hexColor, updateHexColor } = useClothConfigStore();
+interface ColorPickerProps {
+  color: string;
+  updator: (color: string) => void;
+}
 
+const ColorPicker: React.FC<ColorPickerProps> = ({ color, updator }) => {
   return (
     <SketchPicker
       className="text-black"
-      color={hexColor}
+      color={color}
       disableAlpha
       onChange={(color: ColorResult) => {
-        updateHexColor(color.hex);
+        updator(color.hex);
       }}
     />
   );

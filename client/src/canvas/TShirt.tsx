@@ -15,6 +15,9 @@ const TShirt: React.FC = () => {
     logoSize,
     logoPositionY,
     clothText,
+    clothTextColor,
+    clothTextSize,
+    clothTextPositionY,
     designPath,
     designScale,
   } = useClothConfigStore();
@@ -43,17 +46,17 @@ const TShirt: React.FC = () => {
     if (!ctx) return null;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "bold 64px Arial";
+    ctx.font = `bold ${clothTextSize}px Arial`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = clothTextColor;
     ctx.fillText(clothText, canvas.width / 2, canvas.height / 2);
 
     const texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
 
     return texture;
-  }, [clothText]);
+  }, [clothText, clothTextSize, clothTextColor]);
 
   return (
     <>
@@ -78,7 +81,7 @@ const TShirt: React.FC = () => {
         {/* tetx */}
         {clothText && textTexture && (
           <Decal
-            position={[0, 0.12, 0.15]} // Adjust position for best fit
+            position={[0, clothTextPositionY / 1000, 0.15]} // Adjust position for best fit
             rotation={[0, 0, 0]}
             scale={[0.25, 0.08, 0.25]} // Adjust scale for text aspect ratio
             map={textTexture}

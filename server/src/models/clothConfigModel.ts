@@ -8,6 +8,9 @@ interface clothConfigInterface {
   logoSize?: number;
   logoPositionY?: number;
   clothText?: string;
+  clothTextColor?: string;
+  clothTextSize?: number;
+  clothTextPositionY?: number;
   design?: string;
   designPath?: string;
   designScale?: number;
@@ -19,10 +22,12 @@ const clothConfigSchema = new mongoose.Schema({
     required: [true, "User ID is required"],
     unique: true,
   },
+
   hexColor: {
     type: String,
     required: [true, "Color is required"],
   },
+
   logo: {
     type: String,
   },
@@ -35,9 +40,20 @@ const clothConfigSchema = new mongoose.Schema({
   logoPositionY: {
     type: Number,
   },
+
   clothText: {
     type: String,
   },
+  clothTextColor: {
+    tyle: String,
+  },
+  clothTextSize: {
+    tyle: Number,
+  },
+  clothTextPositionY: {
+    tyle: Number,
+  },
+
   design: {
     type: String,
   },
@@ -47,6 +63,7 @@ const clothConfigSchema = new mongoose.Schema({
   designScale: {
     type: Number,
   },
+
   clothSize: {
     type: String,
     required: [true, "Cloth size is required"],
