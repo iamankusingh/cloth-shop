@@ -25,6 +25,7 @@ const Customizer: React.FC = () => {
     logoPath,
     logoSize,
     logoPositionY,
+    logoUrl,
     clothText,
     clothTextColor,
     clothTextSize,
@@ -38,6 +39,7 @@ const Customizer: React.FC = () => {
     updateLogoPath,
     updateLogoSize,
     updateLogoPositionY,
+    updateLogoUrl,
     updateClothText,
     updateClothTextColor,
     updateClothTextSize,
@@ -66,6 +68,7 @@ const Customizer: React.FC = () => {
     updateLogoPath("");
     updateLogoSize(15);
     updateLogoPositionY(0);
+    updateLogoUrl("");
     updateClothText("");
     updateClothTextColor("#ffffff");
     updateClothTextSize(100);
@@ -98,6 +101,7 @@ const Customizer: React.FC = () => {
             logoPath,
             logoSize,
             logoPositionY,
+            logoUrl,
             clothText,
             clothTextColor,
             clothTextSize,

@@ -14,6 +14,7 @@ const TShirt: React.FC = () => {
     logoPath,
     logoSize,
     logoPositionY,
+    logoUrl,
     clothText,
     clothTextColor,
     clothTextSize,
@@ -74,7 +75,7 @@ const TShirt: React.FC = () => {
             position={[0, logoPositionY / 100, 0.15]}
             rotation={[0, 0, 0]}
             scale={logoSize / 100}
-            map={new THREE.TextureLoader().load(logoPath)}
+            map={new THREE.TextureLoader().load(logoUrl || logoPath)}
           />
         )}
 

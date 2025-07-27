@@ -20,6 +20,7 @@ function App() {
     updateLogoPath,
     updateLogoSize,
     updateLogoPositionY,
+    updateLogoUrl,
     updateClothText,
     updateClothTextColor,
     updateClothTextSize,
@@ -31,7 +32,7 @@ function App() {
     updateClothFabric,
   } = useClothConfigStore();
 
-  const fetchClothConfig = async () => {
+  const fetchClothConfig = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
         `http://localhost:3000/api/v1/cloth-config?uid=${userId}`,
@@ -54,6 +55,7 @@ function App() {
         updateLogoPath(result.data.logoPath);
         updateLogoSize(result.data.logoSize);
         updateLogoPositionY(result.data.logoPositionY);
+        updateLogoUrl(result.data.logoUrl);
         updateClothText(result.data.clothText);
         updateClothTextColor(result.data.clothTextColor);
         updateClothTextSize(result.data.clothTextSize);

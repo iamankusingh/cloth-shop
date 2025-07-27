@@ -7,6 +7,7 @@ interface clothConfigInterface {
   logoPath?: string;
   logoSize?: number;
   logoPositionY?: number;
+  logoUrl?: string;
   clothText?: string;
   clothTextColor?: string;
   clothTextSize?: number;
@@ -39,6 +40,9 @@ const clothConfigSchema = new mongoose.Schema({
   },
   logoPositionY: {
     type: Number,
+  },
+  logoUrl: {
+    type: String,
   },
 
   clothText: {

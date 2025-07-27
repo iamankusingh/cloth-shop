@@ -15,6 +15,7 @@ const LogoUpdate: React.FC = () => {
     updateLogoSize,
     logoPositionY,
     updateLogoPositionY,
+    updateLogoUrl,
   } = useClothConfigStore();
 
   const logoPalletImg: logoPalletImgInterface = {
@@ -34,13 +35,36 @@ const LogoUpdate: React.FC = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const imageName = e.target.files?.[0].name;
+      updateLogo(imageName);
 
       const url = URL.createObjectURL(e.target.files?.[0]);
       updateLogoPath(url);
-      updateLogo(imageName);
+
+      const data = new FormData();
+      data.append("file", e.target.files[0]);
+      data.append("upload_preset", "cloth shop 3D");
+
+      try {
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${
+            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+          }/image/upload`,
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+
+        const uploadCloudinary = await res.json();
+        console.log("uploadCloudinary", uploadCloudinary.url);
+        updateLogoUrl(uploadCloudinary.url);
+      } catch (error) {
+        console.error("Error uploading image to Cloudinary", error);
+        alert("Failed to upload image. Please try again.");
+      }
     }
   };
 
