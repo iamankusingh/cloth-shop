@@ -85,14 +85,16 @@ function App() {
     <>
       <PageTitle title="Cloth shop - Home" />
 
-      <main className="w-screen">
+      <main className="h-[50dvh] lg:h-screen w-screen lg:w-[50vw] flex items-center justify-center">
         <section className="lg:w-[50vw] p-2">
-          <h1 className="lg:pt-20 text-5xl">Design Your Cloths</h1>
+          <h1 className="lg:pt-20 text-5xl md:text-7xl font-bold">
+            Design Your <span className="text-clip">Clothes</span>
+          </h1>
 
-          <p className="py-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt,
-            excepturi unde. Quis, tenetur cum id iure odio voluptate blanditiis
-            impedit?
+          <p className="py-6 text-xl">
+            Here you can customize your clothes with your own designs, logos,
+            and text. You can also choose the color, size, and fabric of your
+            clothes.
           </p>
 
           <LinkButton path="/customizer" title="Customize it" />

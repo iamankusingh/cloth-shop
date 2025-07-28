@@ -127,8 +127,8 @@ const Customizer: React.FC = () => {
     <>
       <PageTitle title="Cloth shop - Customize" />
 
-      <main className="h-[60dvh] lg:h-screen w-screen lg:w-[50vw] lg:pt-16 flex flex-col justify-between">
-        <div className="max-w-full p-2 text-white bg-gray-500 rounded-lg flex items-center justify-around md:text-xl">
+      <main className="h-[50dvh] lg:h-screen w-screen lg:w-[50vw] lg:pt-16 flex flex-col justify-between">
+        <div className="max-w-full p-2 text-white bg-gray-500 flex items-center justify-around md:text-xl">
           <button
             className={`tabButton ${
               activeTab === "color" ? "bg-blue-600" : ""
