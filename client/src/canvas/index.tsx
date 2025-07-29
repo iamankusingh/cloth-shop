@@ -18,7 +18,7 @@ const CameraWithLight = () => {
 
 const CanvasModel: React.FC = () => {
   return (
-    <section className="h-[50dvh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0">
+    <section className="h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0">
       <Canvas
         shadows
         camera={{ position: [0, 0, 0], fov: 25 }}
@@ -31,7 +31,12 @@ const CanvasModel: React.FC = () => {
         <CameraWithLight />
 
         {/* action */}
-        <OrbitControls enableZoom={true} minDistance={0.5} maxDistance={3} maxPolarAngle={Math.PI / 2} />
+        <OrbitControls
+          enableZoom={true}
+          minDistance={0.5}
+          maxDistance={3}
+          maxPolarAngle={Math.PI / 2}
+        />
 
         {/* 3D model */}
         <TShirt />

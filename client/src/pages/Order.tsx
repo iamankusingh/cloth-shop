@@ -3,6 +3,7 @@ import PageTitle from "../components/PageTitle";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import useClothConfigStore from "../store/clothConfigStore";
+import { Button } from "@/components/ui/button";
 
 interface updateApiResponse {
   success: boolean;
@@ -404,9 +405,9 @@ const Order: React.FC = () => {
               className="rounded-full"
             />
 
-            <div className="button">
+            <Button variant="outline">
               <SignInButton />
-            </div>
+            </Button>
           </section>
         )}
       </main>

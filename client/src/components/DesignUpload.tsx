@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import { sampleDesigns } from "../assets/design";
+import { Button } from "@/components/ui/button";
 
 interface designPalletImgInterface {
   [key: string]: string;
@@ -56,7 +57,7 @@ const DesignUpload: React.FC = () => {
 
       <label
         htmlFor="design-upload"
-        className="p-6 inline-block text-white rounded border-2 border-blue-500 border-dashed cursor-pointer"
+        className="p-6 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
         Upload Image
       </label>
@@ -64,8 +65,8 @@ const DesignUpload: React.FC = () => {
       {design ? (
         <div className="w-[80%] flex flex-col justify-center items-center gap-4">
           <p className="">{!design ? "" : design}</p>
-          <button
-            className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
+          <Button
+            variant="destructive"
             onClick={() => {
               updateDesign("");
               updateDesignPath("");
@@ -73,7 +74,7 @@ const DesignUpload: React.FC = () => {
             }}
           >
             Remove image
-          </button>
+          </Button>
 
           <label htmlFor="scale">Image Size : </label>
 

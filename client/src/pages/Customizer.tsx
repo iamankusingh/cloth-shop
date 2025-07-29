@@ -1,5 +1,4 @@
 // page appear when have to customize the selected cloth
-import { useState } from "react";
 import ColorInput from "../components/ColorInput";
 import PageTitle from "../components/PageTitle";
 import TextInput from "../components/TextInput";
@@ -9,6 +8,8 @@ import useClothConfigStore from "../store/clothConfigStore";
 import LogoUpdate from "../components/LogoUpdate";
 import useUserStore from "../store/userStore";
 import { useAuth } from "@clerk/clerk-react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface updateApiResponse {
   success: boolean;
@@ -16,8 +17,6 @@ interface updateApiResponse {
 }
 
 const Customizer: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("color");
-
   // cloth configuration from zustand to update and reset database
   const {
     hexColor,
@@ -127,61 +126,41 @@ const Customizer: React.FC = () => {
     <>
       <PageTitle title="Cloth shop - Customize" />
 
-      <main className="h-[50dvh] lg:h-screen w-screen lg:w-[50vw] lg:pt-16 flex flex-col justify-between">
-        <div className="max-w-full p-2 text-white bg-gray-500 flex items-center justify-around md:text-xl">
-          <button
-            className={`tabButton ${
-              activeTab === "color" ? "bg-blue-600" : ""
-            }`}
-            onClick={() => setActiveTab("color")}
-          >
-            Colors
-          </button>
+      <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] lg:pt-12 flex flex-col justify-between">
+        <section className="max-w-full p-2 md:text-xl">
+          <Tabs defaultValue="color">
+            <TabsList className="w-full">
+              <TabsTrigger value="color">Color</TabsTrigger>
+              <TabsTrigger value="logo">Logo</TabsTrigger>
+              <TabsTrigger value="text">Text</TabsTrigger>
+              <TabsTrigger value="design">Design</TabsTrigger>
+            </TabsList>
 
-          <button
-            className={`tabButton ${activeTab === "logo" ? "bg-blue-600" : ""}`}
-            onClick={() => setActiveTab("logo")}
-          >
-            Logo
-          </button>
-
-          <button
-            className={`tabButton ${activeTab === "text" ? "bg-blue-600" : ""}`}
-            onClick={() => setActiveTab("text")}
-          >
-            Text
-          </button>
-
-          <button
-            className={`tabButton ${
-              activeTab === "design" ? "bg-blue-600" : ""
-            }`}
-            onClick={() => setActiveTab("design")}
-          >
-            Design
-          </button>
-
-          <LinkButton path="/order" title="Order now" />
-        </div>
-
-        <section className="lg:w-[50vw] p-2 flex justify-center">
-          {activeTab === "color" ? <ColorInput /> : ""}
-          {activeTab === "logo" ? <LogoUpdate /> : ""}
-          {activeTab === "text" ? <TextInput /> : ""}
-          {activeTab === "design" ? <DesignUpload /> : ""}
+            <TabsContent value="color">
+              <ColorInput />
+            </TabsContent>
+            <TabsContent value="logo">
+              <LogoUpdate />
+            </TabsContent>
+            <TabsContent value="text">
+              <TextInput />
+            </TabsContent>
+            <TabsContent value="design">
+              <DesignUpload />
+            </TabsContent>
+          </Tabs>
         </section>
 
-        <div className="w-full p-2 text-center">
-          <button
-            className="mx-4 button !bg-orange-500"
-            onClick={() => handleResetButton()}
-          >
+        <div className="py-2 flex justify-evenly">
+          <Button variant="outline" onClick={() => handleResetButton()}>
             Reset
-          </button>
+          </Button>
 
-          <button className="mx-4 button" onClick={() => handelSaveButton()}>
+          <Button variant="outline" onClick={() => handelSaveButton()}>
             Save
-          </button>
+          </Button>
+
+          <LinkButton path="/order" title="Order now" />
         </div>
       </main>
     </>

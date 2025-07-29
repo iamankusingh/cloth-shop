@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import ColorPicker from "./ColorPicker";
+import { Button } from "@/components/ui/button";
 
 const TextInput: React.FC = () => {
   const [text, setText] = useState<string>("");
@@ -25,30 +26,30 @@ const TextInput: React.FC = () => {
   }, [text, clothText, updateClothText]);
 
   return (
-    <div className="flex flex-col justify-between items-center gap-4">
+    <div className="flex flex-col justify-between items-center gap-2">
       <div className="flex items-center justify-center gap-4">
         <input
           type="text"
           value={text}
-          autoFocus
+          // autoFocus
           className="p-2 text-xl border rounded-lg"
           onChange={(e) => {
             setText(e.target.value);
           }}
         />
 
-        <button
-          className="p-2 inline-block bg-blue-500 rounded-lg"
+        <Button
+          variant="secondary"
           onClick={() => {
             setText("");
             updateClothText("");
           }}
         >
           Clear
-        </button>
+        </Button>
       </div>
 
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-2">
         <label htmlFor="txt-size">Text Size : </label>
 
         <input

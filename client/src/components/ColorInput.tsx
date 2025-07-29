@@ -5,7 +5,7 @@ const ColorInput = () => {
   const { hexColor, updateHexColor } = useClothConfigStore();
 
   return (
-    <div>
+    <div className="flex justify-center">
       <ColorPicker color={hexColor} updator={updateHexColor} />
     </div>
   );

@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "@/components/theme-provider";
 
 import App from "./App.tsx";
 import Customizer from "./pages/Customizer.tsx";
@@ -18,19 +19,21 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <BrowserRouter>
-        {/* canvas model is here to prevent it from unmounting and re-mounting  */}
-        <CanvasModel />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+        <BrowserRouter>
+          {/* canvas model is here to prevent it from unmounting and re-mounting  */}
+          <CanvasModel />
 
-        <Header />
+          <Header />
 
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/customizer" element={<Customizer />} />
-          <Route path="/order" element={<Order />} />
-        </Routes>
-      </BrowserRouter>
-    </ClerkProvider>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/customizer" element={<Customizer />} />
+            <Route path="/order" element={<Order />} />
+          </Routes>
+        </BrowserRouter>
+      </ClerkProvider>
+    </ThemeProvider>
   </StrictMode>
 );

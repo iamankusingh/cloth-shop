@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import { sampleLogo } from "../assets/logo";
+import { Button } from "@/components/ui/button";
 
 interface logoPalletImgInterface {
   [key: string]: string;
@@ -91,7 +92,7 @@ const LogoUpdate: React.FC = () => {
 
       <label
         htmlFor="file-upload"
-        className="p-2  md:p-4 lg:p-6 inline-block text-white rounded border-2 border-blue-500 border-dashed cursor-pointer"
+        className="p-2  md:p-4 lg:p-6 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
         Upload Image
       </label>
@@ -99,16 +100,16 @@ const LogoUpdate: React.FC = () => {
       {logo ? (
         <div className="w-[80%] flex flex-col justify-center items-center gap-4">
           <p className="">{!logo ? "" : logo}</p>
-          <button
-            className="inline-block px-4 py-2 font-semibold rounded-lg bg-red-600 cursor-pointer"
+          <Button
+            variant="destructive"
             onClick={() => {
               updateLogoPath("");
               updateLogo("");
               handleReset();
             }}
           >
-            Remove image
-          </button>
+            Remove Image
+          </Button>
 
           <label htmlFor="img-size">Image Size : </label>
 
@@ -147,7 +148,7 @@ const LogoUpdate: React.FC = () => {
               src={value}
               alt={key}
               key={key}
-              className="h-auto w-20 p-2 bg-red-300 rounded-lg"
+              className="h-20 w-auto p-2 bg-red-300 rounded-lg"
               onClick={() => {
                 updateLogo(key);
                 updateLogoPath(value);
