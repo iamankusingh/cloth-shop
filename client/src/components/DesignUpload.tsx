@@ -57,7 +57,7 @@ const DesignUpload: React.FC = () => {
 
       <label
         htmlFor="design-upload"
-        className="p-6 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
+        className="p-2 md:p-4 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
         Upload Image
       </label>
@@ -67,6 +67,7 @@ const DesignUpload: React.FC = () => {
           <p className="">{!design ? "" : design}</p>
           <Button
             variant="destructive"
+            className="cursor-pointer"
             onClick={() => {
               updateDesign("");
               updateDesignPath("");

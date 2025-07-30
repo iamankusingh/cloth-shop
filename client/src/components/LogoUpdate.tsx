@@ -2,6 +2,8 @@ import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import { sampleLogo } from "../assets/logo";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "sonner";
 
 interface logoPalletImgInterface {
   [key: string]: string;
@@ -64,7 +66,12 @@ const LogoUpdate: React.FC = () => {
         updateLogoUrl(uploadCloudinary.url);
       } catch (error) {
         console.error("Error uploading image to Cloudinary", error);
-        alert("Failed to upload image. Please try again.");
+        toast.error("Failed to upload image.", {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
       }
     }
   };
@@ -76,6 +83,7 @@ const LogoUpdate: React.FC = () => {
       updateLogo("");
       updateLogoSize(15);
       updateLogoPositionY(0);
+      updateLogoUrl("");
     }
   };
 
@@ -92,7 +100,7 @@ const LogoUpdate: React.FC = () => {
 
       <label
         htmlFor="file-upload"
-        className="p-2  md:p-4 lg:p-6 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
+        className="p-2 md:p-4 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
         Upload Image
       </label>
@@ -102,10 +110,12 @@ const LogoUpdate: React.FC = () => {
           <p className="">{!logo ? "" : logo}</p>
           <Button
             variant="destructive"
+            className="cursor-pointer"
             onClick={() => {
               updateLogoPath("");
               updateLogo("");
               handleReset();
+              updateLogoUrl("");
             }}
           >
             Remove Image
@@ -142,20 +152,22 @@ const LogoUpdate: React.FC = () => {
           />
         </div>
       ) : (
-        <div className="h-full w-full grid grid-cols-4 items-center content-center justify-items-center gap-2">
-          {Object.entries(logoPalletImg).map(([key, value]) => (
-            <img
-              src={value}
-              alt={key}
-              key={key}
-              className="h-20 w-auto p-2 bg-red-300 rounded-lg"
-              onClick={() => {
-                updateLogo(key);
-                updateLogoPath(value);
-              }}
-            />
-          ))}
-        </div>
+        <ScrollArea className="h-[30vh] lg:h-[60vh] w-sm md:w-xl rounded-md border p-4">
+          <div className="h-full w-full grid content-center grid-cols-4 gap-2">
+            {Object.entries(logoPalletImg).map(([key, value]) => (
+              <img
+                src={value}
+                alt={key}
+                key={key}
+                className="h-20 w-auto p-2 bg-red-300 rounded-lg"
+                onClick={() => {
+                  updateLogo(key);
+                  updateLogoPath(value);
+                }}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       )}
     </div>
   );

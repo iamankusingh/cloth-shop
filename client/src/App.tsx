@@ -5,6 +5,7 @@ import PageTitle from "./components/PageTitle";
 import { useEffect } from "react";
 import useUserStore from "./store/userStore";
 import useClothConfigStore from "./store/clothConfigStore";
+import { toast } from "sonner";
 
 function App() {
   // from clerk
@@ -49,7 +50,13 @@ function App() {
       if (response.ok) {
         const result = await response.json();
         console.log("fetch cloth config data ", result);
-        alert(result.message);
+        toast.success(result.message, {
+          // description: "Just fetched your cloth config data from dtabase",
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
 
         // update zustand store with fetched data
         updateHexColor(result.data.hexColor);
@@ -70,7 +77,12 @@ function App() {
       }
     } catch (error) {
       console.error("Unable to fetch cloth config data by default", error);
-      alert("Unable to fetch cloth config data");
+      toast.error("Unable to fetch cloth config data", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
     }
   };
 

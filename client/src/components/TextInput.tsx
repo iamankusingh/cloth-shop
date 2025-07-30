@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import ColorPicker from "./ColorPicker";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const TextInput: React.FC = () => {
   const [text, setText] = useState<string>("");
@@ -28,7 +29,7 @@ const TextInput: React.FC = () => {
   return (
     <div className="flex flex-col justify-between items-center gap-2">
       <div className="flex items-center justify-center gap-4">
-        <input
+        <Input
           type="text"
           value={text}
           // autoFocus

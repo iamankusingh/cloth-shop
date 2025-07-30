@@ -10,6 +10,7 @@ import useUserStore from "../store/userStore";
 import { useAuth } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 interface updateApiResponse {
   success: boolean;
@@ -56,7 +57,12 @@ const Customizer: React.FC = () => {
       updateClothConfig();
     } else {
       console.log("Please Sign in first");
-      alert("Please Sign in first");
+      toast.error("Please Sign in first", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
     }
   };
 
@@ -115,10 +121,23 @@ const Customizer: React.FC = () => {
       if (response.ok) {
         const result: updateApiResponse = await response.json();
         console.log(result.message);
-        alert(result.message);
+        // alert(result.message);
+        toast.success(result.message, {
+          // description: "Just fetched your cloth config data from dtabase",
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
       }
     } catch (error) {
       console.error(error);
+      toast.error("Unable to update cloth config data", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
     }
   };
 
@@ -151,7 +170,7 @@ const Customizer: React.FC = () => {
           </Tabs>
         </section>
 
-        <div className="py-2 flex justify-evenly">
+        <div className="pb-2 flex justify-evenly">
           <Button variant="outline" onClick={() => handleResetButton()}>
             Reset
           </Button>
