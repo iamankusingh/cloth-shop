@@ -15,6 +15,8 @@ interface clothConfigInterface {
   design?: string;
   designPath?: string;
   designScale?: number;
+  clothSize?: string;
+  clothFabric?: string;
 }
 
 const clothConfigSchema = new mongoose.Schema({
@@ -70,12 +72,10 @@ const clothConfigSchema = new mongoose.Schema({
 
   clothSize: {
     type: String,
-    required: [true, "Cloth size is required"],
     enum: ["XS", "S", "M", "L", "XL", "XXL"],
   },
   clothFabric: {
     type: String,
-    required: [true, "Cloth fabric is required"],
     enum: ["Cotton", "Silk", "Polyester", "Wool", "Lenin", "Khakhi"],
   },
 });

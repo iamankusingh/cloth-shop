@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import useClothConfigStore from "../store/clothConfigStore";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface updateApiResponse {
   success: boolean;
@@ -24,8 +33,6 @@ interface fetchUserDataResponse {
     phoneNo: number;
   };
 }
-
-// interface fetchClothConfigResponse {}
 
 const Order: React.FC = () => {
   // variables to store form data
@@ -67,6 +74,10 @@ const Order: React.FC = () => {
     updateClothFabric,
   } = useClothConfigStore();
 
+  useEffect(() => {
+    console.log(clothSize, clothFabric);
+  }, [clothSize, clothFabric]);
+
   const clothSizesPallate: Array<string> = ["XS", "S", "M", "L", "XL", "XXL"];
 
   const clothFabricPallate: Array<string> = [
@@ -94,7 +105,12 @@ const Order: React.FC = () => {
       if (response.ok) {
         const result: fetchUserDataResponse = await response.json();
         console.log("fetch user data by default", result.message);
-        alert(result.message);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
 
         setFullName(result.data.fullName);
         setHouseNo(result.data.houseNo);
@@ -106,7 +122,12 @@ const Order: React.FC = () => {
       }
     } catch (error) {
       console.error("Unable to fetch user data by default", error);
-      alert("Unable to fetch user data");
+      toast.error("Unable to fetch user data", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
     }
   };
 
@@ -135,11 +156,21 @@ const Order: React.FC = () => {
       if (response.ok) {
         const result: updateApiResponse = await response.json();
         console.log(result.message);
-        alert(result.message);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
       }
     } catch (error) {
       console.error("Something went wrong", error);
-      alert("Something went wrong");
+      toast.error("Something went wrong", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
     }
   };
 
@@ -166,6 +197,8 @@ const Order: React.FC = () => {
             design,
             designPath,
             designScale,
+            clothSize,
+            clothFabric,
           }),
         }
       );
@@ -173,7 +206,12 @@ const Order: React.FC = () => {
       if (response.ok) {
         const result: updateApiResponse = await response.json();
         console.log(result.message);
-        alert(result.message);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
       }
     } catch (error) {
       console.error(error);
@@ -196,15 +234,15 @@ const Order: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid, isSignedIn]);
 
-  const handleClothSizeChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    updateClothSize(e.target.value);
-  };
+  // const handleClothSizeChange = (
+  //   e: React.ChangeEvent<HTMLSelectElement>
+  // ): void => {
+  //   updateClothSize(e.target.value);
+  // };
 
-  const handleClothFabricChnage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    updateClothFabric(e.target.value);
-  };
+  // const handleClothFabricChnage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   updateClothFabric(e.target.value);
+  // };
 
   return (
     <>
@@ -220,12 +258,12 @@ const Order: React.FC = () => {
             <p className="py-3 text-3xl font-bold">Delivery address</p>
 
             <form
-              className="p-4 grid gric-cols-1 md:grid-cols-2 content-start gap-4 bg-gray-800 rounded-xl text-xl"
+              className="p-4 grid gric-cols-1 md:grid-cols-2 content-start gap-4 bg-secondary rounded-xl text-xl"
               onSubmit={handleFormSubmit}
             >
               <div className="inputBox">
                 <label htmlFor="name">Full name</label>
-                <input
+                <Input
                   type="text"
                   id="name"
                   name="name"
@@ -238,7 +276,7 @@ const Order: React.FC = () => {
 
               <div className="inputBox">
                 <label htmlFor="houseNo">House No</label>
-                <input
+                <Input
                   type="text"
                   id="houseNo"
                   name="houseNo"
@@ -251,7 +289,7 @@ const Order: React.FC = () => {
 
               <div className="inputBox">
                 <label htmlFor="locality">Locality</label>
-                <input
+                <Input
                   type="text"
                   id="locality"
                   name="locality"
@@ -264,7 +302,7 @@ const Order: React.FC = () => {
 
               <div className="inputBox">
                 <label htmlFor="city">City</label>
-                <input
+                <Input
                   type="text"
                   id="city"
                   name="city"
@@ -277,7 +315,7 @@ const Order: React.FC = () => {
 
               <div className="inputBox">
                 <label htmlFor="pincode">Pincode</label>
-                <input
+                <Input
                   type="number"
                   id="pincode"
                   name="pincode"
@@ -292,7 +330,7 @@ const Order: React.FC = () => {
 
               <div className="inputBox">
                 <label htmlFor="district">District</label>
-                <input
+                <Input
                   type="text"
                   id="district"
                   name="district"
@@ -305,7 +343,7 @@ const Order: React.FC = () => {
 
               <div className="inputBox">
                 <label htmlFor="phoneNo">Phone No</label>
-                <input
+                <Input
                   type="number"
                   id="phoneNo"
                   name="phoneNo"
@@ -318,14 +356,14 @@ const Order: React.FC = () => {
                 />
               </div>
 
-              <div className="my-auto text-center">
-                <input
+              <div className="flex items-center justify-evenly">
+                <Input
                   type="reset"
                   value="Clear all"
                   className="h-fit w-fit mx-2 button"
                 />
 
-                <input
+                <Input
                   type="submit"
                   value="Save"
                   className="h-fit w-fit mx-2 button"
@@ -333,66 +371,45 @@ const Order: React.FC = () => {
               </div>
             </form>
 
-            <div className="py-4 flex justify-between gap-2">
-              <div className="relative inline-block w-full text-gray-700">
-                <select
-                  required
-                  className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  value={clothSize}
-                  onChange={handleClothSizeChange}
-                >
-                  <option value="" selected disabled>
-                    Select Size
-                  </option>
+            <div className="py-4 flex justify-evenly gap-2">
+              <Select
+                value={clothSize}
+                onValueChange={(value) => {
+                  updateClothSize(value);
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Size" />
+                </SelectTrigger>
+                <SelectContent>
                   {clothSizesPallate.map((option) => (
-                    <option key={option} value={option}>
+                    <SelectItem key={option} value={option}>
                       {option}
-                    </option>
+                    </SelectItem>
                   ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="w-4 h-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15 8.707l-1.414-1.414L10 10.586 6.414 7.001 5 8.415l4.293 4.535z" />
-                  </svg>
-                </div>
-              </div>
+                </SelectContent>
+              </Select>
 
-              <div className="relative inline-block w-full text-gray-700">
-                <select
-                  required
-                  className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  value={clothFabric}
-                  onChange={handleClothFabricChnage}
-                >
-                  <option value="" selected disabled>
-                    Select Size
-                  </option>
+              <Select
+                value={clothFabric}
+                onValueChange={(value) => {
+                  updateClothFabric(value);
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Fabric" />
+                </SelectTrigger>
+
+                <SelectContent>
                   {clothFabricPallate.map((option) => (
-                    <option key={option} value={option}>
+                    <SelectItem key={option} value={option}>
                       {option}
-                    </option>
+                    </SelectItem>
                   ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="w-4 h-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15 8.707l-1.414-1.414L10 10.586 6.414 7.001 5 8.415l4.293 4.535z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+                </SelectContent>
+              </Select>
 
-            <div>
-              <button className="button" onClick={() => updateClothConfig()}>
-                Update
-              </button>
+              <Button onClick={() => updateClothConfig()}>Update</Button>
             </div>
           </section>
         ) : (
@@ -405,9 +422,7 @@ const Order: React.FC = () => {
               className="rounded-full"
             />
 
-            <Button variant="outline">
-              <SignInButton />
-            </Button>
+            <SignInButton />
           </section>
         )}
       </main>

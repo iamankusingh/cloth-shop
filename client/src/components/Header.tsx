@@ -6,7 +6,6 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./mode-toggle";
 
 const Header: React.FC = () => {
@@ -16,9 +15,7 @@ const Header: React.FC = () => {
 
       <div className="flex items-center gap-2">
         <SignedOut>
-          <Button variant="outline">
-            <SignInButton />
-          </Button>
+          <SignInButton />
         </SignedOut>
 
         <SignedIn>
