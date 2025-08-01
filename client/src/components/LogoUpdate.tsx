@@ -17,6 +17,8 @@ const LogoUpdate: React.FC = () => {
     updateLogoPath,
     logoSize,
     updateLogoSize,
+    logoPositionX,
+    updateLogoPositionX,
     logoPositionY,
     updateLogoPositionY,
     updateLogoUrl,
@@ -134,6 +136,16 @@ const LogoUpdate: React.FC = () => {
             }}
           />
 
+          <label>Position X : </label>
+
+          <Slider
+            min={-25}
+            max={25}
+            defaultValue={[logoPositionX]}
+            onValueChange={(value) => {
+              updateLogoPositionX(value[0]);
+            }}
+          />
           <label>Position Y : </label>
 
           <Slider

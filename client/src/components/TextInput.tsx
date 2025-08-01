@@ -14,6 +14,8 @@ const TextInput: React.FC = () => {
     updateClothTextColor,
     clothTextSize,
     updateClothTextSize,
+    clothTextPositionX,
+    updateClothTextPositionX,
     clothTextPositionY,
     updateClothTextPositionY,
   } = useClothConfigStore();
@@ -64,6 +66,17 @@ const TextInput: React.FC = () => {
           }}
         />
 
+        <label>Position X : </label>
+
+        <Slider
+          min={-200}
+          max={150}
+          step={1}
+          defaultValue={[clothTextPositionX]}
+          onValueChange={(value) => {
+            updateClothTextPositionX(value[0]);
+          }}
+        />
         <label>Position Y : </label>
 
         <Slider

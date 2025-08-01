@@ -9,6 +9,8 @@ export interface ClothConfigState {
   updateLogoPath: (path: string) => void;
   logoSize: number;
   updateLogoSize: (size: number) => void;
+  logoPositionX: number;
+  updateLogoPositionX: (positionX: number) => void;
   logoPositionY: number;
   updateLogoPositionY: (positionY: number) => void;
   logoUrl: string;
@@ -20,6 +22,8 @@ export interface ClothConfigState {
   updateClothTextColor: (color: string) => void;
   clothTextSize: number;
   updateClothTextSize: (size: number) => void;
+  clothTextPositionX: number;
+  updateClothTextPositionX: (positionX: number) => void;
   clothTextPositionY: number;
   updateClothTextPositionY: (positionY: number) => void;
 
@@ -48,6 +52,9 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   logoSize: 15,
   updateLogoSize: (size) => set(() => ({ logoSize: size })),
 
+  logoPositionX: 0,
+  updateLogoPositionX: (positionX) => set(() => ({ logoPositionX: positionX })),
+
   logoPositionY: 0,
   updateLogoPositionY: (positionY) => set(() => ({ logoPositionY: positionY })),
 
@@ -62,6 +69,10 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
 
   clothTextSize: 100,
   updateClothTextSize: (size) => set(() => ({ clothTextSize: size })),
+
+  clothTextPositionX: 0,
+  updateClothTextPositionX: (positionX) =>
+    set(() => ({ clothTextPositionX: positionX })),
 
   clothTextPositionY: 100,
   updateClothTextPositionY: (positionY) =>

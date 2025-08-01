@@ -13,11 +13,13 @@ const TShirt: React.FC = () => {
     hexColor,
     logoPath,
     logoSize,
+    logoPositionX,
     logoPositionY,
     logoUrl,
     clothText,
     clothTextColor,
     clothTextSize,
+    clothTextPositionX,
     clothTextPositionY,
     designPath,
     designScale,
@@ -71,8 +73,7 @@ const TShirt: React.FC = () => {
         {/* logo */}
         {logoPath && (
           <Decal
-            // position={[0, 0, 0.15]}
-            position={[0, logoPositionY / 100, 0.15]}
+            position={[logoPositionX / 100, logoPositionY / 100, 0.15]}
             rotation={[0, 0, 0]}
             scale={logoSize / 100}
             map={new THREE.TextureLoader().load(logoUrl || logoPath)}
@@ -82,7 +83,7 @@ const TShirt: React.FC = () => {
         {/* tetx */}
         {clothText && textTexture && (
           <Decal
-            position={[0, clothTextPositionY / 1000, 0.15]} // Adjust position for best fit
+            position={[clothTextPositionX / 1000, clothTextPositionY / 1000, 0.15]} // Adjust position for best fit
             rotation={[0, 0, 0]}
             scale={[0.25, 0.08, 0.25]} // Adjust scale for text aspect ratio
             map={textTexture}

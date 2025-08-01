@@ -3,15 +3,20 @@ import mongoose from "mongoose";
 interface clothConfigInterface {
   uid: string;
   hexColor: string;
+
   logo?: string;
   logoPath?: string;
   logoSize?: number;
+  logoPositionX?: number;
   logoPositionY?: number;
   logoUrl?: string;
+
   clothText?: string;
   clothTextColor?: string;
   clothTextSize?: number;
+  clothTextPositionX?: number;
   clothTextPositionY?: number;
+
   design?: string;
   designPath?: string;
   designScale?: number;
@@ -40,6 +45,9 @@ const clothConfigSchema = new mongoose.Schema({
   logoSize: {
     type: Number,
   },
+  logoPositionX: {
+    type: Number,
+  },
   logoPositionY: {
     type: Number,
   },
@@ -54,6 +62,9 @@ const clothConfigSchema = new mongoose.Schema({
     tyle: String,
   },
   clothTextSize: {
+    tyle: Number,
+  },
+  clothTextPositionX: {
     tyle: Number,
   },
   clothTextPositionY: {

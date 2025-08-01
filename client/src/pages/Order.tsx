@@ -60,10 +60,12 @@ const Order: React.FC = () => {
     logo,
     logoPath,
     logoSize,
+    logoPositionX,
     logoPositionY,
     clothText,
     clothTextColor,
     clothTextSize,
+    clothTextPositionX,
     clothTextPositionY,
     design,
     designPath,
@@ -189,10 +191,12 @@ const Order: React.FC = () => {
             logo,
             logoPath,
             logoSize,
+            logoPositionX,
             logoPositionY,
             clothText,
             clothTextColor,
             clothTextSize,
+            clothTextPositionX,
             clothTextPositionY,
             design,
             designPath,
@@ -233,16 +237,6 @@ const Order: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid, isSignedIn]);
-
-  // const handleClothSizeChange = (
-  //   e: React.ChangeEvent<HTMLSelectElement>
-  // ): void => {
-  //   updateClothSize(e.target.value);
-  // };
-
-  // const handleClothFabricChnage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   updateClothFabric(e.target.value);
-  // };
 
   return (
     <>

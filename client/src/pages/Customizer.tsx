@@ -24,11 +24,13 @@ const Customizer: React.FC = () => {
     logo,
     logoPath,
     logoSize,
+    logoPositionX,
     logoPositionY,
     logoUrl,
     clothText,
     clothTextColor,
     clothTextSize,
+    clothTextPositionX,
     clothTextPositionY,
     design,
     designPath,
@@ -38,11 +40,13 @@ const Customizer: React.FC = () => {
     updateLogo,
     updateLogoPath,
     updateLogoSize,
+    updateLogoPositionX,
     updateLogoPositionY,
     updateLogoUrl,
     updateClothText,
     updateClothTextColor,
     updateClothTextSize,
+    updateClothTextPositionX,
     updateClothTextPositionY,
     updateDesign,
     updateDesignPath,
@@ -72,11 +76,13 @@ const Customizer: React.FC = () => {
     updateLogo("");
     updateLogoPath("");
     updateLogoSize(15);
+    updateLogoPositionX(0);
     updateLogoPositionY(0);
     updateLogoUrl("");
     updateClothText("");
     updateClothTextColor("#ffffff");
     updateClothTextSize(100);
+    updateClothTextPositionX(100);
     updateClothTextPositionY(100);
     updateDesign("");
     updateDesignPath("");
@@ -105,11 +111,13 @@ const Customizer: React.FC = () => {
             logo,
             logoPath,
             logoSize,
+            logoPositionX,
             logoPositionY,
             logoUrl,
             clothText,
             clothTextColor,
             clothTextSize,
+            clothTextPositionX,
             clothTextPositionY,
             design,
             designPath,
@@ -121,9 +129,7 @@ const Customizer: React.FC = () => {
       if (response.ok) {
         const result: updateApiResponse = await response.json();
         console.log(result.message);
-        // alert(result.message);
         toast.success(result.message, {
-          // description: "Just fetched your cloth config data from dtabase",
           action: {
             label: "Ok",
             onClick: () => console.log("Ok"),

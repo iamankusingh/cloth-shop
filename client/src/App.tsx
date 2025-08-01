@@ -22,11 +22,13 @@ function App() {
     updateLogo,
     updateLogoPath,
     updateLogoSize,
+    updateLogoPositionX,
     updateLogoPositionY,
     updateLogoUrl,
     updateClothText,
     updateClothTextColor,
     updateClothTextSize,
+    updateClothTextPositionX,
     updateClothTextPositionY,
     updateDesign,
     updateDesignPath,
@@ -63,11 +65,13 @@ function App() {
         updateLogo(result.data.logo);
         updateLogoPath(result.data.logoPath);
         updateLogoSize(result.data.logoSize);
+        updateLogoPositionX(result.data.logoPositionX);
         updateLogoPositionY(result.data.logoPositionY);
         updateLogoUrl(result.data.logoUrl);
         updateClothText(result.data.clothText);
         updateClothTextColor(result.data.clothTextColor);
         updateClothTextSize(result.data.clothTextSize);
+        updateClothTextPositionX(result.data.clothTextPositionX);
         updateClothTextPositionY(result.data.clothTextPositionY);
         updateDesign(result.data.design);
         updateDesignPath(result.data.designPath);
