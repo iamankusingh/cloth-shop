@@ -4,6 +4,7 @@ import { sampleLogo } from "../assets/logo";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
+import { Slider } from "@/components/ui/slider";
 
 interface logoPalletImgInterface {
   [key: string]: string;
@@ -121,34 +122,27 @@ const LogoUpdate: React.FC = () => {
             Remove Image
           </Button>
 
-          <label htmlFor="img-size">Image Size : </label>
+          <label>Image Size : </label>
 
-          <input
-            type="range"
-            name="img-size"
-            id="img-size"
+          <Slider
             min={5}
             max={50}
-            value={logoSize}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              updateLogoSize(parseFloat(e.target.value))
-            }
+            step={1}
+            defaultValue={[logoSize]}
+            onValueChange={(value) => {
+              updateLogoSize(value[0]);
+            }}
           />
 
-          <label htmlFor="positionY">Position Y : </label>
+          <label>Position Y : </label>
 
-          <input
-            type="range"
-            name="positionY"
-            id="positionY"
+          <Slider
             min={-25}
             max={25}
-            value={logoPositionY}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              updateLogoPositionY(parseFloat(e.target.value))
-            }
+            defaultValue={[logoPositionY]}
+            onValueChange={(value) => {
+              updateLogoPositionY(value[0]);
+            }}
           />
         </div>
       ) : (

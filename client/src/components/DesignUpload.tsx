@@ -2,6 +2,7 @@ import { useRef } from "react";
 import useClothConfigStore from "../store/clothConfigStore";
 import { sampleDesigns } from "../assets/design";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 
 interface designPalletImgInterface {
   [key: string]: string;
@@ -77,18 +78,15 @@ const DesignUpload: React.FC = () => {
             Remove image
           </Button>
 
-          <label htmlFor="scale">Image Size : </label>
+          <label>Image Size : </label>
 
-          <input
-            type="range"
-            name="scale"
-            id="scale"
-            value={designScale}
+          <Slider
             min={30}
             max={100}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              updateDesignScale(parseFloat(e.target.value));
+            step={1}
+            defaultValue={[designScale]}
+            onValueChange={(value) => {
+              updateDesignScale(value[0]);
             }}
           />
         </div>

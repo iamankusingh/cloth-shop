@@ -3,6 +3,7 @@ import useClothConfigStore from "../store/clothConfigStore";
 import ColorPicker from "./ColorPicker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 
 const TextInput: React.FC = () => {
   const [text, setText] = useState<string>("");
@@ -51,35 +52,31 @@ const TextInput: React.FC = () => {
       </div>
 
       <div className="flex flex-col items-center gap-2">
-        <label htmlFor="txt-size">Text Size : </label>
+        <label>Text Size : </label>
 
-        <input
-          type="range"
-          name="txt-size"
-          id="txt-size"
+        <Slider
           min={50}
           max={200}
-          value={clothTextSize}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateClothTextSize(parseFloat(e.target.value))
-          }
+          step={1}
+          defaultValue={[clothTextSize]}
+          onValueChange={(value) => {
+            updateClothTextSize(value[0]);
+          }}
         />
 
-        <label htmlFor="positionY">Position Y : </label>
+        <label>Position Y : </label>
 
-        <input
-          type="range"
-          name="positionY"
-          id="positionY"
-          min={-150}
+        <Slider
+          min={-200}
           max={150}
-          value={clothTextPositionY}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateClothTextPositionY(parseFloat(e.target.value))
-          }
+          step={1}
+          defaultValue={[clothTextPositionY]}
+          onValueChange={(value) => {
+            updateClothTextPositionY(value[0]);
+          }}
         />
+        <br />
+
         <ColorPicker color={clothTextColor} updator={updateClothTextColor} />
       </div>
     </div>
