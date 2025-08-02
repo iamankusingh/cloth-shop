@@ -18,14 +18,16 @@ export interface ClothConfigState {
 
   clothText: string;
   updateClothText: (newText: string) => void;
-  clothTextColor: string;
-  updateClothTextColor: (color: string) => void;
+  clothFont: string;
+  updateClothFont: (newFont: string) => void;
   clothTextSize: number;
   updateClothTextSize: (size: number) => void;
   clothTextPositionX: number;
   updateClothTextPositionX: (positionX: number) => void;
   clothTextPositionY: number;
   updateClothTextPositionY: (positionY: number) => void;
+  clothTextColor: string;
+  updateClothTextColor: (color: string) => void;
 
   design: string;
   updateDesign: (img: string) => void;
@@ -45,51 +47,40 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
 
   logo: "",
   updateLogo: (img) => set(() => ({ logo: img })),
-
   logoPath: "",
   updateLogoPath: (path) => set(() => ({ logoPath: path })),
-
   logoSize: 15,
   updateLogoSize: (size) => set(() => ({ logoSize: size })),
-
   logoPositionX: 0,
   updateLogoPositionX: (positionX) => set(() => ({ logoPositionX: positionX })),
-
   logoPositionY: 0,
   updateLogoPositionY: (positionY) => set(() => ({ logoPositionY: positionY })),
-
   logoUrl: "",
   updateLogoUrl: (url) => set(() => ({ logoUrl: url })),
 
   clothText: "",
   updateClothText: (newText) => set(() => ({ clothText: newText })),
-
-  clothTextColor: "#ffffff",
-  updateClothTextColor: (color) => set(() => ({ clothTextColor: color })),
-
+  clothFont: "./AlumniSansSC-VariableFont_wght.ttf",
+  updateClothFont: (newFont) => set(() => ({ clothFont: newFont })),
   clothTextSize: 100,
   updateClothTextSize: (size) => set(() => ({ clothTextSize: size })),
-
   clothTextPositionX: 0,
   updateClothTextPositionX: (positionX) =>
     set(() => ({ clothTextPositionX: positionX })),
-
   clothTextPositionY: 100,
   updateClothTextPositionY: (positionY) =>
     set(() => ({ clothTextPositionY: positionY })),
+  clothTextColor: "#ffffff",
+  updateClothTextColor: (color) => set(() => ({ clothTextColor: color })),
 
   design: "",
   updateDesign: (img) => set(() => ({ design: img })),
-
   designPath: "",
   updateDesignPath: (path) => set(() => ({ designPath: path })),
-
   designScale: 100,
   updateDesignScale: (scale) => set(() => ({ designScale: scale })),
-
   clothSize: "",
   updateClothSize: (size) => set(() => ({ clothSize: size })),
-
   clothFabric: "",
   updateClothFabric: (fabric) => set(() => ({ clothFabric: fabric })),
 }));

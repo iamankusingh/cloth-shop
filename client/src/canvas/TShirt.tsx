@@ -7,6 +7,8 @@ import * as THREE from "three";
 import useClothConfigStore from "../store/clothConfigStore";
 import { useMemo } from "react";
 
+// import { fontStyles } from "@/assets/fonts";
+
 const TShirt: React.FC = () => {
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
   const {
@@ -17,6 +19,7 @@ const TShirt: React.FC = () => {
     logoPositionY,
     logoUrl,
     clothText,
+    clothFont,
     clothTextColor,
     clothTextSize,
     clothTextPositionX,
@@ -49,17 +52,46 @@ const TShirt: React.FC = () => {
     if (!ctx) return null;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = `bold ${clothTextSize}px Arial`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = clothTextColor;
-    ctx.fillText(clothText, canvas.width / 2, canvas.height / 2);
+
+    if (clothFont && clothFont.endsWith(".ttf")) {
+      const font = new FontFace("CustomFont", `url(${clothFont})`);
+      font.load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+        ctx.font = `bold ${clothTextSize}px CustomFont`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = clothTextColor;
+        ctx.fillText(clothText, canvas.width / 2, canvas.height / 2);
+      });
+      // Return a texture anyway, but it will update after font loads
+    } else {
+      ctx.font = `bold ${clothTextSize}px ${clothFont}`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = clothTextColor;
+      ctx.fillText(clothText, canvas.width / 2, canvas.height / 2);
+    }
 
     const texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
 
+    // If using custom font, update texture after font loads
+    if (clothFont && clothFont.endsWith(".ttf")) {
+      const font = new FontFace("CustomFont", `url(${clothFont})`);
+      font.load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `bold ${clothTextSize}px CustomFont`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = clothTextColor;
+        ctx.fillText(clothText, canvas.width / 2, canvas.height / 2);
+        texture.needsUpdate = true;
+      });
+    }
+
     return texture;
-  }, [clothText, clothTextSize, clothTextColor]);
+  }, [clothText, clothTextSize, clothTextColor, clothFont]);
 
   return (
     <>
@@ -83,7 +115,11 @@ const TShirt: React.FC = () => {
         {/* tetx */}
         {clothText && textTexture && (
           <Decal
-            position={[clothTextPositionX / 1000, clothTextPositionY / 1000, 0.15]} // Adjust position for best fit
+            position={[
+              clothTextPositionX / 1000,
+              clothTextPositionY / 1000,
+              0.15,
+            ]} // Adjust position for best fit
             rotation={[0, 0, 0]}
             scale={[0.25, 0.08, 0.25]} // Adjust scale for text aspect ratio
             map={textTexture}

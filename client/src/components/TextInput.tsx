@@ -4,12 +4,23 @@ import ColorPicker from "./ColorPicker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { fontStyles } from "@/assets/fonts";
 
 const TextInput: React.FC = () => {
   const [text, setText] = useState<string>("");
   const {
     clothText,
     updateClothText,
+    clothFont,
+    updateClothFont,
     clothTextColor,
     updateClothTextColor,
     clothTextSize,
@@ -54,6 +65,28 @@ const TextInput: React.FC = () => {
       </div>
 
       <div className="flex flex-col items-center gap-2">
+        <Select
+          value={clothFont}
+          onValueChange={(value) => {
+            updateClothFont(value);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Size" />
+          </SelectTrigger>
+          <SelectContent>
+            {/* <SelectItem value="Arial">Defalur Font</SelectItem> */}
+
+            {fontStyles.flatMap((fontObj) =>
+              Object.entries(fontObj).map(([name, path]) => (
+                <SelectItem key={name} value={path}>
+                  {name}
+                </SelectItem>
+              ))
+            )}
+          </SelectContent>
+        </Select>
+
         <label>Text Size : </label>
 
         <Slider
