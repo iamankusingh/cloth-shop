@@ -26,6 +26,7 @@ function App() {
     updateLogoPositionY,
     updateLogoUrl,
     updateClothText,
+    updateClothFont,
     updateClothTextColor,
     updateClothTextSize,
     updateClothTextPositionX,
@@ -69,6 +70,7 @@ function App() {
         updateLogoPositionY(result.data.logoPositionY);
         updateLogoUrl(result.data.logoUrl);
         updateClothText(result.data.clothText);
+        updateClothFont(result.data.clothFont);
         updateClothTextColor(result.data.clothTextColor);
         updateClothTextSize(result.data.clothTextSize);
         updateClothTextPositionX(result.data.clothTextPositionX);

@@ -12,6 +12,7 @@ interface clothConfigInterface {
   logoUrl?: string;
 
   clothText?: string;
+  clothFont?: string;
   clothTextColor?: string;
   clothTextSize?: number;
   clothTextPositionX?: number;
@@ -56,6 +57,9 @@ const clothConfigSchema = new mongoose.Schema({
   },
 
   clothText: {
+    type: String,
+  },
+  clothFont: {
     type: String,
   },
   clothTextColor: {

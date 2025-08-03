@@ -80,7 +80,10 @@ const TextInput: React.FC = () => {
             {fontStyles.flatMap((fontObj) =>
               Object.entries(fontObj).map(([name, path]) => {
                 // Dynamically inject @font-face if not already present
-                if (typeof window !== "undefined" && !document.getElementById(`font-face-${name}`)) {
+                if (
+                  typeof window !== "undefined" &&
+                  !document.getElementById(`font-face-${name}`)
+                ) {
                   const style = document.createElement("style");
                   style.id = `font-face-${name}`;
                   style.innerHTML = `
@@ -95,7 +98,7 @@ const TextInput: React.FC = () => {
                 return (
                   <SelectItem
                     key={name}
-                    value={name}
+                    value={path}
                     style={{ fontFamily: name }}
                   >
                     {name}

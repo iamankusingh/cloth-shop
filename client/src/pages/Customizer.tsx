@@ -28,6 +28,7 @@ const Customizer: React.FC = () => {
     logoPositionY,
     logoUrl,
     clothText,
+    clothFont,
     clothTextColor,
     clothTextSize,
     clothTextPositionX,
@@ -44,6 +45,7 @@ const Customizer: React.FC = () => {
     updateLogoPositionY,
     updateLogoUrl,
     updateClothText,
+    updateClothFont,
     updateClothTextColor,
     updateClothTextSize,
     updateClothTextPositionX,
@@ -80,6 +82,7 @@ const Customizer: React.FC = () => {
     updateLogoPositionY(0);
     updateLogoUrl("");
     updateClothText("");
+    updateClothFont("/src/assets/fonts/Poppins-Regular.ttf");
     updateClothTextColor("#ffffff");
     updateClothTextSize(100);
     updateClothTextPositionX(100);
@@ -115,6 +118,7 @@ const Customizer: React.FC = () => {
             logoPositionY,
             logoUrl,
             clothText,
+            clothFont,
             clothTextColor,
             clothTextSize,
             clothTextPositionX,
