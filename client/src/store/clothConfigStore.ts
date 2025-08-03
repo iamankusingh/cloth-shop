@@ -60,7 +60,7 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
 
   clothText: "",
   updateClothText: (newText) => set(() => ({ clothText: newText })),
-  clothFont: "./AlumniSansSC-VariableFont_wght.ttf",
+  clothFont: "/src/assets/fonts/Poppins-Regular.ttf",
   updateClothFont: (newFont) => set(() => ({ clothFont: newFont })),
   clothTextSize: 100,
   updateClothTextSize: (size) => set(() => ({ clothTextSize: size })),

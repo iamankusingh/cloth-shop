@@ -24,6 +24,7 @@ import NothingYouCouldDo from "./NothingYouCouldDo-Regular.ttf";
 import Pacifico from "./Pacifico-Regular.ttf";
 import PlaywriteAUQLD from "./PlaywriteAUQLD-VariableFont_wght.ttf";
 import PlaywriteHU from "./PlaywriteHU-VariableFont_wght.ttf";
+import Poppins from "./Poppins-Regular.ttf";
 import PressStart2P from "./PressStart2P-Regular.ttf";
 import Sacramento from "./Sacramento-Regular.ttf";
 import ShadowsIntoLight from "./ShadowsIntoLight-Regular.ttf";
@@ -56,6 +57,7 @@ export const fontStyles = [
   { Pacifico: Pacifico },
   { "Playwrite AUQLD": PlaywriteAUQLD },
   { "Playwrite HU": PlaywriteHU },
+  { Poppins: Poppins },
   { "Press Start 2P": PressStart2P },
   { Sacramento: Sacramento },
   { "Shadows Into Light": ShadowsIntoLight },

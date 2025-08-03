@@ -72,17 +72,36 @@ const TextInput: React.FC = () => {
           }}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Size" />
+            <SelectValue placeholder="Font" />
           </SelectTrigger>
           <SelectContent>
             {/* <SelectItem value="Arial">Defalur Font</SelectItem> */}
 
             {fontStyles.flatMap((fontObj) =>
-              Object.entries(fontObj).map(([name, path]) => (
-                <SelectItem key={name} value={path}>
-                  {name}
-                </SelectItem>
-              ))
+              Object.entries(fontObj).map(([name, path]) => {
+                // Dynamically inject @font-face if not already present
+                if (typeof window !== "undefined" && !document.getElementById(`font-face-${name}`)) {
+                  const style = document.createElement("style");
+                  style.id = `font-face-${name}`;
+                  style.innerHTML = `
+                    @font-face {
+                      font-family: '${name}';
+                      src: url('${path}') format('truetype');
+                      font-display: swap;
+                    }
+                  `;
+                  document.head.appendChild(style);
+                }
+                return (
+                  <SelectItem
+                    key={name}
+                    value={name}
+                    style={{ fontFamily: name }}
+                  >
+                    {name}
+                  </SelectItem>
+                );
+              })
             )}
           </SelectContent>
         </Select>
