@@ -11,6 +11,7 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import Order from "./pages/Order.tsx";
 import Header from "./components/Header.tsx";
 import { Toaster } from "@/components/ui/sonner";
+import Admin from "./pages/Admin.tsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<App />} />
             <Route path="/customizer" element={<Customizer />} />
             <Route path="/order" element={<Order />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </BrowserRouter>
       </ClerkProvider>

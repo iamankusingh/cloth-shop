@@ -106,7 +106,7 @@ function App() {
       <PageTitle title="Cloth shop - Home" />
 
       <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] flex items-center justify-center">
-        <section className="lg:w-[50vw] p-2">
+        <section className="p-2">
           <h1 className="lg:pt-20 text-5xl md:text-7xl font-bold">
             Design Your <span style={{ color: hexColor }}>Clothes</span>
           </h1>

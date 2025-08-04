@@ -18,7 +18,8 @@ export const fetchClothConfig = async (req: Request, res: Response) => {
         // return detched cloth config data
         data: clothConfigData,
       });
-      console.log("Send cloth config data", clothConfigData);
+      // console.log("Send cloth config data", clothConfigData);
+      console.log("Send cloth config data");
     } else {
       res.status(404).json({
         success: false,
