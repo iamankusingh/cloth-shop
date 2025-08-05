@@ -13,6 +13,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
   "dependencies": {
+    "@clerk/backend": "^2.6.2",
     "@types/express": "^5.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",

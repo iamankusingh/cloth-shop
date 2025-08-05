@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 const Admin: React.FC = () => {
   // from clerk
-  const { isSignedIn, userId } = useAuth();
+  const { isSignedIn, userId, getToken } = useAuth();
 
   // user zustand store
   const { updateIsSignedIn, updateUid } = useUserStore();
@@ -16,16 +16,15 @@ const Admin: React.FC = () => {
 
   const verifyAdmin = async (): Promise<void> => {
     console.log("Verifying admin...", userId);
+
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/admin?uid=${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-type": "Application/json",
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3000/api/v1/admin", {
+        method: "GET",
+        headers: {
+          "Content-type": "Application/json",
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
 
       if (response) {
         const result = await response.json();
@@ -54,6 +53,7 @@ const Admin: React.FC = () => {
           method: "GET",
           headers: {
             "Content-type": "Application/json",
+            Authorization: `Bearer ${await getToken()}`,
           },
         }
       );

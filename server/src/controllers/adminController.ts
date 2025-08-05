@@ -5,7 +5,7 @@ import { ADMIN_ID } from "../config/env";
 export const isAdmin = async (req: Request, res: Response) => {
   try {
     // uid from clerk
-    const uid = req.query.uid as string;
+    const uid = (req as any).userId;
 
     console.log(uid, "===", ADMIN_ID);
 
@@ -34,6 +34,13 @@ export const isAdmin = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
+    // uid from clerk
+    const uid = (req as any).userId;
+
+    if (uid !== ADMIN_ID) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
     console.log("Sending all users data");
 
     const userData = await UserModel.find({});
