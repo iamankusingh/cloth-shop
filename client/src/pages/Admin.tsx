@@ -46,6 +46,39 @@ const Admin: React.FC = () => {
     }
   };
 
+  const fetchAllUsers = async (): Promise<void> => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/v1/admin/getAllUsers",
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "Application/json",
+          },
+        }
+      );
+
+      if (response) {
+        const result = await response.json();
+        console.log("all users data ", result);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to fetch users data", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     if (isSignedIn === undefined) return;
 
@@ -55,6 +88,7 @@ const Admin: React.FC = () => {
       console.log("Someone has signed in, verifying for admin");
 
       verifyAdmin();
+      fetchAllUsers();
     } else {
       navigate("/");
     }

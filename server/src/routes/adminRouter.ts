@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { isAdmin } from "../controllers/adminController";
+import { getAllUsers, isAdmin } from "../controllers/adminController";
 
 const adminRouter = Router();
 
 adminRouter.get("/", isAdmin);
+adminRouter.get("/getAllUsers", getAllUsers)
 
 export default adminRouter;

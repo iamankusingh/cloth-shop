@@ -26,14 +26,6 @@ const userSchema = new mongoose.Schema(
       minLength: 2,
       maxLength: 30,
     },
-
-    email: {
-      type: String,
-      unique: true,
-      trim: true,
-      lowercase: true,
-      match: [/^\S+@\S+\.\S+$/, "please fill a valid email address"],
-    },
     houseNo: {
       type: String,
       trim: true,
