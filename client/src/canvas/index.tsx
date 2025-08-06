@@ -7,6 +7,7 @@ import {
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
+import { useLocation } from "react-router-dom";
 
 const CameraWithLight = () => {
   return (
@@ -17,8 +18,15 @@ const CameraWithLight = () => {
 };
 
 const CanvasModel: React.FC = () => {
+  const location = useLocation();
+  console.log("CanvasModel location:", location);
+
   return (
-    <article className="h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0">
+    <article
+      className={`h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0 ${
+        location.pathname.endsWith("/admin") ? "hidden" : ""
+      }`}
+    >
       <Canvas
         shadows
         camera={{ position: [0, 0, 0], fov: 25 }}
