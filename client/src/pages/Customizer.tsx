@@ -53,6 +53,8 @@ const Customizer: React.FC = () => {
     updateDesign,
     updateDesignPath,
     updateDesignScale,
+    updateClothSize,
+    updateClothFabric,
   } = useClothConfigStore();
 
   // from clerk
@@ -90,6 +92,8 @@ const Customizer: React.FC = () => {
     updateDesign("");
     updateDesignPath("");
     updateDesignScale(0);
+    updateClothSize("");
+    updateClothFabric("");
 
     if (isSignedIn) {
       updateClothConfig();

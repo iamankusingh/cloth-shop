@@ -13,6 +13,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface updateApiResponse {
   success: boolean;
@@ -75,6 +86,7 @@ const Order: React.FC = () => {
     updateClothSize,
     clothFabric,
     updateClothFabric,
+    price,
   } = useClothConfigStore();
 
   useEffect(() => {
@@ -179,6 +191,26 @@ const Order: React.FC = () => {
 
   // update or reset cloth configuration api call
   const updateClothConfig = async (): Promise<void> => {
+    if (!clothSize) {
+      toast.error("Please select cloth size", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+      return;
+    }
+
+    if (!clothFabric) {
+      toast.error("Please select cloth fabric", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+      return;
+    }
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
@@ -232,10 +264,57 @@ const Order: React.FC = () => {
     handleUser();
   };
 
+  const purchase = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/order?uid=${uid}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            hexColor,
+            logo,
+            logoPath,
+            logoSize,
+            logoPositionX,
+            logoPositionY,
+            clothText,
+            clothFont,
+            clothTextColor,
+            clothTextSize,
+            clothTextPositionX,
+            clothTextPositionY,
+            design,
+            designPath,
+            designScale,
+            clothSize,
+            clothFabric,
+            price,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const result: updateApiResponse = await response.json();
+        console.log(result.message);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (isSignedIn) {
       fetchUserData();
-      updateClothConfig();
+      // updateClothConfig();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid, isSignedIn]);
@@ -405,7 +484,42 @@ const Order: React.FC = () => {
                 </SelectContent>
               </Select>
 
-              <Button onClick={() => updateClothConfig()}>Update</Button>
+              <Button variant="outline" onClick={() => updateClothConfig()}>
+                Update
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button>Order Now (Rs.500)</Button>
+                </AlertDialogTrigger>
+
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+
+                    <AlertDialogDescription>
+                      <p>
+                        Please note that actual product may be differ from the
+                        one shown in the preview.
+                      </p>
+                      <p className="text-lg font-extrabold">
+                        Payment will be Cash On Delivery
+                      </p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => purchase()}>
+                      Purchase
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </section>
         ) : (

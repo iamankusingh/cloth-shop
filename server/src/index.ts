@@ -4,6 +4,7 @@ import connectToDatabase from "./database/mongodb";
 import userRouter from "./routes/userRoute";
 import clothConfigRouter from "./routes/clothConfigRoute";
 import adminRouter from "./routes/adminRoute";
+import orderRouter from "./routes/orderRoute";
 
 const app = express();
 const PORT = 3000;
@@ -16,6 +17,7 @@ app.use(cors());
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/cloth-config", clothConfigRouter);
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/order", orderRouter);
 
 // default route
 app.get("/", (req: Request, res: Response) => {

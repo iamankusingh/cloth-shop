@@ -39,6 +39,9 @@ export interface ClothConfigState {
   updateClothSize: (size: string) => void;
   clothFabric: string;
   updateClothFabric: (fabric: string) => void;
+
+  price: number;
+  updatePrice: (price: number) => void;
 }
 
 const useClothConfigStore = create<ClothConfigState>((set) => ({
@@ -83,6 +86,9 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   updateClothSize: (size) => set(() => ({ clothSize: size })),
   clothFabric: "",
   updateClothFabric: (fabric) => set(() => ({ clothFabric: fabric })),
+
+  price: 500,
+  updatePrice: (price) => set(() => ({ price: price })),
 }));
 
 export default useClothConfigStore;
