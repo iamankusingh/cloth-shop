@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/userModel";
 import { ADMIN_ID } from "../config/env";
+import OrderModel from "../models/orderModel";
 
 export const isAdmin = async (req: Request, res: Response) => {
   try {
@@ -53,6 +54,39 @@ export const getAllUsers = async (req: Request, res: Response) => {
         data: userData,
       });
       console.log("Fetched all users data", userData);
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "None users found",
+      });
+      console.log("None users found");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    // uid from clerk
+    const uid = (req as any).userId;
+
+    if (uid !== ADMIN_ID) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    console.log("Sending all orders data");
+
+    const orderData = await OrderModel.find({});
+
+    if (orderData) {
+      res.status(200).json({
+        success: true,
+        message: "Fetched all orders data",
+        // return fetched user data
+        data: orderData,
+      });
+      console.log("Sent all users data", orderData);
     } else {
       res.status(404).json({
         success: false,

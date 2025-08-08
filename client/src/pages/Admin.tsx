@@ -17,15 +17,39 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface User {
+  createdAt: string;
   uid: string;
   fullName: string;
-  createdAt: string;
   houseNo: number;
   locality: string;
   city: string;
   district: string;
   pincode: number;
   phoneNo: number;
+}
+
+interface order {
+  createdAt: string;
+  uid: string;
+  hexColor: string;
+  logo?: string;
+  logoPath?: string;
+  logoSize?: number;
+  logoPositionX?: number;
+  logoPositionY?: number;
+  logoUrl?: string;
+  clothText?: string;
+  clothFont?: string;
+  clothTextColor?: string;
+  clothTextSize?: number;
+  clothTextPositionX?: number;
+  clothTextPositionY?: number;
+  design?: string;
+  designPath?: string;
+  designScale?: number;
+  clothSize?: string;
+  clothFabric?: string;
+  price?: number;
 }
 
 const Admin: React.FC = () => {
@@ -38,6 +62,7 @@ const Admin: React.FC = () => {
   const navigate = useNavigate();
 
   const [allUsersList, setAllUsersList] = useState<[]>([]);
+  const [allOrderList, setAllOrderList] = useState<[]>([]);
 
   const verifyAdmin = async (): Promise<void> => {
     console.log("Verifying admin...", userId);
@@ -105,6 +130,41 @@ const Admin: React.FC = () => {
     }
   };
 
+  const fetchAllOrders = async (): Promise<void> => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/v1/admin/getAllOrders",
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "Application/json",
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+
+      if (response) {
+        const result = await response.json();
+        console.log("Fetched all orders data ", result);
+        setAllOrderList(result.data);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to fetch orders data", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     if (isSignedIn === undefined) return;
 
@@ -134,8 +194,12 @@ const Admin: React.FC = () => {
 
             <Tabs defaultValue="allUsers">
               <TabsList className="w-full">
-                <TabsTrigger value="allUsers">All Users</TabsTrigger>
-                <TabsTrigger value="orders">Orders</TabsTrigger>
+                <TabsTrigger value="allUsers" onClick={() => fetchAllUsers()}>
+                  All Users
+                </TabsTrigger>
+                <TabsTrigger value="orders" onClick={() => fetchAllOrders()}>
+                  Orders
+                </TabsTrigger>
                 <TabsTrigger value="processing">Prossesing</TabsTrigger>
               </TabsList>
 
@@ -157,7 +221,7 @@ const Admin: React.FC = () => {
                       </CardHeader>
 
                       <CardContent>
-                        <p>{`${user.houseNo} ${user.locality} ${user.city} ${user.district} - ${user.pincode}`}</p>
+                        <p>{`${user.houseNo}, ${user.locality}, ${user.city}, ${user.district} - ${user.pincode}`}</p>
                         <p className="mt-2">{user.phoneNo}</p>
                       </CardContent>
 
@@ -170,7 +234,44 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="orders">
-                <div>Current Orders</div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {allOrderList.map((order: order, idx: number) => (
+                    <Card key={idx} className="mb-4">
+                      <CardHeader>
+                        <CardTitle>Ballu</CardTitle>
+
+                        <CardDescription>
+                          <p>{order.uid}</p>
+                          <p>{order.createdAt}</p>
+                        </CardDescription>
+
+                        <CardAction>
+                          <Button variant="destructive">Reject order</Button>
+                        </CardAction>
+                      </CardHeader>
+
+                      <CardContent className="flex items-center gap-2">
+                        <div
+                          className="w-10 h-10 rounded-full"
+                          style={{ backgroundColor: order.hexColor }}
+                        ></div>
+
+                        <p>{order.logo}</p>
+                        <p>{order.clothText}</p>
+                        <p>{order.design}</p>
+                      </CardContent>
+
+                      <CardFooter className="flex justify-center gap-2">
+                        <Button variant="outline">
+                          Mark as start Producing
+                        </Button>
+                        <Button variant="outline">
+                          Preview
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
               </TabsContent>
 
               <TabsContent value="processing">
