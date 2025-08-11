@@ -15,6 +15,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useClothConfigStore from "@/store/clothConfigStore";
+import useCanvasStore from "@/store/canvasStore";
 
 interface User {
   createdAt: string;
@@ -58,6 +60,30 @@ const Admin: React.FC = () => {
 
   // user zustand store
   const { updateIsSignedIn, updateUid } = useUserStore();
+
+  // cloth config zustand store
+  const {
+    updateHexColor,
+    updateLogo,
+    updateLogoPath,
+    updateLogoSize,
+    updateLogoPositionX,
+    updateLogoPositionY,
+    updateLogoUrl,
+    updateClothText,
+    updateClothFont,
+    updateClothTextColor,
+    updateClothTextSize,
+    updateClothTextPositionX,
+    updateClothTextPositionY,
+    updateDesign,
+    updateDesignPath,
+    updateDesignScale,
+    updateClothSize,
+    updateClothFabric,
+  } = useClothConfigStore();
+
+  const { updateShow } = useCanvasStore();
 
   const navigate = useNavigate();
 
@@ -165,7 +191,74 @@ const Admin: React.FC = () => {
     }
   };
 
+  const refreshDashboard = (): void => {
+    fetchAllUsers();
+    fetchAllOrders();
+  };
+
+  const fetchClothConfig = async (): Promise<void> => {
+    try {
+      const response: Response = await fetch(
+        `http://localhost:3000/api/v1/cloth-config?uid=${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("fetch cloth config data ", result);
+        toast.success(result.message, {
+          // description: "Just fetched your cloth config data from dtabase",
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
+
+        // update zustand store with fetched data
+        updateHexColor(result.data.hexColor);
+        updateLogo(result.data.logo);
+        updateLogoPath(result.data.logoPath);
+        updateLogoSize(result.data.logoSize);
+        updateLogoPositionX(result.data.logoPositionX);
+        updateLogoPositionY(result.data.logoPositionY);
+        updateLogoUrl(result.data.logoUrl);
+        updateClothText(result.data.clothText);
+        updateClothFont(result.data.clothFont);
+        updateClothTextColor(result.data.clothTextColor);
+        updateClothTextSize(result.data.clothTextSize);
+        updateClothTextPositionX(result.data.clothTextPositionX);
+        updateClothTextPositionY(result.data.clothTextPositionY);
+        updateDesign(result.data.design);
+        updateDesignPath(result.data.designPath);
+        updateDesignScale(result.data.designScale);
+        updateClothSize(result.data.clothSize);
+        updateClothFabric(result.data.clothFabric);
+      }
+    } catch (error) {
+      console.error("Unable to fetch cloth config data by default", error);
+      toast.error("Unable to fetch cloth config data", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+    }
+  };
+
+  const previewCloth = (uid: string): void => {
+    updateUid(uid);
+    fetchClothConfig();
+    updateShow(true);
+  };
+
   useEffect(() => {
+    updateShow(false);
+
     if (isSignedIn === undefined) return;
 
     if (isSignedIn) {
@@ -175,6 +268,7 @@ const Admin: React.FC = () => {
 
       verifyAdmin();
       fetchAllUsers();
+      fetchAllOrders();
     } else {
       navigate("/");
     }
@@ -187,19 +281,21 @@ const Admin: React.FC = () => {
 
       <main className="min-h-[50vh] lg:min-h-screen w-screen lg:min-w-[50vw]">
         {isSignedIn ? (
-          <section className="p-2">
-            <div className="pt-12">
+          <section className="px-2">
+            <div className="pt-12 pb-1 flex items-center justify-between">
               <h2 className="">Welcome Admin</h2>
+
+              <Button variant="outline" onClick={() => refreshDashboard()}>
+                Refresh
+              </Button>
             </div>
 
-            <Tabs defaultValue="allUsers">
+            <Tabs defaultValue="allUsers" className="z-1000">
               <TabsList className="w-full">
-                <TabsTrigger value="allUsers" onClick={() => fetchAllUsers()}>
+                <TabsTrigger value="allUsers" onClick={() => updateShow(false)}>
                   All Users
                 </TabsTrigger>
-                <TabsTrigger value="orders" onClick={() => fetchAllOrders()}>
-                  Orders
-                </TabsTrigger>
+                <TabsTrigger value="orders">Orders</TabsTrigger>
                 <TabsTrigger value="processing">Prossesing</TabsTrigger>
               </TabsList>
 
@@ -265,7 +361,10 @@ const Admin: React.FC = () => {
                         <Button variant="outline">
                           Mark as start Producing
                         </Button>
-                        <Button variant="outline">
+                        <Button
+                          variant="outline"
+                          onClick={() => previewCloth(order.uid)}
+                        >
                           Preview
                         </Button>
                       </CardFooter>
