@@ -30,9 +30,9 @@ interface orderInterface {
 const orderSchema = new mongoose.Schema(
   {
     uid: {
-      type: String,
+      type: String, 
       required: [true, "User ID is required"],
-      unique: true,
+      // unique: true, 
     },
 
     hexColor: {
