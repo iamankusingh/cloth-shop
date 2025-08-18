@@ -13,16 +13,8 @@ export const orderCloth = async (req: Request, res: Response) => {
     // get cloth config data from client
     console.log("Order config data from client ", req.body);
 
-    // create cloth config order if doesn't exists else just modify
-    // const existingOrderConfig = await OrderModel.findOne({ uid });
-
-    // if (!existingOrderConfig) {
-    console.log(
-      "Creating order file with uid",
-      uid,
-      "and with data",
-      req.body
-    );
+    // create cloth config order
+    console.log("Creating order file with uid", uid, "and with data", req.body);
 
     // creating config
     const newOrderhConfig = await OrderModel.create(
@@ -52,42 +44,6 @@ export const orderCloth = async (req: Request, res: Response) => {
       });
       console.log("Failed to receive order");
     }
-    // } else {
-    // uid from clerk
-    // const uid = req.query.uid as string;
-
-    // if exists then just update
-    // console.log(
-    //   "Order config already exists, updating with uid",
-    //   uid,
-    //   "and with data",
-    //   req.body
-    // );
-
-    // // update cloth config
-    // const updateOrderConfig = await OrderModel.findOneAndUpdate(
-    //   { uid },
-    //   req.body
-    // );
-
-    // await session.commitTransaction();
-    // session.endSession();
-
-    // // api status code and response
-    // if (updateOrderConfig) {
-    //   res.status(201).json({
-    //     success: true,
-    //     message: "Order placed",
-    //   });
-    //   console.log("New order", updateOrderConfig);
-    // } else {
-    //   res.status(400).json({
-    //     success: false,
-    //     message: "Failed to place order",
-    //   });
-    //   console.log("Failed to receive order");
-    // }
-    // }
   } catch (error) {
     await session.abortTransaction();
     session.endSession();

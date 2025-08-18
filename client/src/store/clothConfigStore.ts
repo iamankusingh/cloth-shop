@@ -40,6 +40,9 @@ export interface ClothConfigState {
   clothFabric: string;
   updateClothFabric: (fabric: string) => void;
 
+  quantity: number;
+  updateQuantity: (quantity: number) => void;
+
   price: number;
   updatePrice: (price: number) => void;
 }
@@ -86,6 +89,9 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   updateClothSize: (size) => set(() => ({ clothSize: size })),
   clothFabric: "",
   updateClothFabric: (fabric) => set(() => ({ clothFabric: fabric })),
+
+  quantity: 1,
+  updateQuantity: (quantity) => set(() => ({ quantity: quantity })),
 
   price: 500,
   updatePrice: (price) => set(() => ({ price: price })),

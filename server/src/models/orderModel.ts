@@ -24,15 +24,17 @@ interface orderInterface {
   clothSize?: string;
   clothFabric?: string;
 
+  quantity?: number;
+
   price?: number;
 }
 
 const orderSchema = new mongoose.Schema(
   {
     uid: {
-      type: String, 
+      type: String,
       required: [true, "User ID is required"],
-      // unique: true, 
+      // unique: true,
     },
 
     hexColor: {
@@ -97,9 +99,13 @@ const orderSchema = new mongoose.Schema(
       enum: ["Cotton", "Silk", "Polyester", "Wool", "Lenin", "Khakhi"],
     },
 
+    quantity: {
+      type: Number,
+      min: [1, "Quantity must be at least 1"],
+    },
+
     price: {
       type: Number,
-      required: [true, "Price is required"],
       min: [0, "Price cannot be negative"],
     },
   },

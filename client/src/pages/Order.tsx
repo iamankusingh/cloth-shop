@@ -86,6 +86,8 @@ const Order: React.FC = () => {
     updateClothSize,
     clothFabric,
     updateClothFabric,
+    quantity,
+    updateQuantity,
     price,
   } = useClothConfigStore();
 
@@ -291,6 +293,7 @@ const Order: React.FC = () => {
             designScale,
             clothSize,
             clothFabric,
+            quantity,
             price,
           }),
         }
@@ -336,59 +339,55 @@ const Order: React.FC = () => {
               className="p-4 grid gric-cols-1 md:grid-cols-2 content-start gap-4 bg-secondary rounded-xl text-xl"
               onSubmit={handleFormSubmit}
             >
-              <div className="inputBox">
+              <div>
                 <label htmlFor="name">Full name</label>
                 <Input
                   type="text"
                   id="name"
                   name="name"
                   required
-                  className="input"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
               </div>
 
-              <div className="inputBox">
+              <div>
                 <label htmlFor="houseNo">House No</label>
                 <Input
                   type="text"
                   id="houseNo"
                   name="houseNo"
                   required
-                  className="input"
                   value={houseNo}
                   onChange={(e) => setHouseNo(e.target.value)}
                 />
               </div>
 
-              <div className="inputBox">
+              <div>
                 <label htmlFor="locality">Locality</label>
                 <Input
                   type="text"
                   id="locality"
                   name="locality"
                   required
-                  className="input"
                   value={locality}
                   onChange={(e) => setLocality(e.target.value)}
                 />
               </div>
 
-              <div className="inputBox">
+              <div>
                 <label htmlFor="city">City</label>
                 <Input
                   type="text"
                   id="city"
                   name="city"
                   required
-                  className="input"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                 />
               </div>
 
-              <div className="inputBox">
+              <div>
                 <label htmlFor="pincode">Pincode</label>
                 <Input
                   type="number"
@@ -397,26 +396,24 @@ const Order: React.FC = () => {
                   required
                   minLength={6}
                   maxLength={6}
-                  className="input"
                   value={pincode}
                   onChange={(e) => setPincode(parseInt(e.target.value))}
                 />
               </div>
 
-              <div className="inputBox">
+              <div>
                 <label htmlFor="district">District</label>
                 <Input
                   type="text"
                   id="district"
                   name="district"
                   required
-                  className="input"
                   value={district}
                   onChange={(e) => setDistrict(e.target.value)}
                 />
               </div>
 
-              <div className="inputBox">
+              <div>
                 <label htmlFor="phoneNo">Phone No</label>
                 <Input
                   type="number"
@@ -425,7 +422,6 @@ const Order: React.FC = () => {
                   required
                   minLength={10}
                   maxLength={12}
-                  className="input"
                   value={phoneNo}
                   onChange={(e) => setPhoneNo(parseInt(e.target.value))}
                 />
@@ -490,6 +486,19 @@ const Order: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-center">
+              <div className="flex">
+                <label htmlFor="quantity">Quantity</label>
+                <Input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  required
+                  minLength={1}
+                  value={quantity}
+                  onChange={(e) => updateQuantity(parseInt(e.target.value))}
+                />
+              </div>
+
               <AlertDialog>
                 <AlertDialogTrigger>
                   <Button>Order Now (Rs.500)</Button>
