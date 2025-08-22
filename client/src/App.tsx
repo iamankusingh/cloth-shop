@@ -117,7 +117,10 @@ function App() {
             clothes.
           </p>
 
-          <LinkButton path="/customizer" title="Customize" />
+          <div className="flex gap-4">
+            <LinkButton path="/customizer" title="Customize" />
+            <LinkButton path="/your-orders" title="Your orders" />
+          </div>
         </section>
       </main>
     </>

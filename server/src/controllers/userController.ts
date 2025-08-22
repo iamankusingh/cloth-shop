@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import UserModel from "../models/userModel";
+import OrderModel from "../models/orderModel";
 
 export const fetchUserData = async (req: Request, res: Response) => {
   try {
@@ -127,5 +128,33 @@ export const handleUser = async (req: Request, res: Response) => {
       message: "Internal server error",
       error: error instanceof Error ? error.message : error,
     });
+  }
+};
+
+export const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    // uid from clerk
+    const uid = req.query.uid as string;
+    console.log("Fetching all order for UID:", uid);
+
+    const allOrders = await OrderModel.find({ uid });
+
+    if (allOrders) {
+      res.status(200).json({
+        success: true,
+        message: "Fetch all orders",
+        // return fetched user data
+        data: allOrders,
+      });
+      console.log("Fetched all order", allOrders);
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+      console.log("User not found");
+    }
+  } catch (error) {
+    console.error(error);
   }
 };

@@ -51,6 +51,7 @@ interface order {
   designScale?: number;
   clothSize?: string;
   clothFabric?: string;
+  quantity?: number;
   price?: number;
 }
 
@@ -59,7 +60,7 @@ const Admin: React.FC = () => {
   const { isSignedIn, userId, getToken } = useAuth();
 
   // user zustand store
-  const { updateIsSignedIn, updateUid } = useUserStore();
+  const { updateIsSignedIn, uid, updateUid } = useUserStore();
 
   // cloth config zustand store
   const {
@@ -81,6 +82,8 @@ const Admin: React.FC = () => {
     updateDesignScale,
     updateClothSize,
     updateClothFabric,
+    updateQuantity,
+    updatePrice,
   } = useClothConfigStore();
 
   const { updateShow } = useCanvasStore();
@@ -199,7 +202,7 @@ const Admin: React.FC = () => {
   const fetchClothConfig = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${userId}`,
+        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
         {
           method: "GET",
           headers: {
@@ -238,6 +241,8 @@ const Admin: React.FC = () => {
         updateDesignScale(result.data.designScale);
         updateClothSize(result.data.clothSize);
         updateClothFabric(result.data.clothFabric);
+        updateQuantity(result.data.quantity);
+        updatePrice(result.data.price);
       }
     } catch (error) {
       console.error("Unable to fetch cloth config data by default", error);
@@ -334,7 +339,7 @@ const Admin: React.FC = () => {
                   {allOrderList.map((order: order, idx: number) => (
                     <Card key={idx} className="mb-4">
                       <CardHeader>
-                        <CardTitle>Ballu</CardTitle>
+                        <CardTitle>Username</CardTitle>
 
                         <CardDescription>
                           <p>{order.uid}</p>
@@ -355,6 +360,8 @@ const Admin: React.FC = () => {
                         <p>{order.logo}</p>
                         <p>{order.clothText}</p>
                         <p>{order.design}</p>
+                        <p>{order.quantity}x</p>
+                        <p>Rs.{order.price}</p>
                       </CardContent>
 
                       <CardFooter className="flex justify-center gap-2">
