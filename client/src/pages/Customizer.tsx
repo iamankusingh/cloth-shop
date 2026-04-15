@@ -131,7 +131,7 @@ const Customizer: React.FC = () => {
             designPath,
             designScale,
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -159,8 +159,8 @@ const Customizer: React.FC = () => {
     <>
       <PageTitle title="Cloth shop - Customize" />
 
-      <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] lg:pt-12 flex flex-col justify-between">
-        <section className="max-w-full p-2 md:text-xl">
+      <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] px-4 lg:pt-16 lg:pl-20 flex flex-col justify-between">
+        <section className="max-w-full md:text-xl">
           <Tabs defaultValue="color">
             <TabsList className="w-full">
               <TabsTrigger value="color">Color</TabsTrigger>

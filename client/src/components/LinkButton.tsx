@@ -10,7 +10,7 @@ const LinkButton: React.FC<buttonPrope> = ({ path, title }) => {
   return (
     <NavLink to={path}>
       <div>
-        <Button>{title}</Button>
+        <Button className="cursor-pointer">{title}</Button>
       </div>
     </NavLink>
   );

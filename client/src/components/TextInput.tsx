@@ -42,12 +42,13 @@ const TextInput: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-between items-center gap-2">
-      <div className="flex items-center justify-center gap-4">
+      <div className="w-full flex items-center justify-center gap-4">
         <Input
           type="text"
           value={text}
           // autoFocus
-          className="p-2 text-xl border rounded-lg"
+          placeholder="Your text here"
+          className="p-2 text-lg border rounded-lg"
           onChange={(e) => {
             setText(e.target.value);
           }}
@@ -62,9 +63,7 @@ const TextInput: React.FC = () => {
         >
           Clear
         </Button>
-      </div>
 
-      <div className="flex flex-col items-center gap-2">
         <Select
           value={clothFont}
           onValueChange={(value) => {
@@ -104,48 +103,50 @@ const TextInput: React.FC = () => {
                     {name}
                   </SelectItem>
                 );
-              })
+              }),
             )}
           </SelectContent>
         </Select>
+      </div>
 
-        <label>Text Size : </label>
+      <div className="w-full flex flex-col lg:flex-row-reverse items-start gap-2">
+        <div className="w-full p-4 space-y-2 bg-[#d9d9d9] dark:bg-[#d9d9d915] rounded-md">
+          <label>Text Size : </label>
+          <Slider
+            min={50}
+            max={200}
+            step={1}
+            defaultValue={[clothTextSize]}
+            onValueChange={(value) => {
+              updateClothTextSize(value[0]);
+            }}
+          />
+          <label>Position X : </label>
+          <Slider
+            min={-200}
+            max={150}
+            step={1}
+            defaultValue={[clothTextPositionX]}
+            onValueChange={(value) => {
+              updateClothTextPositionX(value[0]);
+            }}
+          />
 
-        <Slider
-          min={50}
-          max={200}
-          step={1}
-          defaultValue={[clothTextSize]}
-          onValueChange={(value) => {
-            updateClothTextSize(value[0]);
-          }}
-        />
+          <label>Position Y : </label>
+          <Slider
+            min={-200}
+            max={150}
+            step={1}
+            defaultValue={[clothTextPositionY]}
+            onValueChange={(value) => {
+              updateClothTextPositionY(value[0]);
+            }}
+          />
+        </div>
 
-        <label>Position X : </label>
-
-        <Slider
-          min={-200}
-          max={150}
-          step={1}
-          defaultValue={[clothTextPositionX]}
-          onValueChange={(value) => {
-            updateClothTextPositionX(value[0]);
-          }}
-        />
-        <label>Position Y : </label>
-
-        <Slider
-          min={-200}
-          max={150}
-          step={1}
-          defaultValue={[clothTextPositionY]}
-          onValueChange={(value) => {
-            updateClothTextPositionY(value[0]);
-          }}
-        />
-        <br />
-
-        <ColorPicker color={clothTextColor} updator={updateClothTextColor} />
+        <div className="py-2">
+          <ColorPicker color={clothTextColor} updator={updateClothTextColor} />
+        </div>
       </div>
     </div>
   );

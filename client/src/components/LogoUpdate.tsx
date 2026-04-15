@@ -61,7 +61,7 @@ const LogoUpdate: React.FC = () => {
           {
             method: "POST",
             body: data,
-          }
+          },
         );
 
         const uploadCloudinary = await res.json();
@@ -103,7 +103,7 @@ const LogoUpdate: React.FC = () => {
 
       <label
         htmlFor="file-upload"
-        className="p-2 md:p-4 inline-block rounded border-2 border-blue-500 border-dashed cursor-pointer"
+        className="w-full p-2 md:p-4 text-center inline-block bg-[#d9d9d9] dark:bg-[#d9d9d915] rounded border-2 border-blue-500 border-dashed cursor-pointer"
       >
         Upload Image
       </label>
@@ -124,53 +124,56 @@ const LogoUpdate: React.FC = () => {
             Remove Image
           </Button>
 
-          <label>Image Size : </label>
+          <div className="w-full p-4 space-y-2 bg-[#d9d9d9] dark:bg-[#d9d9d915] rounded-md">
+            <label>Image Size : </label>
+            <Slider
+              min={5}
+              max={50}
+              step={1}
+              defaultValue={[logoSize]}
+              onValueChange={(value) => {
+                updateLogoSize(value[0]);
+              }}
+            />
+            <label>Position X : </label>
+            <Slider
+              min={-25}
+              max={25}
+              defaultValue={[logoPositionX]}
+              onValueChange={(value) => {
+                updateLogoPositionX(value[0]);
+              }}
+            />
 
-          <Slider
-            min={5}
-            max={50}
-            step={1}
-            defaultValue={[logoSize]}
-            onValueChange={(value) => {
-              updateLogoSize(value[0]);
-            }}
-          />
-
-          <label>Position X : </label>
-
-          <Slider
-            min={-25}
-            max={25}
-            defaultValue={[logoPositionX]}
-            onValueChange={(value) => {
-              updateLogoPositionX(value[0]);
-            }}
-          />
-          <label>Position Y : </label>
-
-          <Slider
-            min={-25}
-            max={25}
-            defaultValue={[logoPositionY]}
-            onValueChange={(value) => {
-              updateLogoPositionY(value[0]);
-            }}
-          />
+            <label>Position Y : </label>
+            <Slider
+              min={-25}
+              max={25}
+              defaultValue={[logoPositionY]}
+              onValueChange={(value) => {
+                updateLogoPositionY(value[0]);
+              }}
+            />
+          </div>
         </div>
       ) : (
-        <ScrollArea className="h-[30vh] lg:h-[60vh] w-sm md:w-xl rounded-md border p-4">
-          <div className="h-full w-full grid content-center grid-cols-4 gap-2">
+        <ScrollArea className="h-[30vh] lg:h-[60vh] w-sm md:w-xl rounded-md border p-1">
+          <div className="h-full w-full grid content-start grid-cols-4 gap-2">
             {Object.entries(logoPalletImg).map(([key, value]) => (
-              <img
-                src={value}
-                alt={key}
+              <div
                 key={key}
-                className="h-20 w-auto p-2 bg-red-300 rounded-lg"
-                onClick={() => {
-                  updateLogo(key);
-                  updateLogoPath(value);
-                }}
-              />
+                className="p-2 flex items-center justify-center bg-red-300 rounded-md"
+              >
+                <img
+                  src={value}
+                  alt={key}
+                  className="max-h-20 w-auto"
+                  onClick={() => {
+                    updateLogo(key);
+                    updateLogoPath(value);
+                  }}
+                />
+              </div>
             ))}
           </div>
         </ScrollArea>

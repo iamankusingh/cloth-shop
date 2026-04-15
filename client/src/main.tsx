@@ -25,10 +25,11 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
         <BrowserRouter>
+          <Header />
+
           {/* canvas model is here to prevent it from unmounting and re-mounting  */}
           <CanvasModel />
 
-          <Header />
           <Toaster position="bottom-center" />
 
           <Routes>
@@ -41,5 +42,5 @@ createRoot(document.getElementById("root")!).render(
         </BrowserRouter>
       </ClerkProvider>
     </ThemeProvider>
-  </StrictMode>
+  </StrictMode>,
 );

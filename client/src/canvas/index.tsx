@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import TShirt from "./TShirt";
 import {
-  MeshReflectorMaterial,
+  // MeshReflectorMaterial,
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
@@ -22,7 +22,7 @@ const CanvasModel: React.FC = () => {
 
   return (
     <article
-      className="h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0"
+      className="px-4 pt-16 pb-4  lg:pb-16 h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0"
       style={show ? { display: "block" } : { display: "none" }}
     >
       <Canvas
@@ -30,7 +30,7 @@ const CanvasModel: React.FC = () => {
         camera={{ position: [0, 0, 0], fov: 25 }}
         gl={{ preserveDrawingBuffer: true }}
         fallback={<div>Sorry!! Your browser doesn't provide 3D support</div>}
-        className="w-full max-w-full h-full transition-all ease-in"
+        className="w-full max-w-full h-full transition-all ease-in bg-[#d9d9d9] dark:bg-[#d9d9d915] rounded-2xl"
       >
         {/* lights and camera */}
         <ambientLight intensity={0.5} />
@@ -48,14 +48,14 @@ const CanvasModel: React.FC = () => {
         <TShirt />
 
         {/* surface */}
-        <mesh
+        {/* <mesh
           rotation={[-Math.PI / 2, 0, 0]}
           position={[0, -0.4, 0]}
           receiveShadow
         >
           <circleGeometry args={[0.4, 70]} />
           <MeshReflectorMaterial color="silver" />
-        </mesh>
+        </mesh> */}
       </Canvas>
     </article>
   );

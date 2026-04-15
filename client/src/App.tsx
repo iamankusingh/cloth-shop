@@ -11,7 +11,7 @@ function App() {
   // from clerk
   const { isSignedIn, userId } = useAuth();
 
-  const { hexColor } = useClothConfigStore();
+  // const { hexColor } = useClothConfigStore();
 
   // user zustand store
   const { updateIsSignedIn, updateUid } = useUserStore();
@@ -47,7 +47,7 @@ function App() {
           headers: {
             "Content-type": "application/json",
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -106,9 +106,10 @@ function App() {
       <PageTitle title="Cloth shop - Home" />
 
       <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] flex items-center justify-center">
-        <section className="p-2">
+        <section className="p-4 lg:pl-20">
           <h1 className="lg:pt-20 text-5xl md:text-7xl font-bold">
-            Design Your <span style={{ color: hexColor }}>Clothes</span>
+            {/* Design Your <span style={{ color: hexColor }}>Clothes</span> */}
+            Design Your Clothes
           </h1>
 
           <p className="py-6 text-xl">
@@ -119,7 +120,9 @@ function App() {
 
           <div className="flex gap-4">
             <LinkButton path="/customizer" title="Customize" />
-            <LinkButton path="/your-orders" title="Your orders" />
+            {isSignedIn && (
+              <LinkButton path="/your-orders" title="Your orders" />
+            )}
           </div>
         </section>
       </main>

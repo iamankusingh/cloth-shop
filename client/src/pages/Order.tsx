@@ -116,7 +116,7 @@ const Order: React.FC = () => {
           headers: {
             "Content-type": "Application/json",
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -167,7 +167,7 @@ const Order: React.FC = () => {
             district,
             phoneNo,
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -240,7 +240,7 @@ const Order: React.FC = () => {
             clothSize,
             clothFabric,
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -296,7 +296,7 @@ const Order: React.FC = () => {
             quantity,
             price,
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -501,7 +501,7 @@ const Order: React.FC = () => {
 
               <AlertDialog>
                 <AlertDialogTrigger>
-                  <Button>Order Now (Rs.500)</Button>
+                  <Button>Order Now (Rs.250)</Button>
                 </AlertDialogTrigger>
 
                 <AlertDialogContent>
@@ -541,7 +541,9 @@ const Order: React.FC = () => {
               className="rounded-full"
             />
 
-            <SignInButton />
+            <SignInButton>
+              <Button>Sign In</Button>
+            </SignInButton>
           </section>
         )}
       </main>
