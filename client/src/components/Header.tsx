@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 
 const Header: React.FC = () => {
   return (
-    <header className="w-full px-4 lg:px-20 py-2 flex justify-between items-center text-2xl font-semibold bg-[#f5f5f5] dark:bg-[#f5f5f515] shadow fixed top-0 z-10">
+    <header className="w-full px-4 lg:px-20 py-2 flex justify-between items-center text-2xl font-semibold bg-[#f5f5f5] dark:bg-[#1b1b1be0] shadow fixed top-0 z-10">
       <NavLink to="/">Cloth Shop</NavLink>
 
       <div className="flex items-center gap-2 lg:gap-4">

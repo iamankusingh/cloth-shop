@@ -330,7 +330,7 @@ const Order: React.FC = () => {
         {!isLoaded ? <p>Loading...</p> : null}
 
         {isSignedIn ? (
-          <section className="lg:pt-16 p-3 lg:w-[50vw] rounded-lg">
+          <section className="lg:pt-16 lg:pl-20 p-3 lg:w-[50vw] rounded-lg">
             <h3 className="text-2xl">Order your Personalized cloth</h3>
 
             <p className="py-3 text-3xl font-bold">Delivery address</p>
@@ -442,7 +442,7 @@ const Order: React.FC = () => {
               </div>
             </form>
 
-            <div className="py-4 flex justify-evenly gap-2">
+            <div className="py-4 flex justify-between">
               <Select
                 value={clothSize}
                 onValueChange={(value) => {
@@ -485,19 +485,18 @@ const Order: React.FC = () => {
               </Button>
             </div>
 
-            <div className="flex items-center justify-center">
-              <div className="flex">
-                <label htmlFor="quantity">Quantity</label>
-                <Input
-                  type="number"
-                  id="quantity"
-                  name="quantity"
-                  required
-                  minLength={1}
-                  value={quantity}
-                  onChange={(e) => updateQuantity(parseInt(e.target.value))}
-                />
-              </div>
+            <div className="flex items-center justify-between">
+              <Input
+                type="number"
+                id="quantity"
+                name="quantity"
+                required
+                placeholder="Quantity"
+                minLength={1}
+                className="w-fit"
+                value={quantity}
+                onChange={(e) => updateQuantity(parseInt(e.target.value))}
+              />
 
               <AlertDialog>
                 <AlertDialogTrigger>
