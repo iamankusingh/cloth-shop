@@ -510,13 +510,11 @@ const Order: React.FC = () => {
                     </AlertDialogTitle>
 
                     <AlertDialogDescription>
-                      <p>
-                        Please note that actual product may be differ from the
-                        one shown in the preview.
-                      </p>
-                      <p className="text-lg font-extrabold">
+                      Please note that actual product may be differ from the one
+                      shown in the preview. <br />
+                      <span className="text-lg font-extrabold">
                         Payment will be Cash On Delivery
-                      </p>
+                      </span>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
 

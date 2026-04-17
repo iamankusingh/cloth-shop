@@ -8,10 +8,12 @@ import {
   CardAction,
   CardContent,
   CardDescription,
-  // CardFooter,
+  CardFooter,
   CardHeader,
-  // CardTitle,
+  CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface order {
   createdAt: string;
@@ -53,7 +55,7 @@ const YourOrders = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -89,49 +91,53 @@ const YourOrders = () => {
     <>
       <PageTitle title="Cloth shop - Your orders" />
 
-      <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] pt-2 lg:pt-14">
-        <section className="p-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {allOrders.map((order: order, idx: number) => (
-            <Card key={idx} className="mb-4">
-              <CardHeader>
-                {/* <CardTitle>Username</CardTitle> */}
+      <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] py-2 lg:pt-16 lg:pl-20">
+        <ScrollArea className="h-full w-full rounded-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {allOrders.map((order: order, idx: number) => (
+              <Card key={idx} className="py-4 gap-4">
+                <CardHeader className="px-3">
+                  <CardTitle>T-Shirt</CardTitle>
 
-                <CardDescription>
-                  <p>{new Date(order.createdAt).toLocaleString()}</p>
-                </CardDescription>
+                  <CardDescription>
+                    <p>{new Date(order.createdAt).toLocaleString()}</p>
+                  </CardDescription>
 
-                <CardAction>
-                  {/* <Button variant="destructive">Reject order</Button> */}
-                </CardAction>
-              </CardHeader>
+                  <CardAction>
+                    <Button variant="outline">Preview</Button>
+                  </CardAction>
+                </CardHeader>
 
-              <CardContent className="flex items-center gap-2">
-                <div
-                  className="w-10 h-10 rounded-full"
-                  style={{ backgroundColor: order.hexColor }}
-                ></div>
+                <CardContent className="px-3">
+                  <div
+                    className="w-6 h-6 rounded-full"
+                    style={{ backgroundColor: order.hexColor }}
+                  ></div>
 
-                <p>{order.logo}</p>
-                <p style={{ color: order.clothTextColor || undefined }}>
-                  {order.clothText}
-                </p>
-                <p>{order.design}</p>
-                <p>{order.quantity}x</p>
-                <p>Rs.{order.price}</p>
-              </CardContent>
+                  <p>Logo: {order.logo}</p>
+                  <p style={{ color: order.clothTextColor }}>
+                    Text with color: {order.clothText}
+                  </p>
+                  <p>{order.design}</p>
+                  <p>Fabric: {order.clothFabric}</p>
+                  <p>Size: {order.clothSize}</p>
+                  <p>Quantity: {order.quantity}x</p>
+                  <p>Rs.{order.price}</p>
+                </CardContent>
 
-              {/* <CardFooter className="flex justify-center gap-2">
-                <Button variant="outline">Mark as start Producing</Button>
-                <Button
-                  variant="outline"
-                  onClick={() => previewCloth(order.uid)}
-                >
-                  Preview
-                </Button>
-              </CardFooter> */}
-            </Card>
-          ))}
-        </section>
+                <CardFooter className="px-3">
+                  {/* <Button variant="outline">Mark as start Producing</Button> */}
+                  <Button
+                    variant="destructive"
+                    // onClick={() => previewCloth(order.uid)}
+                  >
+                    Cancel
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </ScrollArea>
       </main>
     </>
   );

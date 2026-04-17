@@ -68,16 +68,16 @@ const orderSchema = new mongoose.Schema(
       type: String,
     },
     clothTextColor: {
-      tyle: String,
+      type: String,
     },
     clothTextSize: {
-      tyle: Number,
+      type: Number,
     },
     clothTextPositionX: {
-      tyle: Number,
+      type: Number,
     },
     clothTextPositionY: {
-      tyle: Number,
+      type: Number,
     },
 
     design: {
@@ -109,7 +109,7 @@ const orderSchema = new mongoose.Schema(
       min: [0, "Price cannot be negative"],
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const OrderModel = mongoose.model<orderInterface>("orders", orderSchema);
