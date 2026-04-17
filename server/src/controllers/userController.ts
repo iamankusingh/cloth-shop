@@ -65,7 +65,7 @@ export const handleUser = async (req: Request, res: Response) => {
             phoneNo,
           },
         ],
-        { session }
+        { session },
       );
 
       await session.commitTransaction();
@@ -99,7 +99,7 @@ export const handleUser = async (req: Request, res: Response) => {
           pincode,
           district,
           phoneNo,
-        }
+        },
       );
 
       await session.commitTransaction();

@@ -56,7 +56,7 @@ export const handleClothConfig = async (req: Request, res: Response) => {
         "Cloth config didn't exixt, creating with uid",
         uid,
         "and with data",
-        req.body
+        req.body,
       );
 
       // creating config
@@ -67,7 +67,7 @@ export const handleClothConfig = async (req: Request, res: Response) => {
             ...req.body,
           },
         ],
-        { session }
+        { session },
       );
 
       await session.commitTransaction();
@@ -96,13 +96,13 @@ export const handleClothConfig = async (req: Request, res: Response) => {
         "Cloth config already exists, updating with uid",
         uid,
         "and with data",
-        req.body
+        req.body,
       );
 
       // update cloth config
       const updateClothConfig = await ClothConfigModel.findOneAndUpdate(
         { uid },
-        req.body
+        req.body,
       );
 
       await session.commitTransaction();

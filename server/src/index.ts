@@ -5,9 +5,9 @@ import userRouter from "./routes/userRoute";
 import clothConfigRouter from "./routes/clothConfigRoute";
 import adminRouter from "./routes/adminRoute";
 import orderRouter from "./routes/orderRoute";
+import { host, port } from "./config/env";
 
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,8 +28,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // server
-app.listen(PORT, async () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, async () => {
+  console.log(`Server is running on http://${host}:${port}`);
 
   await connectToDatabase();
 });

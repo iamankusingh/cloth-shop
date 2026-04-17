@@ -41,6 +41,8 @@ interface order {
 }
 
 const YourOrders = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const { userId } = useAuth();
   const uid = userId as string;
 
@@ -49,7 +51,7 @@ const YourOrders = () => {
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/user/all-orders?uid=${uid}`,
+        `${apiUrl}/api/v1/user/all-orders?uid=${uid}`,
         {
           method: "GET",
           headers: {

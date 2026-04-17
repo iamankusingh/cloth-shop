@@ -46,6 +46,8 @@ interface fetchUserDataResponse {
 }
 
 const Order: React.FC = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // variables to store form data
   const [fullName, setFullName] = useState<string>("");
   const [houseNo, setHouseNo] = useState<string>("");
@@ -110,7 +112,7 @@ const Order: React.FC = () => {
   const fetchUserData = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        `http://localhost:3000/api/v1/user?uid=${uid}`,
+        `${apiUrl}/api/v1/user?uid=${uid}`,
         {
           method: "GET",
           headers: {
@@ -152,7 +154,7 @@ const Order: React.FC = () => {
   const handleUser = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        `http://localhost:3000/api/v1/user?uid=${uid}`,
+        `${apiUrl}/api/v1/user?uid=${uid}`,
         {
           method: "POST",
           headers: {
@@ -214,34 +216,31 @@ const Order: React.FC = () => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "Application/json",
-          },
-          body: JSON.stringify({
-            hexColor,
-            logo,
-            logoPath,
-            logoSize,
-            logoPositionX,
-            logoPositionY,
-            clothText,
-            clothFont,
-            clothTextColor,
-            clothTextSize,
-            clothTextPositionX,
-            clothTextPositionY,
-            design,
-            designPath,
-            designScale,
-            clothSize,
-            clothFabric,
-          }),
+      const response = await fetch(`${apiUrl}/api/v1/cloth-config?uid=${uid}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "Application/json",
         },
-      );
+        body: JSON.stringify({
+          hexColor,
+          logo,
+          logoPath,
+          logoSize,
+          logoPositionX,
+          logoPositionY,
+          clothText,
+          clothFont,
+          clothTextColor,
+          clothTextSize,
+          clothTextPositionX,
+          clothTextPositionY,
+          design,
+          designPath,
+          designScale,
+          clothSize,
+          clothFabric,
+        }),
+      });
 
       if (response.ok) {
         const result: updateApiResponse = await response.json();
@@ -268,36 +267,33 @@ const Order: React.FC = () => {
 
   const purchase = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/order?uid=${uid}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "Application/json",
-          },
-          body: JSON.stringify({
-            hexColor,
-            logo,
-            logoPath,
-            logoSize,
-            logoPositionX,
-            logoPositionY,
-            clothText,
-            clothFont,
-            clothTextColor,
-            clothTextSize,
-            clothTextPositionX,
-            clothTextPositionY,
-            design,
-            designPath,
-            designScale,
-            clothSize,
-            clothFabric,
-            quantity,
-            price,
-          }),
+      const response = await fetch(`${apiUrl}/api/v1/order?uid=${uid}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "Application/json",
         },
-      );
+        body: JSON.stringify({
+          hexColor,
+          logo,
+          logoPath,
+          logoSize,
+          logoPositionX,
+          logoPositionY,
+          clothText,
+          clothFont,
+          clothTextColor,
+          clothTextSize,
+          clothTextPositionX,
+          clothTextPositionY,
+          design,
+          designPath,
+          designScale,
+          clothSize,
+          clothFabric,
+          quantity,
+          price,
+        }),
+      });
 
       if (response.ok) {
         const result: updateApiResponse = await response.json();

@@ -24,7 +24,7 @@ export const orderCloth = async (req: Request, res: Response) => {
           ...req.body,
         },
       ],
-      { session }
+      { session },
     );
 
     await session.commitTransaction();

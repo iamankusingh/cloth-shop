@@ -18,6 +18,8 @@ interface updateApiResponse {
 }
 
 const Customizer: React.FC = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // cloth configuration from zustand to update and reset database
   const {
     hexColor,
@@ -106,33 +108,30 @@ const Customizer: React.FC = () => {
   // update or reset cloth configuration api call
   const updateClothConfig = async (): Promise<void> => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "Application/json",
-          },
-          body: JSON.stringify({
-            hexColor,
-            logo,
-            logoPath,
-            logoSize,
-            logoPositionX,
-            logoPositionY,
-            logoUrl,
-            clothText,
-            clothFont,
-            clothTextColor,
-            clothTextSize,
-            clothTextPositionX,
-            clothTextPositionY,
-            design,
-            designPath,
-            designScale,
-          }),
+      const response = await fetch(`${apiUrl}/api/v1/cloth-config?uid=${uid}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "Application/json",
         },
-      );
+        body: JSON.stringify({
+          hexColor,
+          logo,
+          logoPath,
+          logoSize,
+          logoPositionX,
+          logoPositionY,
+          logoUrl,
+          clothText,
+          clothFont,
+          clothTextColor,
+          clothTextSize,
+          clothTextPositionX,
+          clothTextPositionY,
+          design,
+          designPath,
+          designScale,
+        }),
+      });
 
       if (response.ok) {
         const result: updateApiResponse = await response.json();

@@ -8,6 +8,8 @@ import useClothConfigStore from "./store/clothConfigStore";
 import { toast } from "sonner";
 
 function App() {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // from clerk
   const { isSignedIn, userId } = useAuth();
 
@@ -41,7 +43,7 @@ function App() {
   const fetchClothConfig = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${userId}`,
+        `${apiUrl}/api/v1/cloth-config?uid=${userId}`,
         {
           method: "GET",
           headers: {

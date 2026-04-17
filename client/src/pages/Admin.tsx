@@ -56,6 +56,8 @@ interface order {
 }
 
 const Admin: React.FC = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // from clerk
   const { isSignedIn, userId, getToken } = useAuth();
 
@@ -97,7 +99,7 @@ const Admin: React.FC = () => {
     console.log("Verifying admin...", userId);
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/admin", {
+      const response = await fetch(`${apiUrl}/api/v1/admin`, {
         method: "GET",
         headers: {
           "Content-type": "Application/json",
@@ -126,16 +128,13 @@ const Admin: React.FC = () => {
 
   const fetchAllUsers = async (): Promise<void> => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/admin/getAllUsers",
-        {
-          method: "GET",
-          headers: {
-            "Content-type": "Application/json",
-            Authorization: `Bearer ${await getToken()}`,
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/v1/admin/getAllUsers`, {
+        method: "GET",
+        headers: {
+          "Content-type": "Application/json",
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
 
       if (response) {
         const result = await response.json();
@@ -161,16 +160,13 @@ const Admin: React.FC = () => {
 
   const fetchAllOrders = async (): Promise<void> => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/admin/getAllOrders",
-        {
-          method: "GET",
-          headers: {
-            "Content-type": "Application/json",
-            Authorization: `Bearer ${await getToken()}`,
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/v1/admin/getAllOrders`, {
+        method: "GET",
+        headers: {
+          "Content-type": "Application/json",
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
 
       if (response) {
         const result = await response.json();
@@ -202,13 +198,13 @@ const Admin: React.FC = () => {
   const fetchClothConfig = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
-        `http://localhost:3000/api/v1/cloth-config?uid=${uid}`,
+        `${apiUrl}/api/v1/cloth-config?uid=${uid}`,
         {
           method: "GET",
           headers: {
             "Content-type": "application/json",
           },
-        }
+        },
       );
 
       if (response.ok) {
