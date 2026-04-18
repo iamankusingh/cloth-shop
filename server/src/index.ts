@@ -28,7 +28,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // server
-app.listen(port, async () => {
+app.listen(port, host, async () => {
   console.log(`Server is running on http://${host}:${port}`);
 
   await connectToDatabase();

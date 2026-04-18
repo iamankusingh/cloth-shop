@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import useClothConfigStore from "@/store/clothConfigStore";
 
 interface order {
   createdAt: string;
@@ -40,13 +41,35 @@ interface order {
   price?: number;
 }
 
-const YourOrders = () => {
+const YourOrders: React.FC = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const { userId } = useAuth();
   const uid = userId as string;
 
   const [allOrders, setAllOrders] = useState<[]>([]);
+
+  // cloth config zustand store
+  const {
+    updateHexColor,
+    updateLogo,
+    updateLogoPath,
+    updateLogoSize,
+    updateLogoPositionX,
+    updateLogoPositionY,
+    updateLogoUrl,
+    updateClothText,
+    updateClothFont,
+    updateClothTextColor,
+    updateClothTextSize,
+    updateClothTextPositionX,
+    updateClothTextPositionY,
+    updateDesign,
+    updateDesignPath,
+    updateDesignScale,
+    updateClothSize,
+    updateClothFabric,
+  } = useClothConfigStore();
 
   const fetchOrders = async () => {
     try {
@@ -89,6 +112,28 @@ const YourOrders = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
+  const previewOrder = (order: order) => {
+    // update zustand store with fetched data
+    updateHexColor(order.hexColor);
+    updateLogo(order.logo || "");
+    updateLogoPath(order.logoPath || "");
+    updateLogoSize(order.logoSize || 0);
+    updateLogoPositionX(order.logoPositionX || 0);
+    updateLogoPositionY(order.logoPositionY || 0);
+    updateLogoUrl(order.logoUrl || "");
+    updateClothText(order.clothText || "");
+    updateClothFont(order.clothFont || "");
+    updateClothTextColor(order.clothTextColor || "#ffffff");
+    updateClothTextSize(order.clothTextSize || 0);
+    updateClothTextPositionX(order.clothTextPositionX || 0);
+    updateClothTextPositionY(order.clothTextPositionY || 0);
+    updateDesign(order.design || "");
+    updateDesignPath(order.designPath || "");
+    updateDesignScale(order.designScale || 1);
+    updateClothSize(order.clothSize || "");
+    updateClothFabric(order.clothFabric || "");
+  };
+
   return (
     <>
       <PageTitle title="Cloth shop - Your orders" />
@@ -106,7 +151,14 @@ const YourOrders = () => {
                   </CardDescription>
 
                   <CardAction>
-                    <Button variant="outline">Preview</Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        previewOrder(order);
+                      }}
+                    >
+                      Preview
+                    </Button>
                   </CardAction>
                 </CardHeader>
 
@@ -129,12 +181,7 @@ const YourOrders = () => {
 
                 <CardFooter className="px-3">
                   {/* <Button variant="outline">Mark as start Producing</Button> */}
-                  <Button
-                    variant="destructive"
-                    // onClick={() => previewCloth(order.uid)}
-                  >
-                    Cancel
-                  </Button>
+                  <Button variant="destructive">Cancel</Button>
                 </CardFooter>
               </Card>
             ))}

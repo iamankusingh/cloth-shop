@@ -3,7 +3,7 @@ import { config } from "dotenv";
 config({ path: ".env" });
 
 const host: string = process.env.host || "";
-const port: string = process.env.port || "";
+const port: number = Number(process.env.port);
 
 const DB_URL: string = process.env.DB_URL || "";
 const ADMIN_ID: string = process.env.ADMIN_ID || "";

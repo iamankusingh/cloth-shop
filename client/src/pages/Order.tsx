@@ -496,7 +496,9 @@ const Order: React.FC = () => {
 
               <AlertDialog>
                 <AlertDialogTrigger>
-                  <Button>Order Now (Rs.250)</Button>
+                  <div className="p-2 bg-card rounded-lg border">
+                    Order Now (Rs.250)
+                  </div>
                 </AlertDialogTrigger>
 
                 <AlertDialogContent>
@@ -535,7 +537,7 @@ const Order: React.FC = () => {
             />
 
             <SignInButton>
-              <Button>Sign In</Button>
+              <div className="p-2 bg-card rounded-lg border">Sign In</div>
             </SignInButton>
           </section>
         )}
