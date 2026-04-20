@@ -138,7 +138,7 @@ const YourOrders: React.FC = () => {
     <>
       <PageTitle title="Cloth shop - Your orders" />
 
-      <main className="h-[50vh] lg:h-screen w-screen lg:w-[50vw] py-2 lg:pt-16 lg:pl-20">
+      <main className="h-[50dvh] lg:h-screen w-screen lg:w-[50vw] py-2 px-4 lg:pt-16 lg:pl-20 bg-muted">
         <ScrollArea className="h-full w-full rounded-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {allOrders.map((order: order, idx: number) => (
@@ -179,9 +179,9 @@ const YourOrders: React.FC = () => {
                   <p>Rs.{order.price}</p>
                 </CardContent>
 
-                <CardFooter className="px-3">
-                  {/* <Button variant="outline">Mark as start Producing</Button> */}
-                  <Button variant="destructive">Cancel</Button>
+                <CardFooter className="px-3 flex justify-between">
+                  <Button variant="outline">Status</Button>
+                  <Button variant="destructive">Delete</Button>
                 </CardFooter>
               </Card>
             ))}

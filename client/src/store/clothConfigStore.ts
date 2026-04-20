@@ -93,7 +93,7 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   quantity: 1,
   updateQuantity: (quantity) => set(() => ({ quantity: quantity })),
 
-  price: 500,
+  price: 250,
   updatePrice: (price) => set(() => ({ price: price })),
 }));
 

@@ -91,6 +91,7 @@ const Order: React.FC = () => {
     quantity,
     updateQuantity,
     price,
+    updatePrice,
   } = useClothConfigStore();
 
   useEffect(() => {
@@ -273,6 +274,7 @@ const Order: React.FC = () => {
           "Content-type": "Application/json",
         },
         body: JSON.stringify({
+          fullName,
           hexColor,
           logo,
           logoPath,
@@ -317,6 +319,11 @@ const Order: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid, isSignedIn]);
+
+  useEffect(() => {
+    updatePrice(quantity * 250);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantity]);
 
   return (
     <>
@@ -438,7 +445,7 @@ const Order: React.FC = () => {
               </div>
             </form>
 
-            <div className="py-4 flex justify-between">
+            <div className="py-4 flex justify-between gap-4">
               <Select
                 value={clothSize}
                 onValueChange={(value) => {
@@ -448,6 +455,7 @@ const Order: React.FC = () => {
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Size" />
                 </SelectTrigger>
+
                 <SelectContent>
                   {clothSizesPallate.map((option) => (
                     <SelectItem key={option} value={option}>
@@ -481,7 +489,7 @@ const Order: React.FC = () => {
               </Button>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between gap-4">
               <Input
                 type="number"
                 id="quantity"
@@ -489,16 +497,17 @@ const Order: React.FC = () => {
                 required
                 placeholder="Quantity"
                 minLength={1}
-                className="w-fit"
+                min={1}
+                className="w-32"
                 value={quantity}
-                onChange={(e) => updateQuantity(parseInt(e.target.value))}
+                onChange={(e) => {
+                  updateQuantity(parseInt(e.target.value));
+                }}
               />
 
               <AlertDialog>
-                <AlertDialogTrigger>
-                  <div className="p-2 bg-card rounded-lg border">
-                    Order Now (Rs.250)
-                  </div>
+                <AlertDialogTrigger className="p-2 bg-card rounded-lg border-2">
+                  Order Now at ₹ {price}
                 </AlertDialogTrigger>
 
                 <AlertDialogContent>

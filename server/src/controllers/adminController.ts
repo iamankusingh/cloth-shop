@@ -53,7 +53,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
         // return fetched user data
         data: userData,
       });
-      console.log("Fetched all users data", userData);
+      console.log("Send all users data", userData);
     } else {
       res.status(404).json({
         success: false,
@@ -86,7 +86,7 @@ export const getAllOrders = async (req: Request, res: Response) => {
         // return fetched user data
         data: orderData,
       });
-      console.log("Sent all users data", orderData);
+      console.log("Sent all Order data data", orderData);
     } else {
       res.status(404).json({
         success: false,

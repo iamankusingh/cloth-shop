@@ -22,7 +22,7 @@ const CanvasModel: React.FC = () => {
 
   return (
     <article
-      className="px-4 pt-16 pb-4  lg:pb-16 h-[50vh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0"
+      className="px-4 pt-16 pb-4  lg:pb-16 h-[50dvh] lg:h-screen lg:w-[50vw] lg:absolute lg:top-0 lg:right-0"
       style={show ? { display: "block" } : { display: "none" }}
     >
       <Canvas

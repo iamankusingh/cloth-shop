@@ -157,7 +157,7 @@ const LogoUpdate: React.FC = () => {
           </div>
         </div>
       ) : (
-        <ScrollArea className="h-[30vh] lg:h-[60vh] w-sm md:w-xl rounded-md border p-1">
+        <ScrollArea className="h-[30dvh] lg:h-[60dvh] w-sm md:w-xl rounded-md border p-1">
           <div className="h-full w-full grid content-start grid-cols-4 gap-2">
             {Object.entries(logoPalletImg).map(([key, value]) => (
               <div

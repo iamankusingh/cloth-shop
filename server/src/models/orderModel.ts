@@ -31,6 +31,10 @@ interface orderInterface {
 
 const orderSchema = new mongoose.Schema(
   {
+    fullName: {
+      type: String,
+    },
+
     uid: {
       type: String,
       required: [true, "User ID is required"],

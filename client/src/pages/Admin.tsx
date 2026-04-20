@@ -17,6 +17,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useClothConfigStore from "@/store/clothConfigStore";
 import useCanvasStore from "@/store/canvasStore";
+import { Spinner } from "@/components/ui/spinner";
 
 interface User {
   createdAt: string;
@@ -31,6 +32,7 @@ interface User {
 }
 
 interface order {
+  fullName: string;
   createdAt: string;
   uid: string;
   hexColor: string;
@@ -278,27 +280,30 @@ const Admin: React.FC = () => {
 
   return (
     <>
-      <PageTitle title="Cloth shop - Home" />
+      <PageTitle title="Cloth shop - Admin" />
 
-      <main className="min-h-[50vh] lg:min-h-screen w-screen lg:min-w-[50vw]">
+      <main className="min-h-[50dvh] lg:min-h-screen w-screen lg:min-w-[50vw]">
         {isSignedIn ? (
-          <section className="px-2">
-            <div className="pt-12 pb-1 flex items-center justify-between">
-              <h2 className="">Welcome Admin</h2>
-
-              <Button variant="outline" onClick={() => refreshDashboard()}>
-                Refresh
-              </Button>
-            </div>
-
-            <Tabs defaultValue="allUsers" className="z-1000">
+          <section className="px-2 pt-14 pb-1">
+            <Tabs defaultValue="overview" className="z-1000">
               <TabsList className="w-full">
-                <TabsTrigger value="allUsers" onClick={() => updateShow(false)}>
-                  All Users
+                <TabsTrigger value="overview" onClick={() => updateShow(false)}>
+                  Overview
                 </TabsTrigger>
+                <TabsTrigger value="allUsers">All Users</TabsTrigger>
                 <TabsTrigger value="orders">Orders</TabsTrigger>
                 <TabsTrigger value="processing">Prossesing</TabsTrigger>
               </TabsList>
+
+              <TabsContent value="overview">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold">Welcome Admin</h2>
+
+                  <Button variant="outline" onClick={() => refreshDashboard()}>
+                    Refresh
+                  </Button>
+                </div>
+              </TabsContent>
 
               <TabsContent value="allUsers">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -313,7 +318,7 @@ const Admin: React.FC = () => {
                         </CardDescription>
 
                         <CardAction>
-                          <Button variant="destructive">Delete User</Button>
+                          {/* <Button variant="destructive">Delete User</Button> */}
                         </CardAction>
                       </CardHeader>
 
@@ -335,7 +340,7 @@ const Admin: React.FC = () => {
                   {allOrderList.map((order: order, idx: number) => (
                     <Card key={idx} className="mb-4">
                       <CardHeader>
-                        <CardTitle>Username</CardTitle>
+                        <CardTitle>{order.fullName}</CardTitle>
 
                         <CardDescription>
                           <p>{order.uid}</p>
@@ -382,8 +387,9 @@ const Admin: React.FC = () => {
             </Tabs>
           </section>
         ) : (
-          <section className="p-2">
-            <div className="pt-12">
+          <section className="h-[100dvh] p-2">
+            <div className="pt-12 flex justify-center">
+              <Spinner className="size-8" />
               <h2>Loading...</h2>
             </div>
           </section>
