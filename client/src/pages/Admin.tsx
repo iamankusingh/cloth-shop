@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useClothConfigStore from "@/store/clothConfigStore";
 import useCanvasStore from "@/store/canvasStore";
 import { Spinner } from "@/components/ui/spinner";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface User {
   createdAt: string;
@@ -192,11 +193,6 @@ const Admin: React.FC = () => {
     }
   };
 
-  const refreshDashboard = (): void => {
-    fetchAllUsers();
-    fetchAllOrders();
-  };
-
   const fetchClothConfig = async (): Promise<void> => {
     try {
       const response: Response = await fetch(
@@ -253,10 +249,36 @@ const Admin: React.FC = () => {
     }
   };
 
-  const previewCloth = (uid: string): void => {
+  const previewCloth = (order: order): void => {
     updateUid(uid);
+    // fetchClothConfig();
+    // updateShow(true);
+
+    // update zustand store with fetched data
+    updateHexColor(order.hexColor);
+    updateLogo(order.logo || "");
+    updateLogoPath(order.logoPath || "");
+    updateLogoSize(order.logoSize || 0);
+    updateLogoPositionX(order.logoPositionX || 0);
+    updateLogoPositionY(order.logoPositionY || 0);
+    updateLogoUrl(order.logoUrl || "");
+    updateClothText(order.clothText || "");
+    updateClothFont(order.clothFont || "");
+    updateClothTextColor(order.clothTextColor || "#ffffff");
+    updateClothTextSize(order.clothTextSize || 0);
+    updateClothTextPositionX(order.clothTextPositionX || 0);
+    updateClothTextPositionY(order.clothTextPositionY || 0);
+    updateDesign(order.design || "");
+    updateDesignPath(order.designPath || "");
+    updateDesignScale(order.designScale || 1);
+    updateClothSize(order.clothSize || "");
+    updateClothFabric(order.clothFabric || "");
+  };
+
+  const refreshDashboard = (): void => {
+    fetchAllUsers();
+    fetchAllOrders();
     fetchClothConfig();
-    updateShow(true);
   };
 
   useEffect(() => {
@@ -272,6 +294,7 @@ const Admin: React.FC = () => {
       verifyAdmin();
       fetchAllUsers();
       fetchAllOrders();
+      fetchClothConfig();
     } else {
       navigate("/");
     }
@@ -285,14 +308,43 @@ const Admin: React.FC = () => {
       <main className="min-h-[50dvh] lg:min-h-screen w-screen lg:min-w-[50vw]">
         {isSignedIn ? (
           <section className="px-2 pt-14 pb-1">
-            <Tabs defaultValue="overview" className="z-1000">
-              <TabsList className="w-full">
-                <TabsTrigger value="overview" onClick={() => updateShow(false)}>
+            <Tabs defaultValue="overview">
+              <TabsList className="w-full z-100">
+                <TabsTrigger
+                  value="overview"
+                  onClick={() => {
+                    updateShow(false);
+                  }}
+                >
                   Overview
                 </TabsTrigger>
-                <TabsTrigger value="allUsers">All Users</TabsTrigger>
-                <TabsTrigger value="orders">Orders</TabsTrigger>
-                <TabsTrigger value="processing">Prossesing</TabsTrigger>
+
+                <TabsTrigger
+                  value="allUsers"
+                  onClick={() => {
+                    updateShow(false);
+                  }}
+                >
+                  All Users
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="orders"
+                  onClick={() => {
+                    updateShow(true);
+                  }}
+                >
+                  Orders
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="processing"
+                  onClick={() => {
+                    updateShow(false);
+                  }}
+                >
+                  Prossesing
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview">
@@ -336,7 +388,7 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="orders">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList.map((order: order, idx: number) => (
                     <Card key={idx} className="mb-4">
                       <CardHeader>
@@ -348,7 +400,12 @@ const Admin: React.FC = () => {
                         </CardDescription>
 
                         <CardAction>
-                          <Button variant="destructive">Reject order</Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => previewCloth(order)}
+                          >
+                            Preview
+                          </Button>
                         </CardAction>
                       </CardHeader>
 
@@ -369,16 +426,13 @@ const Admin: React.FC = () => {
                         <Button variant="outline">
                           Mark as start Producing
                         </Button>
-                        <Button
-                          variant="outline"
-                          onClick={() => previewCloth(order.uid)}
-                        >
-                          Preview
-                        </Button>
+                        {/* <Button variant="outline">Reject order</Button> */}
+                        {/* <Button variant="default">Reject order</Button> */}
+                        <Button variant="destructive">Reject order</Button>
                       </CardFooter>
                     </Card>
                   ))}
-                </div>
+                </ScrollArea>
               </TabsContent>
 
               <TabsContent value="processing">
