@@ -57,6 +57,7 @@ interface order {
   clothFabric?: string;
   quantity?: number;
   price?: number;
+  status: string;
 }
 
 const Admin: React.FC = () => {
@@ -377,7 +378,7 @@ const Admin: React.FC = () => {
                 <TabsTrigger
                   value="processing"
                   onClick={() => {
-                    updateShow(false);
+                    updateShow(true);
                   }}
                 >
                   Processing
@@ -513,7 +514,66 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="processing">
-                <div>Orders in processing</div>
+                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                  {allOrderList
+                    .filter((order: order) => order.status == "Processing")
+                    .map((order: order, idx: number) => (
+                      <Card key={idx} className="mb-4">
+                        <CardHeader>
+                          <CardTitle>{order.fullName}</CardTitle>
+
+                          <CardDescription>
+                            <p>{order.uid}</p>
+                            <p>{order._id}</p>
+                            <p>{order.createdAt}</p>
+                          </CardDescription>
+
+                          <CardAction>
+                            <Button
+                              variant="destructive"
+                              onClick={() => {
+                                updateStatus(order._id, "Rejected");
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </CardAction>
+                        </CardHeader>
+
+                        <CardContent className="flex items-center gap-2">
+                          <div
+                            className="w-10 h-10 rounded-full"
+                            style={{ backgroundColor: order.hexColor }}
+                          ></div>
+
+                          <p>{order.logo}</p>
+                          <p>{order.clothText}</p>
+                          <p>{order.design}</p>
+                          <p>{order.quantity}x</p>
+                          <p>Rs.{order.price}</p>
+                        </CardContent>
+
+                        <CardFooter className="flex justify-center gap-2">
+                          <Button
+                            variant="default"
+                            onClick={() => {
+                              updateStatus(order._id, "Processing");
+                            }}
+                          >
+                            Accept
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => previewCloth(order)}
+                          >
+                            Preview
+                          </Button>
+                          <Button variant="outline">Download logo</Button>
+                          <Button variant="outline">Download design</Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                </ScrollArea>
               </TabsContent>
 
               <TabsContent value="delivering">
