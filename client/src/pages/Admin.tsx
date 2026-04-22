@@ -33,6 +33,7 @@ interface User {
 }
 
 interface order {
+  _id: string;
   fullName: string;
   createdAt: string;
   uid: string;
@@ -281,6 +282,42 @@ const Admin: React.FC = () => {
     fetchClothConfig();
   };
 
+  const updateStatus = async (_id: string, status: string) => {
+    console.log(_id, status);
+    try {
+      const response: Response = await fetch(
+        `${apiUrl}/api/v1/admin/updateOrderStatus`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+            Authorization: `Bearer ${await getToken()}`,
+          },
+          body: JSON.stringify({ _id, status }),
+        },
+      );
+
+      if (response) {
+        const result = await response.json();
+        console.log(result);
+        toast.success(result.message, {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to update orders status", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     updateShow(false);
 
@@ -343,7 +380,7 @@ const Admin: React.FC = () => {
                     updateShow(false);
                   }}
                 >
-                  Prossesing
+                  Processing
                 </TabsTrigger>
 
                 <TabsTrigger
@@ -423,11 +460,19 @@ const Admin: React.FC = () => {
 
                         <CardDescription>
                           <p>{order.uid}</p>
+                          <p>{order._id}</p>
                           <p>{order.createdAt}</p>
                         </CardDescription>
 
                         <CardAction>
-                          <Button variant="destructive">Reject</Button>
+                          <Button
+                            variant="destructive"
+                            onClick={() => {
+                              updateStatus(order._id, "Rejected");
+                            }}
+                          >
+                            Reject
+                          </Button>
                         </CardAction>
                       </CardHeader>
 
@@ -445,7 +490,14 @@ const Admin: React.FC = () => {
                       </CardContent>
 
                       <CardFooter className="flex justify-center gap-2">
-                        <Button variant="default">Accept</Button>
+                        <Button
+                          variant="default"
+                          onClick={() => {
+                            updateStatus(order._id, "Processing");
+                          }}
+                        >
+                          Accept
+                        </Button>
                         <Button
                           variant="outline"
                           onClick={() => previewCloth(order)}

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import UserModel from "../models/userModel";
 import { ADMIN_ID } from "../config/env";
 import OrderModel from "../models/orderModel";
+import mongoose from "mongoose";
 
 export const isAdmin = async (req: Request, res: Response) => {
   try {
@@ -93,6 +94,49 @@ export const getAllOrders = async (req: Request, res: Response) => {
         message: "None users found",
       });
       console.log("None users found");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    // uid from clerk
+    const uid = (req as any).userId;
+
+    if (uid !== ADMIN_ID) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    // console.log("Updating a orders status ", req.body);
+
+    // update database
+    const orderDoc = await OrderModel.updateOne(
+      { _id: req.body._id },
+      { $set: { status: req.body.status } },
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+
+    if (orderDoc) {
+      res.status(200).json({
+        success: true,
+        message: `Updated status ${req.body.status}`,
+      });
+      console.log(
+        `Updated order status to ${req.body.status} for id ${req.body._id}`,
+      );
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No order found",
+      });
+      console.log("No order found of this id to update status");
     }
   } catch (error) {
     console.error(error);

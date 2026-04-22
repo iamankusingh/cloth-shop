@@ -294,6 +294,7 @@ const Order: React.FC = () => {
           clothFabric,
           quantity,
           price,
+          status: "Pending",
         }),
       });
 

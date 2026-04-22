@@ -37,8 +37,9 @@ interface order {
   designScale?: number;
   clothSize?: string;
   clothFabric?: string;
-  quantity?: number;
-  price?: number;
+  quantity: number;
+  price: number;
+  status: string;
 }
 
 const YourOrders: React.FC = () => {
@@ -180,7 +181,7 @@ const YourOrders: React.FC = () => {
                 </CardContent>
 
                 <CardFooter className="px-3 flex justify-between">
-                  <Button variant="outline">Status</Button>
+                  <p>Status: {order.status}</p>
                   <Button variant="destructive">Delete</Button>
                 </CardFooter>
               </Card>

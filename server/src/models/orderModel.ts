@@ -112,6 +112,10 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       min: [0, "Price cannot be negative"],
     },
+    status: {
+      type: String,
+      enum: ["Pending", "Rejected", "Processing", "Delivering", "Delivered"],
+    },
   },
   { timestamps: true },
 );
