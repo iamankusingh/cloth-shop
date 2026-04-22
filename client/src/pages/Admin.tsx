@@ -345,6 +345,33 @@ const Admin: React.FC = () => {
                 >
                   Prossesing
                 </TabsTrigger>
+
+                <TabsTrigger
+                  value="delivering"
+                  onClick={() => {
+                    updateShow(false);
+                  }}
+                >
+                  Delivering
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="delivered"
+                  onClick={() => {
+                    updateShow(false);
+                  }}
+                >
+                  Delivered
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="finance"
+                  onClick={() => {
+                    updateShow(false);
+                  }}
+                >
+                  Finance
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview">
@@ -370,7 +397,7 @@ const Admin: React.FC = () => {
                         </CardDescription>
 
                         <CardAction>
-                          {/* <Button variant="destructive">Delete User</Button> */}
+                          <Button variant="destructive">Ban User</Button>
                         </CardAction>
                       </CardHeader>
 
@@ -400,12 +427,7 @@ const Admin: React.FC = () => {
                         </CardDescription>
 
                         <CardAction>
-                          <Button
-                            variant="outline"
-                            onClick={() => previewCloth(order)}
-                          >
-                            Preview
-                          </Button>
+                          <Button variant="destructive">Reject</Button>
                         </CardAction>
                       </CardHeader>
 
@@ -423,12 +445,15 @@ const Admin: React.FC = () => {
                       </CardContent>
 
                       <CardFooter className="flex justify-center gap-2">
-                        <Button variant="outline">
-                          Mark as start Producing
+                        <Button variant="default">Accept</Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => previewCloth(order)}
+                        >
+                          Preview
                         </Button>
-                        {/* <Button variant="outline">Reject order</Button> */}
-                        {/* <Button variant="default">Reject order</Button> */}
-                        <Button variant="destructive">Reject order</Button>
+                        <Button variant="outline">Download logo</Button>
+                        <Button variant="outline">Download design</Button>
                       </CardFooter>
                     </Card>
                   ))}
@@ -437,6 +462,18 @@ const Admin: React.FC = () => {
 
               <TabsContent value="processing">
                 <div>Orders in processing</div>
+              </TabsContent>
+
+              <TabsContent value="delivering">
+                <div>Orders in delivering</div>
+              </TabsContent>
+
+              <TabsContent value="delivered">
+                <div>Orders in delevered</div>
+              </TabsContent>
+
+              <TabsContent value="finance">
+                <div>Finance</div>
               </TabsContent>
             </Tabs>
           </section>
