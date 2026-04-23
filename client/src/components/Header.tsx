@@ -9,6 +9,7 @@ import {
 import { ModeToggle } from "./mode-toggle";
 import { NavLink } from "react-router-dom";
 import { Button } from "./ui/button";
+import LinkButton from "./LinkButton";
 
 const Header: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const Header: React.FC = () => {
       <NavLink to="/">Cloth Shop</NavLink>
 
       <div className="flex items-center gap-2 lg:gap-4">
+        <LinkButton path="/admin" title="Admin" />
         <ModeToggle />
 
         <SignedOut>

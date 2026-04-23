@@ -367,12 +367,12 @@ const Admin: React.FC = () => {
                 </TabsTrigger>
 
                 <TabsTrigger
-                  value="orders"
+                  value="allOrders"
                   onClick={() => {
                     updateShow(true);
                   }}
                 >
-                  Orders
+                  All Orders
                 </TabsTrigger>
 
                 <TabsTrigger
@@ -387,7 +387,7 @@ const Admin: React.FC = () => {
                 <TabsTrigger
                   value="delivering"
                   onClick={() => {
-                    updateShow(false);
+                    updateShow(true);
                   }}
                 >
                   Delivering
@@ -396,7 +396,7 @@ const Admin: React.FC = () => {
                 <TabsTrigger
                   value="delivered"
                   onClick={() => {
-                    updateShow(false);
+                    updateShow(true);
                   }}
                 >
                   Delivered
@@ -452,64 +452,68 @@ const Admin: React.FC = () => {
                 </div>
               </TabsContent>
 
-              <TabsContent value="orders">
+              <TabsContent value="allOrders">
                 <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
-                  {allOrderList.map((order: order, idx: number) => (
-                    <Card key={idx} className="mb-4">
-                      <CardHeader>
-                        <CardTitle>{order.fullName}</CardTitle>
+                  {allOrderList
+                    .slice(0)
+                    .reverse()
+                    .map((order: order, idx: number) => (
+                      <Card key={idx} className="mb-4">
+                        <CardHeader>
+                          <CardTitle>{order.fullName}</CardTitle>
 
-                        <CardDescription>
-                          <p>{order.uid}</p>
-                          <p>{order._id}</p>
-                          <p>{order.createdAt}</p>
-                        </CardDescription>
+                          <CardDescription>
+                            <p>{order.uid}</p>
+                            <p>{order._id}</p>
+                            <p>{order.createdAt}</p>
+                          </CardDescription>
 
-                        <CardAction>
+                          <CardAction>
+                            <Button
+                              variant="destructive"
+                              onClick={() => {
+                                updateStatus(order._id, "Rejected");
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </CardAction>
+                        </CardHeader>
+
+                        <CardContent className="flex items-center gap-2">
+                          <div
+                            className="w-10 h-10 rounded-full"
+                            style={{ backgroundColor: order.hexColor }}
+                          ></div>
+
+                          <p>{order.logo}</p>
+                          <p>{order.clothText}</p>
+                          <p>{order.design}</p>
+                          <p>{order.quantity}x</p>
+                          <p>Rs.{order.price}</p>
+                          <p>{order.status}</p>
+                        </CardContent>
+
+                        <CardFooter className="flex justify-center gap-2">
                           <Button
-                            variant="destructive"
+                            variant="default"
                             onClick={() => {
-                              updateStatus(order._id, "Rejected");
+                              updateStatus(order._id, "Processing");
                             }}
                           >
-                            Reject
+                            Accept
                           </Button>
-                        </CardAction>
-                      </CardHeader>
-
-                      <CardContent className="flex items-center gap-2">
-                        <div
-                          className="w-10 h-10 rounded-full"
-                          style={{ backgroundColor: order.hexColor }}
-                        ></div>
-
-                        <p>{order.logo}</p>
-                        <p>{order.clothText}</p>
-                        <p>{order.design}</p>
-                        <p>{order.quantity}x</p>
-                        <p>Rs.{order.price}</p>
-                      </CardContent>
-
-                      <CardFooter className="flex justify-center gap-2">
-                        <Button
-                          variant="default"
-                          onClick={() => {
-                            updateStatus(order._id, "Processing");
-                          }}
-                        >
-                          Accept
-                        </Button>
-                        <Button
-                          variant="outline"
-                          onClick={() => previewCloth(order)}
-                        >
-                          Preview
-                        </Button>
-                        <Button variant="outline">Download logo</Button>
-                        <Button variant="outline">Download design</Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
+                          <Button
+                            variant="outline"
+                            onClick={() => previewCloth(order)}
+                          >
+                            Preview
+                          </Button>
+                          <Button variant="outline">Download logo</Button>
+                          <Button variant="outline">Download design</Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
                 </ScrollArea>
               </TabsContent>
 
@@ -517,6 +521,8 @@ const Admin: React.FC = () => {
                 <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList
                     .filter((order: order) => order.status == "Processing")
+                    .slice(0)
+                    .reverse()
                     .map((order: order, idx: number) => (
                       <Card key={idx} className="mb-4">
                         <CardHeader>
@@ -557,10 +563,10 @@ const Admin: React.FC = () => {
                           <Button
                             variant="default"
                             onClick={() => {
-                              updateStatus(order._id, "Processing");
+                              updateStatus(order._id, "Delivering");
                             }}
                           >
-                            Accept
+                            Deliver
                           </Button>
                           <Button
                             variant="outline"
@@ -577,11 +583,133 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="delivering">
-                <div>Orders in delivering</div>
+                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                  {allOrderList
+                    .filter((order: order) => order.status == "Delivering")
+                    .slice(0)
+                    .reverse()
+                    .map((order: order, idx: number) => (
+                      <Card key={idx} className="mb-4">
+                        <CardHeader>
+                          <CardTitle>{order.fullName}</CardTitle>
+
+                          <CardDescription>
+                            <p>{order.uid}</p>
+                            <p>{order._id}</p>
+                            <p>{order.createdAt}</p>
+                          </CardDescription>
+
+                          <CardAction>
+                            <Button
+                              variant="destructive"
+                              onClick={() => {
+                                updateStatus(order._id, "Rejected");
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </CardAction>
+                        </CardHeader>
+
+                        <CardContent className="flex items-center gap-2">
+                          <div
+                            className="w-10 h-10 rounded-full"
+                            style={{ backgroundColor: order.hexColor }}
+                          ></div>
+
+                          <p>{order.logo}</p>
+                          <p>{order.clothText}</p>
+                          <p>{order.design}</p>
+                          <p>{order.quantity}x</p>
+                          <p>Rs.{order.price}</p>
+                        </CardContent>
+
+                        <CardFooter className="flex justify-center gap-2">
+                          <Button
+                            variant="default"
+                            onClick={() => {
+                              updateStatus(order._id, "Delivered");
+                            }}
+                          >
+                            Delivereds
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => previewCloth(order)}
+                          >
+                            Preview
+                          </Button>
+                          <Button variant="outline">Download logo</Button>
+                          <Button variant="outline">Download design</Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                </ScrollArea>
               </TabsContent>
 
               <TabsContent value="delivered">
-                <div>Orders in delevered</div>
+                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                  {allOrderList
+                    .filter((order: order) => order.status == "Delivered")
+                    .slice(0)
+                    .reverse()
+                    .map((order: order, idx: number) => (
+                      <Card key={idx} className="mb-4">
+                        <CardHeader>
+                          <CardTitle>{order.fullName}</CardTitle>
+
+                          <CardDescription>
+                            <p>{order.uid}</p>
+                            <p>{order._id}</p>
+                            <p>{order.createdAt}</p>
+                          </CardDescription>
+
+                          <CardAction>
+                            <Button
+                              variant="destructive"
+                              onClick={() => {
+                                updateStatus(order._id, "Rejected");
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </CardAction>
+                        </CardHeader>
+
+                        <CardContent className="flex items-center gap-2">
+                          <div
+                            className="w-10 h-10 rounded-full"
+                            style={{ backgroundColor: order.hexColor }}
+                          ></div>
+
+                          <p>{order.logo}</p>
+                          <p>{order.clothText}</p>
+                          <p>{order.design}</p>
+                          <p>{order.quantity}x</p>
+                          <p>Rs.{order.price}</p>
+                        </CardContent>
+
+                        <CardFooter className="flex justify-center gap-2">
+                          {/* <Button
+                            variant="default"
+                            onClick={() => {
+                              updateStatus(order._id, "Delivering");
+                            }}
+                          >
+                            Deliver
+                          </Button> */}
+                          <Button
+                            variant="outline"
+                            onClick={() => previewCloth(order)}
+                          >
+                            Preview
+                          </Button>
+                          <Button variant="outline">Download logo</Button>
+                          <Button variant="outline">Download design</Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                </ScrollArea>
               </TabsContent>
 
               <TabsContent value="finance">
