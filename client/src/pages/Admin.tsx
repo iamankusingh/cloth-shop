@@ -480,29 +480,51 @@ const Admin: React.FC = () => {
                           </CardAction>
                         </CardHeader>
 
-                        <CardContent className="flex items-center gap-2">
-                          <div
-                            className="w-10 h-10 rounded-full"
-                            style={{ backgroundColor: order.hexColor }}
-                          ></div>
+                        <CardContent className="space-y-4">
+                          {allUsersList
+                            .filter((user: User) => user.uid == order.uid)
+                            .map((user: User, idx: number) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-2"
+                              >
+                                <p>{user.houseNo}</p>
+                                <p>{user.locality}</p>
+                                <p>{user.city}</p>
+                                <p>{user.district}</p>
+                                <p>{user.pincode} -</p>
+                                <p>{user.phoneNo}</p>
+                              </div>
+                            ))}
 
-                          <p>{order.logo}</p>
-                          <p>{order.clothText}</p>
-                          <p>{order.design}</p>
-                          <p>{order.quantity}x</p>
-                          <p>Rs.{order.price}</p>
-                          <p>{order.status}</p>
+                          <div className="flex items-center gap-2">
+                            <div
+                              className="w-10 h-10 rounded-full"
+                              style={{ backgroundColor: order.hexColor }}
+                            ></div>
+                            <p>{order.logo}</p>
+                            <p style={{ color: order.clothTextColor }}>
+                              {order.clothText}
+                            </p>
+                            <p>{order.design}</p>
+                            <p>{order.quantity}x</p>
+                            <p>Rs.{order.price}</p>
+                            <p>{order.status}</p>
+                          </div>
                         </CardContent>
 
                         <CardFooter className="flex justify-center gap-2">
-                          <Button
-                            variant="default"
-                            onClick={() => {
-                              updateStatus(order._id, "Processing");
-                            }}
-                          >
-                            Accept
-                          </Button>
+                          {order.status == "Pending" && (
+                            <Button
+                              variant="default"
+                              onClick={() => {
+                                updateStatus(order._id, "Processing");
+                              }}
+                            >
+                              Accept
+                            </Button>
+                          )}
+
                           <Button
                             variant="outline"
                             onClick={() => previewCloth(order)}
@@ -553,7 +575,9 @@ const Admin: React.FC = () => {
                           ></div>
 
                           <p>{order.logo}</p>
-                          <p>{order.clothText}</p>
+                          <p style={{ color: order.clothTextColor }}>
+                            {order.clothText}
+                          </p>
                           <p>{order.design}</p>
                           <p>{order.quantity}x</p>
                           <p>Rs.{order.price}</p>
@@ -618,7 +642,9 @@ const Admin: React.FC = () => {
                           ></div>
 
                           <p>{order.logo}</p>
-                          <p>{order.clothText}</p>
+                          <p style={{ color: order.clothTextColor }}>
+                            {order.clothText}
+                          </p>
                           <p>{order.design}</p>
                           <p>{order.quantity}x</p>
                           <p>Rs.{order.price}</p>
@@ -664,7 +690,7 @@ const Admin: React.FC = () => {
                             <p>{order.createdAt}</p>
                           </CardDescription>
 
-                          <CardAction>
+                          {/* <CardAction>
                             <Button
                               variant="destructive"
                               onClick={() => {
@@ -673,7 +699,7 @@ const Admin: React.FC = () => {
                             >
                               Reject
                             </Button>
-                          </CardAction>
+                          </CardAction> */}
                         </CardHeader>
 
                         <CardContent className="flex items-center gap-2">
@@ -683,7 +709,9 @@ const Admin: React.FC = () => {
                           ></div>
 
                           <p>{order.logo}</p>
-                          <p>{order.clothText}</p>
+                          <p style={{ color: order.clothTextColor }}>
+                            {order.clothText}
+                          </p>
                           <p>{order.design}</p>
                           <p>{order.quantity}x</p>
                           <p>Rs.{order.price}</p>

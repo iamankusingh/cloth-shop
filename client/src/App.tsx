@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import useUserStore from "./store/userStore";
 import useClothConfigStore from "./store/clothConfigStore";
 import { toast } from "sonner";
+import useCanvasStore from "./store/canvasStore";
 
 function App() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -39,6 +40,8 @@ function App() {
     updateClothSize,
     updateClothFabric,
   } = useClothConfigStore();
+
+  const { updateShow } = useCanvasStore();
 
   const fetchClothConfig = async (): Promise<void> => {
     try {
@@ -99,6 +102,7 @@ function App() {
       updateIsSignedIn(true);
       updateUid(userId || "");
       fetchClothConfig();
+      updateShow(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn]);

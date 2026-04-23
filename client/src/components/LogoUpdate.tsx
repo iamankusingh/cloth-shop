@@ -29,7 +29,7 @@ const LogoUpdate: React.FC = () => {
     "threejs.png": sampleLogo.threejs,
     "cat.png": sampleLogo.cat,
     "dog.png": sampleLogo.dog,
-    "e;ephant.png": sampleLogo.elephant,
+    "elephant.png": sampleLogo.elephant,
     "flower.png": sampleLogo.flower,
     "giraffe.png": sampleLogo.giraffe,
     "js.png": sampleLogo.js,
