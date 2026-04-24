@@ -30,7 +30,7 @@ createRoot(document.getElementById("root")!).render(
           {/* canvas model is here to prevent it from unmounting and re-mounting  */}
           <CanvasModel />
 
-          <Toaster position="bottom-center" />
+          <Toaster position="bottom-right" />
 
           <Routes>
             <Route path="/" element={<App />} />

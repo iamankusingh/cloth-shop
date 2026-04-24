@@ -19,6 +19,8 @@ import useClothConfigStore from "@/store/clothConfigStore";
 import useCanvasStore from "@/store/canvasStore";
 import { Spinner } from "@/components/ui/spinner";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 
 interface User {
   createdAt: string;
@@ -60,6 +62,8 @@ interface order {
   status: string;
 }
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 const Admin: React.FC = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -99,6 +103,16 @@ const Admin: React.FC = () => {
 
   const [allUsersList, setAllUsersList] = useState<[]>([]);
   const [allOrderList, setAllOrderList] = useState<[]>([]);
+
+  // counts
+  const [usersCount, setUserCount] = useState<number>(0);
+  const [orderCount, setOrderCount] = useState<number>(0);
+  const [acceptedCount, setAcceptedCount] = useState<number>(0);
+  const [rejectedCount, setRejectedCount] = useState<number>(0);
+  const [pendingCount, setPendingCount] = useState<number>(0);
+  const [processingCount, setProcessingCount] = useState<number>(0);
+  const [deliveringCount, setDeliveringCount] = useState<number>(0);
+  const [deliveredCount, setDeliveredCount] = useState<number>(0);
 
   const verifyAdmin = async (): Promise<void> => {
     console.log("Verifying admin...", userId);
@@ -339,6 +353,34 @@ const Admin: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn]);
 
+  useEffect(() => {
+    setUserCount(allUsersList.length);
+    setOrderCount(allOrderList.length);
+    setAcceptedCount(
+      allOrderList.filter(
+        (order: order) =>
+          order.status !== "Rejected" && order.status !== "Pending",
+      ).length,
+    );
+    setRejectedCount(
+      allOrderList.filter((order: order) => order.status == "Rejected").length,
+    );
+    setPendingCount(
+      allOrderList.filter((order: order) => order.status == "Pending").length,
+    );
+    setProcessingCount(
+      allOrderList.filter((order: order) => order.status == "Processing")
+        .length,
+    );
+    setDeliveringCount(
+      allOrderList.filter((order: order) => order.status == "Delivering")
+        .length,
+    );
+    setDeliveredCount(
+      allOrderList.filter((order: order) => order.status == "Delivered").length,
+    );
+  }, [allUsersList, allOrderList]);
+
   return (
     <>
       <PageTitle title="Cloth shop - Admin" />
@@ -420,6 +462,52 @@ const Admin: React.FC = () => {
                     Refresh
                   </Button>
                 </div>
+
+                <section className="p-4 flex bg-card rounded-lg mt-4 items-center justify-around gap-4">
+                  <div>
+                    <p>Users: {usersCount}</p>
+                    <p>Orders: {orderCount}</p>
+                    <p>Pending Orders: {pendingCount}</p>
+                    <p>Rejected Orders: {rejectedCount}</p>
+                    <p>Accepted Orders: {acceptedCount}</p>
+                    <p>Processing Orders: {processingCount}</p>
+                    <p>Delivering Orders: {deliveringCount}</p>
+                    <p>Delivered Orders: {deliveredCount}</p>
+                  </div>
+
+                  <div className="h-64 w-64">
+                    <Pie
+                      data={{
+                        labels: [
+                          "Pending",
+                          "Rejected",
+                          "Processing",
+                          "Delivering",
+                          "Delivered",
+                        ],
+                        datasets: [
+                          {
+                            label: "",
+                            data: [
+                              pendingCount,
+                              rejectedCount,
+                              processingCount,
+                              deliveringCount,
+                              deliveredCount,
+                            ],
+                            backgroundColor: [
+                              "#facc15",
+                              "#ef4444",
+                              "#3b82f6",
+                              "#f97316",
+                              "#22c55e",
+                            ],
+                          },
+                        ],
+                      }}
+                    />
+                  </div>
+                </section>
               </TabsContent>
 
               <TabsContent value="allUsers">
