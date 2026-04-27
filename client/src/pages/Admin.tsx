@@ -113,6 +113,9 @@ const Admin: React.FC = () => {
   const [processingCount, setProcessingCount] = useState<number>(0);
   const [deliveringCount, setDeliveringCount] = useState<number>(0);
   const [deliveredCount, setDeliveredCount] = useState<number>(0);
+  const [totalEarned, setTotalEarned] = useState<number>(0);
+  const [onTheWayCount, setOnTheWayCount] = useState<number>(0);
+  const [cancelledCount, setCancelledCount] = useState<number>(0);
 
   const verifyAdmin = async (): Promise<void> => {
     console.log("Verifying admin...", userId);
@@ -379,6 +382,24 @@ const Admin: React.FC = () => {
     setDeliveredCount(
       allOrderList.filter((order: order) => order.status == "Delivered").length,
     );
+    setTotalEarned(
+      allOrderList
+        .filter((order: order) => order.status == "Delivered")
+        .reduce((total: number, order: order) => total + (order.price || 0), 0),
+    );
+    setOnTheWayCount(
+      allOrderList
+        .filter(
+          (order: order) =>
+            order.status == "Processing" || order.status == "Delivering",
+        )
+        .reduce((total: number, order: order) => total + (order.price || 0), 0),
+    );
+    setCancelledCount(
+      allOrderList
+        .filter((order: order) => order.status == "Rejected")
+        .reduce((total: number, order: order) => total + (order.price || 0), 0),
+    );
   }, [allUsersList, allOrderList]);
 
   return (
@@ -445,12 +466,12 @@ const Admin: React.FC = () => {
                 </TabsTrigger>
 
                 <TabsTrigger
-                  value="finance"
+                  value="rejected"
                   onClick={() => {
-                    updateShow(false);
+                    updateShow(true);
                   }}
                 >
-                  Finance
+                  Rejected
                 </TabsTrigger>
               </TabsList>
 
@@ -463,51 +484,76 @@ const Admin: React.FC = () => {
                   </Button>
                 </div>
 
-                <section className="p-4 flex bg-card rounded-lg mt-4 items-center justify-around gap-4">
-                  <div>
-                    <p>Users: {usersCount}</p>
-                    <p>Orders: {orderCount}</p>
-                    <p>Pending Orders: {pendingCount}</p>
-                    <p>Rejected Orders: {rejectedCount}</p>
-                    <p>Accepted Orders: {acceptedCount}</p>
-                    <p>Processing Orders: {processingCount}</p>
-                    <p>Delivering Orders: {deliveringCount}</p>
-                    <p>Delivered Orders: {deliveredCount}</p>
-                  </div>
+                <div className="flex justify-around">
+                  <section className="p-4 flex bg-card rounded-lg mt-4 items-center justify-around gap-4">
+                    <div>
+                      <p>Users: {usersCount}</p>
+                      <p>Orders: {orderCount}</p>
+                      <p>Pending Orders: {pendingCount}</p>
+                      <p>Rejected Orders: {rejectedCount}</p>
+                      <p>Accepted Orders: {acceptedCount}</p>
+                      <p>Processing Orders: {processingCount}</p>
+                      <p>Delivering Orders: {deliveringCount}</p>
+                      <p>Delivered Orders: {deliveredCount}</p>
+                    </div>
 
-                  <div className="h-64 w-64">
-                    <Pie
-                      data={{
-                        labels: [
-                          "Pending",
-                          "Rejected",
-                          "Processing",
-                          "Delivering",
-                          "Delivered",
-                        ],
-                        datasets: [
-                          {
-                            label: "",
-                            data: [
-                              pendingCount,
-                              rejectedCount,
-                              processingCount,
-                              deliveringCount,
-                              deliveredCount,
-                            ],
-                            backgroundColor: [
-                              "#facc15",
-                              "#ef4444",
-                              "#3b82f6",
-                              "#f97316",
-                              "#22c55e",
-                            ],
-                          },
-                        ],
-                      }}
-                    />
-                  </div>
-                </section>
+                    <div className="h-64 w-64">
+                      <Pie
+                        data={{
+                          labels: [
+                            "Pending",
+                            "Rejected",
+                            "Processing",
+                            "Delivering",
+                            "Delivered",
+                          ],
+                          datasets: [
+                            {
+                              label: "",
+                              data: [
+                                pendingCount,
+                                rejectedCount,
+                                processingCount,
+                                deliveringCount,
+                                deliveredCount,
+                              ],
+                              backgroundColor: [
+                                "#facc15",
+                                "#ef4444",
+                                "#3b82f6",
+                                "#f97316",
+                                "#22c55e",
+                              ],
+                            },
+                          ],
+                        }}
+                      />
+                    </div>
+                  </section>
+
+                  <section className="p-4 bg-card rounded-lg mt-4">
+                    <div>
+                      <h3 className="text-lg font-semibold mt-4">
+                        Total Earned
+                      </h3>
+                      <p className="text-2xl font-bold">Rs.{totalEarned}</p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold mt-4">
+                        Processing & Delivering
+                      </h3>
+                      <p className="text-2xl font-bold">Rs.{onTheWayCount}</p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold mt-4">
+                        Cancelled Amount
+                      </h3>
+                      <p className="text-2xl font-bold">Rs.{cancelledCount}</p>
+                    </div>
+                  </section>
+                </div>
               </TabsContent>
 
               <TabsContent value="allUsers">
@@ -828,8 +874,71 @@ const Admin: React.FC = () => {
                 </ScrollArea>
               </TabsContent>
 
-              <TabsContent value="finance">
-                <div>Finance</div>
+              <TabsContent value="rejected">
+                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                  {allOrderList
+                    .filter((order: order) => order.status == "Rejected")
+                    .slice(0)
+                    .reverse()
+                    .map((order: order, idx: number) => (
+                      <Card key={idx} className="mb-4">
+                        <CardHeader>
+                          <CardTitle>{order.fullName}</CardTitle>
+
+                          <CardDescription>
+                            <p>{order.uid}</p>
+                            <p>{order._id}</p>
+                            <p>{order.createdAt}</p>
+                          </CardDescription>
+
+                          {/* <CardAction>
+                            <Button
+                              variant="destructive"
+                              onClick={() => {
+                                updateStatus(order._id, "Rejected");
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </CardAction> */}
+                        </CardHeader>
+
+                        <CardContent className="flex items-center gap-2">
+                          <div
+                            className="w-10 h-10 rounded-full"
+                            style={{ backgroundColor: order.hexColor }}
+                          ></div>
+
+                          <p>{order.logo}</p>
+                          <p style={{ color: order.clothTextColor }}>
+                            {order.clothText}
+                          </p>
+                          <p>{order.design}</p>
+                          <p>{order.quantity}x</p>
+                          <p>Rs.{order.price}</p>
+                        </CardContent>
+
+                        <CardFooter className="flex justify-center gap-2">
+                          {/* <Button
+                            variant="default"
+                            onClick={() => {
+                              updateStatus(order._id, "Delivering");
+                            }}
+                          >
+                            Deliver
+                          </Button> */}
+                          <Button
+                            variant="outline"
+                            onClick={() => previewCloth(order)}
+                          >
+                            Preview
+                          </Button>
+                          <Button variant="outline">Download logo</Button>
+                          <Button variant="outline">Download design</Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                </ScrollArea>
               </TabsContent>
             </Tabs>
           </section>
