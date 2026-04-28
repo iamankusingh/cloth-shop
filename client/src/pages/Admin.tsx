@@ -408,9 +408,9 @@ const Admin: React.FC = () => {
 
       <main className="min-h-[50dvh] lg:min-h-screen w-screen lg:min-w-[50vw]">
         {isSignedIn ? (
-          <section className="px-2 pt-14 pb-1">
+          <div className="px-2 pt-14 pb-1">
             <Tabs defaultValue="overview">
-              <TabsList className="w-full z-100">
+              <TabsList className="h-auto w-full px-2 z-100 flex flex-wrap">
                 <TabsTrigger
                   value="overview"
                   onClick={() => {
@@ -484,20 +484,20 @@ const Admin: React.FC = () => {
                   </Button>
                 </div>
 
-                <div className="flex justify-around">
-                  <section className="p-4 flex bg-card rounded-lg mt-4 items-center justify-around gap-4">
-                    <div>
+                <div className="pt-2 flex flex-col md:flex-row justify-around gap-2">
+                  <section className="p-4 flex bg-card rounded-lg items-center justify-around gap-4">
+                    <div className="text-sm md:text-lg">
                       <p>Users: {usersCount}</p>
                       <p>Orders: {orderCount}</p>
-                      <p>Pending Orders: {pendingCount}</p>
-                      <p>Rejected Orders: {rejectedCount}</p>
-                      <p>Accepted Orders: {acceptedCount}</p>
-                      <p>Processing Orders: {processingCount}</p>
-                      <p>Delivering Orders: {deliveringCount}</p>
-                      <p>Delivered Orders: {deliveredCount}</p>
+                      <p>Pending: {pendingCount}</p>
+                      <p>Rejected: {rejectedCount}</p>
+                      <p>Accepted: {acceptedCount}</p>
+                      <p>Processing: {processingCount}</p>
+                      <p>Delivering: {deliveringCount}</p>
+                      <p>Delivered: {deliveredCount}</p>
                     </div>
 
-                    <div className="h-64 w-64">
+                    <div className="h-60 w-60">
                       <Pie
                         data={{
                           labels: [
@@ -531,7 +531,7 @@ const Admin: React.FC = () => {
                     </div>
                   </section>
 
-                  <section className="p-4 bg-card rounded-lg mt-4">
+                  <section className="px-4 py-2 bg-card rounded-lg">
                     <div>
                       <h3 className="text-lg font-semibold mt-4">
                         Total Earned
@@ -587,13 +587,13 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="allOrders">
-                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                <ScrollArea className="lg:h-[80dvh] lg:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList
                     .slice(0)
                     .reverse()
                     .map((order: order, idx: number) => (
                       <Card key={idx} className="mb-4">
-                        <CardHeader>
+                        <CardHeader className="px-2 lg:px-4">
                           <CardTitle>{order.fullName}</CardTitle>
 
                           <CardDescription>
@@ -614,20 +614,21 @@ const Admin: React.FC = () => {
                           </CardAction>
                         </CardHeader>
 
-                        <CardContent className="space-y-4">
+                        <CardContent className="px-2 lg:px-4 space-y-4">
                           {allUsersList
                             .filter((user: User) => user.uid == order.uid)
                             .map((user: User, idx: number) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-2"
+                                className="flex  items-center gap-2"
                               >
-                                <p>{user.houseNo}</p>
-                                <p>{user.locality}</p>
-                                <p>{user.city}</p>
-                                <p>{user.district}</p>
-                                <p>{user.pincode} -</p>
-                                <p>{user.phoneNo}</p>
+                                <p>
+                                  {user.houseNo}
+                                  {user.locality}
+                                  {user.city}
+                                  {user.district}
+                                  {user.pincode} - {user.phoneNo}
+                                </p>
                               </div>
                             ))}
 
@@ -647,7 +648,7 @@ const Admin: React.FC = () => {
                           </div>
                         </CardContent>
 
-                        <CardFooter className="flex justify-center gap-2">
+                        <CardFooter className="px-2 lg:px-4 flex justify-center gap-2">
                           {order.status == "Pending" && (
                             <Button
                               variant="default"
@@ -674,14 +675,14 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="processing">
-                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                <ScrollArea className="lg:h-[80dvh] lg:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList
                     .filter((order: order) => order.status == "Processing")
                     .slice(0)
                     .reverse()
                     .map((order: order, idx: number) => (
                       <Card key={idx} className="mb-4">
-                        <CardHeader>
+                        <CardHeader className="px-2 lg:px-4">
                           <CardTitle>{order.fullName}</CardTitle>
 
                           <CardDescription>
@@ -702,7 +703,7 @@ const Admin: React.FC = () => {
                           </CardAction>
                         </CardHeader>
 
-                        <CardContent className="flex items-center gap-2">
+                        <CardContent className="px-2 lg:px-4 flex items-center gap-2">
                           <div
                             className="w-10 h-10 rounded-full"
                             style={{ backgroundColor: order.hexColor }}
@@ -717,7 +718,7 @@ const Admin: React.FC = () => {
                           <p>Rs.{order.price}</p>
                         </CardContent>
 
-                        <CardFooter className="flex justify-center gap-2">
+                        <CardFooter className="px-2 lg:px-4 flex flex-wrap justify-center gap-2">
                           <Button
                             variant="default"
                             onClick={() => {
@@ -741,14 +742,14 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="delivering">
-                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                <ScrollArea className="lg:h-[80dvh] lg:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList
                     .filter((order: order) => order.status == "Delivering")
                     .slice(0)
                     .reverse()
                     .map((order: order, idx: number) => (
                       <Card key={idx} className="mb-4">
-                        <CardHeader>
+                        <CardHeader className="px-2 lg:px-4">
                           <CardTitle>{order.fullName}</CardTitle>
 
                           <CardDescription>
@@ -769,7 +770,7 @@ const Admin: React.FC = () => {
                           </CardAction>
                         </CardHeader>
 
-                        <CardContent className="flex items-center gap-2">
+                        <CardContent className="px-2 lg:px-4 flex items-center gap-2">
                           <div
                             className="w-10 h-10 rounded-full"
                             style={{ backgroundColor: order.hexColor }}
@@ -784,7 +785,7 @@ const Admin: React.FC = () => {
                           <p>Rs.{order.price}</p>
                         </CardContent>
 
-                        <CardFooter className="flex justify-center gap-2">
+                        <CardFooter className="px-2 lg:px-4 flex flex-wrap justify-center gap-2">
                           <Button
                             variant="default"
                             onClick={() => {
@@ -808,14 +809,14 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="delivered">
-                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                <ScrollArea className="lg:h-[80dvh] lg:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList
                     .filter((order: order) => order.status == "Delivered")
                     .slice(0)
                     .reverse()
                     .map((order: order, idx: number) => (
                       <Card key={idx} className="mb-4">
-                        <CardHeader>
+                        <CardHeader className="px-2 lg:px-4">
                           <CardTitle>{order.fullName}</CardTitle>
 
                           <CardDescription>
@@ -836,7 +837,7 @@ const Admin: React.FC = () => {
                           </CardAction> */}
                         </CardHeader>
 
-                        <CardContent className="flex items-center gap-2">
+                        <CardContent className="px-2 lg:px-4 flex items-center gap-2">
                           <div
                             className="w-10 h-10 rounded-full"
                             style={{ backgroundColor: order.hexColor }}
@@ -851,7 +852,7 @@ const Admin: React.FC = () => {
                           <p>Rs.{order.price}</p>
                         </CardContent>
 
-                        <CardFooter className="flex justify-center gap-2">
+                        <CardFooter className="px-2 lg:px-4 flex flex-wrap justify-center gap-2">
                           {/* <Button
                             variant="default"
                             onClick={() => {
@@ -875,14 +876,14 @@ const Admin: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="rejected">
-                <ScrollArea className="lg:h-[80dvh] md:w-[50dvw] grid grid-cols-1 rounded-2xl">
+                <ScrollArea className="lg:h-[80dvh] lg:w-[50dvw] grid grid-cols-1 rounded-2xl">
                   {allOrderList
                     .filter((order: order) => order.status == "Rejected")
                     .slice(0)
                     .reverse()
                     .map((order: order, idx: number) => (
                       <Card key={idx} className="mb-4">
-                        <CardHeader>
+                        <CardHeader className="px-2 lg:px-4">
                           <CardTitle>{order.fullName}</CardTitle>
 
                           <CardDescription>
@@ -903,7 +904,7 @@ const Admin: React.FC = () => {
                           </CardAction> */}
                         </CardHeader>
 
-                        <CardContent className="flex items-center gap-2">
+                        <CardContent className="px-2 lg:px-4 flex items-center gap-2">
                           <div
                             className="w-10 h-10 rounded-full"
                             style={{ backgroundColor: order.hexColor }}
@@ -918,7 +919,7 @@ const Admin: React.FC = () => {
                           <p>Rs.{order.price}</p>
                         </CardContent>
 
-                        <CardFooter className="flex justify-center gap-2">
+                        <CardFooter className="px-2 lg:px-4 flex flex-wrap justify-center gap-2">
                           {/* <Button
                             variant="default"
                             onClick={() => {
@@ -941,14 +942,14 @@ const Admin: React.FC = () => {
                 </ScrollArea>
               </TabsContent>
             </Tabs>
-          </section>
+          </div>
         ) : (
-          <section className="h-[100dvh] p-2">
-            <div className="pt-12 flex justify-center">
+          <div className="h-[100dvh] p-2">
+            <section className="pt-12 flex justify-center">
               <Spinner className="size-8" />
               <h2>Loading...</h2>
-            </div>
-          </section>
+            </section>
+          </div>
         )}
       </main>
     </>
