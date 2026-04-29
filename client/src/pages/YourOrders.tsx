@@ -15,8 +15,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useClothConfigStore from "@/store/clothConfigStore";
+import { Copy } from "lucide-react";
 
 interface order {
+  _id: string;
   createdAt: string;
   uid: string;
   hexColor: string;
@@ -135,23 +137,75 @@ const YourOrders: React.FC = () => {
     updateClothFabric(order.clothFabric || "");
   };
 
+  const copyToClipboard = async (id: string) => {
+    try {
+      await navigator.clipboard.writeText(id);
+      toast.success("Copied order ID", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("Ok"),
+        },
+      });
+    } catch (error) {
+      toast.error("Failed to copy ID", {
+        action: {
+          label: "Ok",
+          onClick: () => console.log(error),
+        },
+      });
+    }
+  };
+
   return (
     <>
       <PageTitle title="Cloth shop - Your orders" />
 
-      <main className="h-[50dvh] lg:h-screen w-screen lg:w-[50vw] py-2 px-4 lg:pt-16 lg:pl-20 bg-muted">
+      <main className="h-[50dvh] lg:h-screen w-screen lg:w-[50vw] py-2 px-4 lg:pt-16 lg:pl-20">
         <ScrollArea className="h-full w-full rounded-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {allOrders.map((order: order, idx: number) => (
-              <Card key={idx} className="py-4 gap-4">
-                <CardHeader className="px-3">
-                  <CardTitle>T-Shirt</CardTitle>
+            {allOrders
+              .slice(0)
+              .reverse()
+              .map((order: order, idx: number) => (
+                <Card key={idx} className="py-4 gap-4">
+                  <CardHeader className="px-3">
+                    <CardTitle>T-Shirt</CardTitle>
 
-                  <CardDescription>
-                    <p>{new Date(order.createdAt).toLocaleString()}</p>
-                  </CardDescription>
+                    <CardDescription>
+                      <p>{new Date(order.createdAt).toLocaleString()}</p>
+                      <p>{order._id}</p>
+                    </CardDescription>
 
-                  <CardAction>
+                    <CardAction className="text-center">
+                      <Button
+                        variant="outline"
+                        title="Copy ID"
+                        onClick={() => copyToClipboard(order._id)}
+                      >
+                        <Copy />
+                      </Button>
+                    </CardAction>
+                  </CardHeader>
+
+                  <CardContent className="px-3">
+                    <div
+                      className="w-6 h-6 rounded-full"
+                      style={{ backgroundColor: order.hexColor }}
+                    ></div>
+
+                    <p>Logo: {order.logo}</p>
+                    <p style={{ color: order.clothTextColor }}>
+                      Text with color: {order.clothText}
+                    </p>
+                    <p>Design: {order.design}</p>
+                    <p>Fabric: {order.clothFabric}</p>
+                    <p>Size: {order.clothSize}</p>
+                    <p>Quantity: {order.quantity}x</p>
+                    <p>Rs.{order.price}</p>
+                  </CardContent>
+
+                  <CardFooter className="px-3 flex justify-between">
+                    <p>Status: {order.status}</p>
                     <Button
                       variant="outline"
                       onClick={() => {
@@ -160,32 +214,9 @@ const YourOrders: React.FC = () => {
                     >
                       Preview
                     </Button>
-                  </CardAction>
-                </CardHeader>
-
-                <CardContent className="px-3">
-                  <div
-                    className="w-6 h-6 rounded-full"
-                    style={{ backgroundColor: order.hexColor }}
-                  ></div>
-
-                  <p>Logo: {order.logo}</p>
-                  <p style={{ color: order.clothTextColor }}>
-                    Text with color: {order.clothText}
-                  </p>
-                  <p>{order.design}</p>
-                  <p>Fabric: {order.clothFabric}</p>
-                  <p>Size: {order.clothSize}</p>
-                  <p>Quantity: {order.quantity}x</p>
-                  <p>Rs.{order.price}</p>
-                </CardContent>
-
-                <CardFooter className="px-3 flex justify-between">
-                  <p>Status: {order.status}</p>
-                  <Button variant="destructive">Delete</Button>
-                </CardFooter>
-              </Card>
-            ))}
+                  </CardFooter>
+                </Card>
+              ))}
           </div>
         </ScrollArea>
       </main>
