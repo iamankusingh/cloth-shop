@@ -84,6 +84,9 @@ const clothConfigSchema = new mongoose.Schema({
   designScale: {
     type: Number,
   },
+  designUrl: {
+    type: String,
+  },
 
   clothSize: {
     type: String,
@@ -97,7 +100,7 @@ const clothConfigSchema = new mongoose.Schema({
 
 const ClothConfigModel = mongoose.model<clothConfigInterface>(
   "ClothConfig",
-  clothConfigSchema
+  clothConfigSchema,
 );
 
 export default ClothConfigModel;

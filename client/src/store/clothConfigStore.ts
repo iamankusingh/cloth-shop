@@ -35,6 +35,9 @@ export interface ClothConfigState {
   updateDesignPath: (path: string) => void;
   designScale: number;
   updateDesignScale: (scale: number) => void;
+  designUrl: string;
+  updateDesignUrl: (url: string) => void;
+
   clothSize: string;
   updateClothSize: (size: string) => void;
   clothFabric: string;
@@ -85,6 +88,9 @@ const useClothConfigStore = create<ClothConfigState>((set) => ({
   updateDesignPath: (path) => set(() => ({ designPath: path })),
   designScale: 100,
   updateDesignScale: (scale) => set(() => ({ designScale: scale })),
+  designUrl: "",
+  updateDesignUrl: (url) => set(() => ({ designUrl: url })),
+
   clothSize: "",
   updateClothSize: (size) => set(() => ({ clothSize: size })),
   clothFabric: "",

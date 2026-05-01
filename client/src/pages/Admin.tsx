@@ -56,6 +56,7 @@ interface order {
   designPath?: string;
   designScale?: number;
   clothSize?: string;
+  designUrl?: string;
   clothFabric?: string;
   quantity?: number;
   price?: number;
@@ -91,6 +92,7 @@ const Admin: React.FC = () => {
     updateDesign,
     updateDesignPath,
     updateDesignScale,
+    updateDesignUrl,
     updateClothSize,
     updateClothFabric,
     updateQuantity,
@@ -252,6 +254,7 @@ const Admin: React.FC = () => {
         updateDesign(result.data.design);
         updateDesignPath(result.data.designPath);
         updateDesignScale(result.data.designScale);
+        updateDesignUrl(result.data.designUrl);
         updateClothSize(result.data.clothSize);
         updateClothFabric(result.data.clothFabric);
         updateQuantity(result.data.quantity);
@@ -632,7 +635,7 @@ const Admin: React.FC = () => {
                               </div>
                             ))}
 
-                          <div className="flex items-center gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
                             <div
                               className="w-10 h-10 rounded-full"
                               style={{ backgroundColor: order.hexColor }}
@@ -666,8 +669,32 @@ const Admin: React.FC = () => {
                           >
                             Preview
                           </Button>
-                          <Button variant="outline">Download logo</Button>
-                          <Button variant="outline">Download design</Button>
+                          <a
+                            href={order.logoUrl || order.logoPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.logoUrl || order.logoPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See logo</Button>
+                          </a>
+                          <a
+                            href={order.designUrl || order.designPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.designUrl || order.designPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See design</Button>
+                          </a>
                         </CardFooter>
                       </Card>
                     ))}
@@ -733,8 +760,32 @@ const Admin: React.FC = () => {
                           >
                             Preview
                           </Button>
-                          <Button variant="outline">Download logo</Button>
-                          <Button variant="outline">Download design</Button>
+                          <a
+                            href={order.logoUrl || order.logoPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.logoUrl || order.logoPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See logo</Button>
+                          </a>
+                          <a
+                            href={order.designUrl || order.designPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.designUrl || order.designPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See design</Button>
+                          </a>
                         </CardFooter>
                       </Card>
                     ))}
@@ -800,8 +851,32 @@ const Admin: React.FC = () => {
                           >
                             Preview
                           </Button>
-                          <Button variant="outline">Download logo</Button>
-                          <Button variant="outline">Download design</Button>
+                          <a
+                            href={order.logoUrl || order.logoPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.logoUrl || order.logoPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See logo</Button>
+                          </a>
+                          <a
+                            href={order.designUrl || order.designPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.designUrl || order.designPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See design</Button>
+                          </a>
                         </CardFooter>
                       </Card>
                     ))}
@@ -824,17 +899,6 @@ const Admin: React.FC = () => {
                             <p>{order._id}</p>
                             <p>{order.createdAt}</p>
                           </CardDescription>
-
-                          {/* <CardAction>
-                            <Button
-                              variant="destructive"
-                              onClick={() => {
-                                updateStatus(order._id, "Rejected");
-                              }}
-                            >
-                              Reject
-                            </Button>
-                          </CardAction> */}
                         </CardHeader>
 
                         <CardContent className="px-2 lg:px-4 flex items-center gap-2">
@@ -853,22 +917,38 @@ const Admin: React.FC = () => {
                         </CardContent>
 
                         <CardFooter className="px-2 lg:px-4 flex flex-wrap justify-center gap-2">
-                          {/* <Button
-                            variant="default"
-                            onClick={() => {
-                              updateStatus(order._id, "Delivering");
-                            }}
-                          >
-                            Deliver
-                          </Button> */}
                           <Button
                             variant="outline"
                             onClick={() => previewCloth(order)}
                           >
                             Preview
                           </Button>
-                          <Button variant="outline">Download logo</Button>
-                          <Button variant="outline">Download design</Button>
+                          <a
+                            href={order.logoUrl || order.logoPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.logoUrl || order.logoPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See logo</Button>
+                          </a>
+                          <a
+                            href={order.designUrl || order.designPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.designUrl || order.designPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See design</Button>
+                          </a>
                         </CardFooter>
                       </Card>
                     ))}
@@ -891,17 +971,6 @@ const Admin: React.FC = () => {
                             <p>{order._id}</p>
                             <p>{order.createdAt}</p>
                           </CardDescription>
-
-                          {/* <CardAction>
-                            <Button
-                              variant="destructive"
-                              onClick={() => {
-                                updateStatus(order._id, "Rejected");
-                              }}
-                            >
-                              Reject
-                            </Button>
-                          </CardAction> */}
                         </CardHeader>
 
                         <CardContent className="px-2 lg:px-4 flex items-center gap-2">
@@ -920,22 +989,38 @@ const Admin: React.FC = () => {
                         </CardContent>
 
                         <CardFooter className="px-2 lg:px-4 flex flex-wrap justify-center gap-2">
-                          {/* <Button
-                            variant="default"
-                            onClick={() => {
-                              updateStatus(order._id, "Delivering");
-                            }}
-                          >
-                            Deliver
-                          </Button> */}
                           <Button
                             variant="outline"
                             onClick={() => previewCloth(order)}
                           >
                             Preview
                           </Button>
-                          <Button variant="outline">Download logo</Button>
-                          <Button variant="outline">Download design</Button>
+                          <a
+                            href={order.logoUrl || order.logoPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.logoUrl || order.logoPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See logo</Button>
+                          </a>
+                          <a
+                            href={order.designUrl || order.designPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display:
+                                order.designUrl || order.designPath
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <Button variant="outline">See design</Button>
+                          </a>
                         </CardFooter>
                       </Card>
                     ))}

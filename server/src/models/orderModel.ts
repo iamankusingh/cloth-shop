@@ -93,6 +93,9 @@ const orderSchema = new mongoose.Schema(
     designScale: {
       type: Number,
     },
+    designUrl: {
+      type: String,
+    },
 
     clothSize: {
       type: String,

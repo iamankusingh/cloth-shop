@@ -4,6 +4,7 @@ import { sampleDesigns } from "../assets/design";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { toast } from "sonner";
 
 interface designPalletImgInterface {
   [key: string]: string;
@@ -26,17 +27,46 @@ const DesignUpload: React.FC = () => {
     updateDesign,
     updateDesignPath,
     updateDesignScale,
+    updateDesignUrl,
   } = useClothConfigStore();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const imageName = e.target.files?.[0].name;
 
       const url = URL.createObjectURL(e.target.files?.[0]);
       updateDesign(imageName);
       updateDesignPath(url);
+
+      const data = new FormData();
+      data.append("file", e.target.files[0]);
+      data.append("upload_preset", "cloth shop 3D");
+
+      try {
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${
+            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+          }/image/upload`,
+          {
+            method: "POST",
+            body: data,
+          },
+        );
+
+        const uploadCloudinary = await res.json();
+        console.log("uploadCloudinary", uploadCloudinary.url);
+        updateDesignUrl(uploadCloudinary.url);
+      } catch (error) {
+        console.error("Error uploading image to Cloudinary", error);
+        toast.error("Failed to upload image.", {
+          action: {
+            label: "Ok",
+            onClick: () => console.log("Ok"),
+          },
+        });
+      }
     }
   };
 
